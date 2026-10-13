@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TransitProvider, useTransit } from './context/TransitContext';
 import Header from './components/Header';
@@ -6,37 +6,11 @@ import EditorialHeroCanvas from './components/EditorialHeroCanvas';
 import TransitMap from './components/TransitMap';
 import PassengerView from './components/PassengerView';
 import OperatorDashboard from './components/OperatorDashboard';
-import Chatbot from './components/Chatbot';
 import CorridorTelemetrySheet from './components/CorridorTelemetrySheet';
-import { MessageSquare } from 'lucide-react';
-import { scrollToChat } from './lib/navigation';
 
 function DashboardContent() {
   const { role, language } = useTransit();
   const isTamil = language === 'ta';
-  const [chatDirection, setChatDirection] = useState('down');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const chatEl = document.getElementById('chat-area');
-      if (!chatEl) return;
-      const rect = chatEl.getBoundingClientRect();
-      const chatCenter = rect.top + rect.height / 2;
-      const viewportCenter = window.innerHeight / 2;
-      
-      // If chat center is below viewport center, user is above chatbot -> show down arrow (↓)
-      // If chat center is above viewport center, user is below chatbot -> show up arrow (↑)
-      if (chatCenter > viewportCenter) {
-        setChatDirection('down');
-      } else {
-        setChatDirection('up');
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <div className="min-h-screen bg-[#F6F3EC] text-[#0A0A0A] flex flex-col font-sans selection:bg-[#0A0A0A] selection:text-[#F6F3EC] overflow-x-hidden">
@@ -118,19 +92,6 @@ function DashboardContent() {
             </motion.div>
           </AnimatePresence>
         </div>
-
-        {/* Floating Quick Action Popup Pill with Dynamic Directional Arrow */}
-        <motion.button
-          onClick={scrollToChat}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2.5 bg-[#0A0A0A] text-[#F6F3EC] border-2 border-[#0A0A0A] shadow-[3px_3px_0px_#6E6B65] sm:shadow-[4px_4px_0px_#6E6B65] font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider cursor-pointer hover:bg-[#FFFFFF] hover:text-[#0A0A0A] transition-colors"
-          title={chatDirection === 'down' ? "Scroll down to AI Assistant" : "Scroll up to AI Assistant"}
-        >
-          <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          <span>Chat (AI Assistant) {chatDirection === 'down' ? '↓' : '↑'}</span>
-        </motion.button>
-
       </main>
 
       {/* 4. Editorial Archival Footer */}

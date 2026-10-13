@@ -2,8 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useTransit } from '../context/TransitContext';
 import { CorridorBranchSvg, TransitCrosshairSvg, RadarWaveSvg, TechnicalGearSvg } from './CustomIcons';
-import { MessageSquare } from 'lucide-react';
-import { scrollToChat } from '../lib/navigation';
 import Chatbot from './Chatbot';
 
 export default function EditorialHeroCanvas() {
@@ -77,16 +75,6 @@ export default function EditorialHeroCanvas() {
                   CORRIDOR 01 • GANDHIPURAM ↔ SARAVANAMPATTI (COIMBATORE)
                 </span>
               </div>
-
-              {/* Chat Popup Trigger Button */}
-              <button
-                onClick={scrollToChat}
-                className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 px-2.5 sm:px-3 py-1 bg-[#FFFFFF] border border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] hover:bg-[#0A0A0A] hover:text-[#F6F3EC] transition-all cursor-pointer"
-                title="Jump to Chat Area"
-              >
-                <MessageSquare className="w-3 h-3" />
-                <span>{isTamil ? "உரையாடல்" : "Chat"} ↓</span>
-              </button>
             </div>
 
             {/* Primary High-Contrast Typography */}
@@ -165,17 +153,6 @@ export default function EditorialHeroCanvas() {
                 >
                   RESET
                 </button>
-
-                {/* Jump to Chat */}
-                <button
-                  onClick={scrollToChat}
-                  className="px-3 sm:px-3.5 py-1 sm:py-1.5 font-mono text-[11px] sm:text-xs uppercase tracking-wider font-bold border border-[#0A0A0A] bg-[#0A0A0A] text-[#F6F3EC] hover:bg-[#FFFFFF] hover:text-[#0A0A0A] transition-all flex items-center gap-1.5 shadow-[2px_2px_0px_#0A0A0A] cursor-pointer"
-                  title="Scroll to Chat Area"
-                >
-                  <MessageSquare className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
-                  <span>Chat ↓</span>
-                </button>
-
               </div>
             </div>
 
