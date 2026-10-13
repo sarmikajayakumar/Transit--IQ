@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { useTransit } from '../context/TransitContext';
 import { TransitCrosshairSvg, RadarWaveSvg } from './CustomIcons';
 import { checkSupabaseConnection } from '../lib/supabaseClient';
+import { MessageSquare } from 'lucide-react';
+import { scrollToChat } from '../lib/navigation';
 
 export default function Header() {
   const { language, setLanguage, role, setRole, t, floodActive } = useTransit();
@@ -116,6 +118,16 @@ export default function Header() {
                 {isTamil ? "இயக்குனர்" : "Operator"}
               </button>
             </div>
+
+            {/* Chat Action Button / Popup trigger */}
+            <button
+              onClick={scrollToChat}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider font-bold border border-[#0A0A0A] bg-[#0A0A0A] text-[#F6F3EC] hover:bg-[#FFFFFF] hover:text-[#0A0A0A] transition-all shadow-[2px_2px_0px_#0A0A0A] cursor-pointer"
+              title="Go to AI Assistant Chat"
+            >
+              <MessageSquare className="w-3.5 h-3.5" />
+              <span>{isTamil ? "உரையாடல்" : "Chat"}</span>
+            </button>
 
           </div>
 

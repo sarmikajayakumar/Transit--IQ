@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-[#F6F3EC] text-[#0A0A0A] min-h-screen font-sans;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";

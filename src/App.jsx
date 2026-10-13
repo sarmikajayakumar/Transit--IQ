@@ -7,6 +7,8 @@ import TransitMap from './components/TransitMap';
 import PassengerView from './components/PassengerView';
 import OperatorDashboard from './components/OperatorDashboard';
 import Chatbot from './components/Chatbot';
+import { MessageSquare } from 'lucide-react';
+import { scrollToChat } from './lib/navigation';
 
 function DashboardContent() {
   const { role, language } = useTransit();
@@ -58,7 +60,7 @@ function DashboardContent() {
           </div>
 
           {/* Right Column (5 of 12 cols = ~42% width): Bilingual Tamil/English AI Copilot */}
-          <div className="lg:col-span-5 xl:col-span-5 space-y-4 sticky top-6">
+          <div id="chat-area" className="lg:col-span-5 xl:col-span-5 space-y-4 sticky top-6 scroll-mt-6 transition-all duration-300">
             <div className="flex items-center justify-between font-mono text-xs">
               <span className="font-bold text-[#0A0A0A] uppercase tracking-wider">
                 [COPILOT DIALOGUE]
@@ -100,6 +102,18 @@ function DashboardContent() {
             </motion.div>
           </AnimatePresence>
         </div>
+
+        {/* Floating Quick Action Popup Pill */}
+        <motion.button
+          onClick={scrollToChat}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] text-[#F6F3EC] border-2 border-[#0A0A0A] shadow-[4px_4px_0px_#6E6B65] font-mono text-xs font-bold uppercase tracking-wider cursor-pointer hover:bg-[#FFFFFF] hover:text-[#0A0A0A] transition-colors"
+          title="Go to AI Assistant Chat"
+        >
+          <MessageSquare className="w-4 h-4" />
+          <span>Chat (AI Assistant) ↓</span>
+        </motion.button>
 
       </main>
 
