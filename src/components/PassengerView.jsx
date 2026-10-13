@@ -367,9 +367,13 @@ export default function PassengerView() {
                 <div
                   key={route.id}
                   onClick={() => setSelectedRouteId(route.id)}
-                  className={`p-3.5 sm:p-5 cursor-pointer transition-colors flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 ${
-                    isSelected ? 'bg-[#FAF8F5]' : 'bg-[#FFFFFF] hover:bg-[#F6F3EC]/60'
-                  }`}
+                  className={`p-3.5 sm:p-5 cursor-pointer transition-colors flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 border-l-4 ${
+                    isOvercrowded
+                      ? 'border-l-[#DC2626] bg-[#FEF2F2]/40 hover:bg-[#FEF2F2]/70'
+                      : route.crowdingPercent < 50
+                      ? 'border-l-[#CA8A04] bg-[#FEFCE8]/40 hover:bg-[#FEFCE8]/70'
+                      : 'border-l-[#16A34A] bg-[#F0FDF4]/40 hover:bg-[#F0FDF4]/70'
+                  } ${isSelected ? 'ring-2 ring-[#0A0A0A]' : ''}`}
                 >
                   {/* Left Info */}
                   <div className="space-y-1">
@@ -382,7 +386,7 @@ export default function PassengerView() {
                       </span>
                       {isRecommended && (
                         <span className="font-mono text-[8px] sm:text-[9px] uppercase px-1.5 py-0.5 bg-[#0A0A0A] text-[#F6F3EC] font-bold">
-                          ★ OPTIMAL CHOICE
+                          ★ RECOMMENDED
                         </span>
                       )}
                     </div>
@@ -392,16 +396,21 @@ export default function PassengerView() {
                           ? "Sathy Road direct • IT Corridor"
                           : route.id === 'route-b'
                           ? "Trichy Road • 60% empty seats, fast express"
-                          : "Avinashi Road • Moderate passenger flow, steady transit"}
+                          : "Avinashi Road • Steady flow, balanced transit"}
                       </p>
                       {route.id === 'route-a' && (
-                        <span className="px-1.5 py-0.5 bg-[#FEF08A] text-[#991B1B] border border-[#DC2626] font-mono text-[9px] font-black">
-                          ⚠️ CROWDING TOO HIGH (134%) • NEEDS +2 EXTRA BUSES
+                        <span className="px-1.5 py-0.5 bg-[#DC2626] text-[#FFFFFF] font-mono text-[9px] font-black uppercase shadow-[1px_1px_0px_#0A0A0A]">
+                          🚨 RED BLOCK • OVERCROWDED (134%) • NEEDS +2 BUSES
                         </span>
                       )}
                       {route.id === 'route-b' && (
-                        <span className="px-1.5 py-0.5 bg-[#BBF7D0] text-[#166534] border border-[#16A34A] font-mono text-[9px] font-black">
-                          🌿 CROWDING TOO LOW (40%) • 1 BUS TO SWITCH TO RTE 12
+                        <span className="px-1.5 py-0.5 bg-[#CA8A04] text-[#FFFFFF] font-mono text-[9px] font-black uppercase shadow-[1px_1px_0px_#0A0A0A]">
+                          📉 YELLOW BLOCK • UNDERCROWDED (40%) • 1 BUS TO SWITCH
+                        </span>
+                      )}
+                      {route.id === 'route-c' && (
+                        <span className="px-1.5 py-0.5 bg-[#16A34A] text-[#FFFFFF] font-mono text-[9px] font-black uppercase shadow-[1px_1px_0px_#0A0A0A]">
+                          ✅ GREEN BLOCK • NORMAL CROWD (76%) • BALANCED
                         </span>
                       )}
                     </div>
@@ -411,14 +420,14 @@ export default function PassengerView() {
                   <div className="grid grid-cols-2 sm:grid-cols-4 md:flex items-center gap-2.5 sm:gap-6 font-mono text-[11px] sm:text-xs shrink-0 w-full md:w-auto pt-2.5 md:pt-0 border-t md:border-t-0 border-[#E2DBD0]">
                     <div>
                       <span className="text-[9px] sm:text-[10px] text-[#6E6B65] block uppercase">Crowding</span>
-                      <span className={`font-mono text-xs font-black px-1.5 py-0.5 border ${
+                      <span className={`font-mono text-xs font-black px-2 py-0.5 border ${
                         isOvercrowded
-                          ? 'bg-[#FEF2F2] text-[#DC2626] border-[#DC2626]'
+                          ? 'bg-[#DC2626] text-[#FFFFFF] border-[#DC2626]'
                           : route.crowdingPercent < 50
-                          ? 'bg-[#F0FDF4] text-[#16A34A] border-[#16A34A]'
-                          : 'bg-[#FAF8F5] text-[#0A0A0A] border-[#0A0A0A]'
+                          ? 'bg-[#CA8A04] text-[#FFFFFF] border-[#CA8A04]'
+                          : 'bg-[#16A34A] text-[#FFFFFF] border-[#16A34A]'
                       }`}>
-                        {route.crowdingPercent}% {isOvercrowded ? 'TOO HIGH' : route.crowdingPercent < 50 ? 'TOO LOW' : 'MOD'}
+                        {route.crowdingPercent}% {isOvercrowded ? 'RED (HIGH)' : route.crowdingPercent < 50 ? 'YELLOW (LOW)' : 'GREEN (NORM)'}
                       </span>
                     </div>
 
@@ -487,26 +496,26 @@ export default function PassengerView() {
                   <td className="py-2.5 sm:py-3">
                     <span className={`px-2 py-0.5 font-mono text-[10px] font-black border ${
                       r.crowdingPercent > 100
-                        ? 'bg-[#FEE2E2] text-[#DC2626] border-[#DC2626]'
+                        ? 'bg-[#FEF2F2] text-[#DC2626] border-[#DC2626]'
                         : r.crowdingPercent < 50
-                        ? 'bg-[#DCFCE7] text-[#16A34A] border-[#16A34A]'
-                        : 'bg-[#FAF8F5] text-[#0A0A0A] border-[#0A0A0A]'
+                        ? 'bg-[#FEFCE8] text-[#854D0E] border-[#CA8A04]'
+                        : 'bg-[#F0FDF4] text-[#16A34A] border-[#16A34A]'
                     }`}>
-                      {r.crowdingPercent}% {r.crowdingPercent > 100 ? 'TOO HIGH' : r.crowdingPercent < 50 ? 'TOO LOW' : 'BALANCED'}
+                      {r.crowdingPercent}% {r.crowdingPercent > 100 ? '🚨 RED (HIGH)' : r.crowdingPercent < 50 ? '📉 YELLOW (LOW)' : '✅ GREEN (NORMAL)'}
                     </span>
                   </td>
                   <td className="py-2.5 sm:py-3 font-mono text-[10px] sm:text-[11px]">
                     {r.id === 'route-a' ? (
-                      <span className="px-2 py-0.5 bg-[#FEF08A] text-[#0A0A0A] border border-[#0A0A0A] font-black">
+                      <span className="px-2 py-0.5 bg-[#FEF2F2] text-[#DC2626] border border-[#DC2626] font-black">
                         {optimizationApplied ? '✅ +2 Relief Buses Deployed' : '👉 +2 Extra Buses Needed'}
                       </span>
                     ) : r.id === 'route-b' ? (
-                      <span className="px-2 py-0.5 bg-[#BBF7D0] text-[#0A0A0A] border border-[#0A0A0A] font-black">
+                      <span className="px-2 py-0.5 bg-[#FEFCE8] text-[#854D0E] border border-[#CA8A04] font-black">
                         {optimizationApplied ? '✅ 1 Bus Switched to Rte 12' : '👉 1 Bus to Switch to Rte 12'}
                       </span>
                     ) : (
-                      <span className="px-2 py-0.5 bg-[#FAF8F5] text-[#6E6B65] border border-[#E2DBD0]">
-                        Standard Headway
+                      <span className="px-2 py-0.5 bg-[#F0FDF4] text-[#16A34A] border border-[#16A34A] font-bold">
+                        Normal Steady Service
                       </span>
                     )}
                   </td>

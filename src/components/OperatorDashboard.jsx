@@ -66,39 +66,67 @@ export default function OperatorDashboard() {
           </div>
         </div>
 
-        {/* High-Visibility Highlight Strip */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-[#FAF8F5] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] mb-5">
-          <div className="flex items-center gap-2 p-2 bg-[#FEF2F2] border-2 border-[#DC2626]">
-            <span className="px-2 py-0.5 bg-[#DC2626] text-white font-mono text-[10px] font-black uppercase tracking-wider">
-              🚨 CROWDING TOO HIGH
-            </span>
-            <span className="font-mono text-xs font-bold text-[#991B1B]">
-              Route 12 (134%) ➔ <span className="bg-[#FEF08A] px-1.5 py-0.5 text-[#0A0A0A] border border-[#0A0A0A] font-black">+2 EXTRA BUSES NEEDED</span>
-            </span>
+        {/* High-Visibility 3-Tier Color Strip: Red (Overcrowded), Yellow (Undercrowded), Green (Normal) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-3 bg-[#FAF8F5] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] mb-5">
+          {/* RED BLOCK: OVERCROWDED */}
+          <div className="p-2.5 bg-[#FEF2F2] border-2 border-[#DC2626] shadow-[2px_2px_0px_#DC2626]">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="px-2 py-0.5 bg-[#DC2626] text-white font-mono text-[9px] sm:text-[10px] font-black uppercase tracking-wider">
+                🚨 RED • OVERCROWDED
+              </span>
+            </div>
+            <div className="font-mono text-xs font-black text-[#991B1B]">
+              Route 12 (134% Load)
+            </div>
+            <div className="mt-1 font-mono text-[11px] font-bold text-[#DC2626]">
+              👉 +2 EXTRA BUSES NEEDED
+            </div>
           </div>
-          <div className="flex items-center gap-2 p-2 bg-[#F0FDF4] border-2 border-[#16A34A]">
-            <span className="px-2 py-0.5 bg-[#16A34A] text-white font-mono text-[10px] font-black uppercase tracking-wider">
-              📉 CROWDING TOO LOW
-            </span>
-            <span className="font-mono text-xs font-bold text-[#166534]">
-              Route 3A (40%) ➔ <span className="bg-[#BBF7D0] px-1.5 py-0.5 text-[#0A0A0A] border border-[#0A0A0A] font-black">1 BUS TO SWITCH TO ROUTE 12</span>
-            </span>
+
+          {/* YELLOW BLOCK: UNDERCROWDED */}
+          <div className="p-2.5 bg-[#FEFCE8] border-2 border-[#CA8A04] shadow-[2px_2px_0px_#CA8A04]">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="px-2 py-0.5 bg-[#CA8A04] text-white font-mono text-[9px] sm:text-[10px] font-black uppercase tracking-wider">
+                📉 YELLOW • UNDERCROWDED
+              </span>
+            </div>
+            <div className="font-mono text-xs font-black text-[#854D0E]">
+              Route 3A (40% Load)
+            </div>
+            <div className="mt-1 font-mono text-[11px] font-bold text-[#854D0E]">
+              👉 1 BUS TO SWITCH TO ROUTE 12
+            </div>
+          </div>
+
+          {/* GREEN BLOCK: NORMAL CROWD */}
+          <div className="p-2.5 bg-[#F0FDF4] border-2 border-[#16A34A] shadow-[2px_2px_0px_#16A34A]">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="px-2 py-0.5 bg-[#16A34A] text-white font-mono text-[9px] sm:text-[10px] font-black uppercase tracking-wider">
+                ✅ GREEN • NORMAL CROWD
+              </span>
+            </div>
+            <div className="font-mono text-xs font-black text-[#166534]">
+              Route 70 (76% Load)
+            </div>
+            <div className="mt-1 font-mono text-[11px] font-bold text-[#166534]">
+              👉 BALANCED STANDARD FLEET
+            </div>
           </div>
         </div>
 
         {/* 2 Dedicated Side-by-Side Live Analytical Alert Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
           
-          {/* Card A: OVERCROWDED ROUTE ANALYSIS & DIRECTIVE */}
-          <div className="border-2 border-[#DC2626] bg-[#FEF2F2]/60 p-4 sm:p-5 relative shadow-[4px_4px_0px_#DC2626]">
-            {/* Highlight Badge for Crowding Too High */}
+          {/* Card A: OVERCROWDED ROUTE ANALYSIS & DIRECTIVE (RED BLOCK) */}
+          <div className="border-2 border-[#DC2626] bg-[#FEF2F2] p-4 sm:p-5 relative shadow-[4px_4px_0px_#DC2626]">
+            {/* Highlight Badge for Crowding Too High (RED) */}
             <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
               <span className="font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-2.5 py-1 bg-[#DC2626] text-[#FFFFFF] shadow-[2px_2px_0px_#0A0A0A] flex items-center gap-1.5">
-                <span>🚨 CROWDING STATUS:</span>
-                <span className="underline">TOO HIGH (134% OVERCROWDED)</span>
+                <span>🚨 OVERCROWDED BLOCK (RED):</span>
+                <span className="underline">134% CRITICAL LOAD</span>
               </span>
-              <span className="font-mono text-xs font-black px-2 py-0.5 bg-[#FEF08A] text-[#991B1B] border border-[#DC2626]">
-                CRITICAL OVERLOAD: 480 PAX/HR
+              <span className="font-mono text-xs font-black px-2 py-0.5 bg-[#FFFFFF] text-[#DC2626] border border-[#DC2626]">
+                480 PAX/HR OVERLOAD
               </span>
             </div>
             
@@ -107,23 +135,23 @@ export default function OperatorDashboard() {
             </h4>
 
             <div className="mt-3 space-y-2.5 text-xs font-sans">
-              {/* HIGHLIGHT: Extra Buses Needed */}
-              <div className="p-3 bg-[#FEF08A] border-2 border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] font-mono">
-                <div className="flex items-center gap-1.5 font-black text-[11px] sm:text-xs uppercase tracking-wider text-[#991B1B]">
-                  <span>⚡ FLEET DEMAND HIGHLIGHT:</span>
+              {/* RED HIGHLIGHT: Extra Buses Needed */}
+              <div className="p-3 bg-[#DC2626] text-[#FFFFFF] border-2 border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] font-mono">
+                <div className="flex items-center gap-1.5 font-black text-[11px] sm:text-xs uppercase tracking-wider text-[#FEF08A]">
+                  <span>⚡ EXTRA BUSES DIRECTIVE:</span>
                 </div>
-                <div className="text-sm sm:text-base font-black text-[#0A0A0A] mt-0.5">
+                <div className="text-sm sm:text-base font-black text-[#FFFFFF] mt-0.5">
                   👉 +2 EXTRA RELIEF BUSES NEEDED IMMEDIATELY
                 </div>
-                <div className="text-[11px] text-[#451A03] font-sans font-medium mt-1">
+                <div className="text-[11px] text-[#FEE2E2] font-sans font-medium mt-1">
                   {isTamil
                     ? "பயணிகள் நெரிசலைத் தவிர்க்க TN-38-N-6602 மற்றும் ரிசர்வ் பேருந்தை உடனடியாக இயக்க வேண்டும்."
                     : "Deploy standby units TN-38-N-6602 + Standby Depot unit to cut headway to 7.5 min and drop wait times from 15.4m to 6.2m."}
                 </div>
               </div>
 
-              <div className="p-2.5 bg-[#FFFFFF] border border-[#0A0A0A]">
-                <span className="font-mono text-[10px] uppercase font-bold text-[#6E6B65] block">ANALYSIS & JUSTIFICATION:</span>
+              <div className="p-2.5 bg-[#FFFFFF] border border-[#DC2626]">
+                <span className="font-mono text-[10px] uppercase font-bold text-[#DC2626] block">OPERATIONAL REASONING:</span>
                 <p className="text-[#0A0A0A] leading-relaxed mt-0.5">
                   • <b>Passenger Surge:</b> 480 passengers/hour during morning IT rush on Sathy Road against a 280 pax capacity.
                   <br />• <b>Long Wait Time:</b> Commuters facing 15.4 minutes delay at GP Signal and Ganapathy Stop.
@@ -133,16 +161,16 @@ export default function OperatorDashboard() {
             </div>
           </div>
 
-          {/* Card B: UNDERCROWDED ROUTE ANALYSIS & DIRECTIVE */}
-          <div className="border-2 border-[#16A34A] bg-[#F0FDF4]/60 p-4 sm:p-5 relative shadow-[4px_4px_0px_#16A34A]">
-            {/* Highlight Badge for Crowding Too Low */}
+          {/* Card B: UNDERCROWDED ROUTE ANALYSIS & DIRECTIVE (YELLOW BLOCK) */}
+          <div className="border-2 border-[#CA8A04] bg-[#FEFCE8] p-4 sm:p-5 relative shadow-[4px_4px_0px_#CA8A04]">
+            {/* Highlight Badge for Crowding Too Low (YELLOW) */}
             <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <span className="font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-2.5 py-1 bg-[#16A34A] text-[#FFFFFF] shadow-[2px_2px_0px_#0A0A0A] flex items-center gap-1.5">
-                <span>📉 CROWDING STATUS:</span>
-                <span className="underline">TOO LOW (40% UNDERCROWDED)</span>
+              <span className="font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-2.5 py-1 bg-[#CA8A04] text-[#FFFFFF] shadow-[2px_2px_0px_#0A0A0A] flex items-center gap-1.5">
+                <span>📉 UNDERCROWDED BLOCK (YELLOW):</span>
+                <span className="underline">40% LEAN OCCUPANCY</span>
               </span>
-              <span className="font-mono text-xs font-black px-2 py-0.5 bg-[#BBF7D0] text-[#166534] border border-[#16A34A]">
-                60% SEATS EMPTY (SURPLUS CAPACITY)
+              <span className="font-mono text-xs font-black px-2 py-0.5 bg-[#FFFFFF] text-[#CA8A04] border border-[#CA8A04]">
+                60% SEATS EMPTY
               </span>
             </div>
             
@@ -151,23 +179,23 @@ export default function OperatorDashboard() {
             </h4>
 
             <div className="mt-3 space-y-2.5 text-xs font-sans">
-              {/* HIGHLIGHT: Less Crowded Buses to Switch */}
-              <div className="p-3 bg-[#BBF7D0] border-2 border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] font-mono">
-                <div className="flex items-center gap-1.5 font-black text-[11px] sm:text-xs uppercase tracking-wider text-[#166534]">
-                  <span>🔄 FLEET REALLOCATION HIGHLIGHT:</span>
+              {/* YELLOW HIGHLIGHT: Less Crowded Buses to Switch */}
+              <div className="p-3 bg-[#FEF08A] text-[#854D0E] border-2 border-[#CA8A04] shadow-[3px_3px_0px_#CA8A04] font-mono">
+                <div className="flex items-center gap-1.5 font-black text-[11px] sm:text-xs uppercase tracking-wider text-[#CA8A04]">
+                  <span>🔄 FLEET REALLOCATION DIRECTIVE:</span>
                 </div>
-                <div className="text-sm sm:text-base font-black text-[#0A0A0A] mt-0.5">
+                <div className="text-sm sm:text-base font-black text-[#854D0E] mt-0.5">
                   👉 1 LESS-CROWDED BUS AVAILABLE TO SWITCH TO OVERCROWDED ROUTE
                 </div>
-                <div className="text-[11px] text-[#14532D] font-sans font-medium mt-1">
+                <div className="text-[11px] text-[#713F12] font-sans font-medium mt-1">
                   {isTamil
                     ? "வழித்தடம் 3A-ல் வீணாக ஓடும் 1 பேருந்தை ரத்து செய்து, அதனை அதிக நெரிசல் உள்ள வழித்தடம் 12-க்கு நேரடியாக மாற்றலாம்."
                     : "Cancel 1 idle departure on Route 3A and reassign the bus & driver directly to overcrowded Route 12 to eliminate fuel waste while preserving 15-minute headway."}
                 </div>
               </div>
 
-              <div className="p-2.5 bg-[#FFFFFF] border border-[#0A0A0A]">
-                <span className="font-mono text-[10px] uppercase font-bold text-[#6E6B65] block">ANALYSIS & JUSTIFICATION:</span>
+              <div className="p-2.5 bg-[#FFFFFF] border border-[#CA8A04]">
+                <span className="font-mono text-[10px] uppercase font-bold text-[#CA8A04] block">OPERATIONAL REASONING:</span>
                 <p className="text-[#0A0A0A] leading-relaxed mt-0.5">
                   • <b>Under-utilization:</b> Operating at only 40% passenger occupancy with 60% empty seats (wasteful diesel burn).
                   <br />• <b>Service Preservation:</b> Cancelling 1 departure maintains a comfortable 15-minute headway with guaranteed seating.
@@ -196,14 +224,15 @@ export default function OperatorDashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E2DBD0] text-[11px] sm:text-xs">
-                <tr>
+                {/* OVERCROWDED ROUTE: RED */}
+                <tr className="bg-[#FEF2F2]/40">
                   <td className="p-2.5 sm:p-3 font-bold">
-                    Route 12 (Gandhipuram ↔ Saravanampatti)
+                    <span className="text-[#DC2626]">● [RED]</span> Route 12 (Gandhipuram ↔ Saravanampatti)
                     <span className="block text-[10px] font-mono text-[#DC2626]">Corridor: Sathy Road IT Rush</span>
                   </td>
                   <td className="p-2.5 sm:p-3">
-                    <span className="px-2 py-1 bg-[#FEF08A] text-[#991B1B] border border-[#DC2626] font-bold block sm:inline">
-                      ⚠️ CROWDING TOO HIGH (134%) • +2 EXTRA BUSES NEEDED
+                    <span className="px-2 py-1 bg-[#FEE2E2] text-[#DC2626] border border-[#DC2626] font-black block sm:inline">
+                      🚨 OVERCROWDED (134% RED) • +2 EXTRA BUSES NEEDED
                     </span>
                   </td>
                   <td className="p-2.5 sm:p-3">
@@ -213,23 +242,45 @@ export default function OperatorDashboard() {
                   </td>
                   <td className="p-2.5 sm:p-3 font-bold text-[#16A34A]">Wait cut from 15.4m to 6.2m (↓ 60%)</td>
                 </tr>
-                <tr>
+
+                {/* UNDERCROWDED ROUTE: YELLOW */}
+                <tr className="bg-[#FEFCE8]/40">
                   <td className="p-2.5 sm:p-3 font-bold">
-                    Route 3A (Ukkadam ↔ Singanallur)
-                    <span className="block text-[10px] font-mono text-[#16A34A]">Corridor: Trichy Road Lean</span>
+                    <span className="text-[#CA8A04]">● [YELLOW]</span> Route 3A (Ukkadam ↔ Singanallur)
+                    <span className="block text-[10px] font-mono text-[#CA8A04]">Corridor: Trichy Road Lean</span>
                   </td>
                   <td className="p-2.5 sm:p-3">
-                    <span className="px-2 py-1 bg-[#BBF7D0] text-[#166534] border border-[#16A34A] font-bold block sm:inline">
-                      🌿 CROWDING TOO LOW (40%) • 1 BUS TO SWITCH
+                    <span className="px-2 py-1 bg-[#FEF08A] text-[#854D0E] border border-[#CA8A04] font-black block sm:inline">
+                      📉 UNDERCROWDED (40% YELLOW) • 1 BUS TO SWITCH
                     </span>
                   </td>
                   <td className="p-2.5 sm:p-3">
-                    <span className="px-2 py-1 bg-[#FEF08A] text-[#0A0A0A] border border-[#0A0A0A] font-bold block sm:inline">
+                    <span className="px-2 py-1 bg-[#FEFCE8] text-[#854D0E] border border-[#CA8A04] font-bold block sm:inline">
                       🔄 1 BUS SWITCHED TO OVERCROWDED ROUTE 12
                     </span>
                   </td>
                   <td className="p-2.5 sm:p-3 font-bold text-[#16A34A]">Zero empty runs • 18L fuel saved/day</td>
                 </tr>
+
+                {/* NORMAL CROWD ROUTE: GREEN */}
+                <tr className="bg-[#F0FDF4]/40">
+                  <td className="p-2.5 sm:p-3 font-bold">
+                    <span className="text-[#16A34A]">● [GREEN]</span> Route 70 (Gandhipuram ↔ Airport)
+                    <span className="block text-[10px] font-mono text-[#16A34A]">Corridor: Avinashi Road Express</span>
+                  </td>
+                  <td className="p-2.5 sm:p-3">
+                    <span className="px-2 py-1 bg-[#DCFCE7] text-[#166534] border border-[#16A34A] font-black block sm:inline">
+                      ✅ NORMAL CROWD (76% GREEN) • BALANCED SEATS
+                    </span>
+                  </td>
+                  <td className="p-2.5 sm:p-3">
+                    <span className="px-2 py-1 bg-[#DCFCE7] text-[#166534] border border-[#16A34A] font-bold block sm:inline">
+                      ✅ PRESERVED (Standard 4 Buses/hr)
+                    </span>
+                  </td>
+                  <td className="p-2.5 sm:p-3 font-bold text-[#16A34A]">Consistent 15m Headway</td>
+                </tr>
+
                 <tr>
                   <td className="p-2.5 sm:p-3 font-bold">Average Passenger Waiting Time</td>
                   <td className="p-2.5 sm:p-3 text-[#6E6B65]">15.4 min average bottleneck</td>
@@ -249,66 +300,80 @@ export default function OperatorDashboard() {
 
       </div>
 
-      {/* 2. Three Routes Telemetry Ledger */}
+      {/* 2. Three Routes Telemetry Ledger: Overcrowded (RED), Undercrowded (YELLOW), Normal (GREEN) */}
       <div className="border border-[#0A0A0A] bg-[#FFFFFF] p-4 sm:p-6 shadow-[4px_4px_0px_#0A0A0A] sm:shadow-[6px_6px_0px_#0A0A0A]">
         <div className="border-b border-[#0A0A0A] pb-3 mb-4 flex items-center justify-between">
           <span className="font-mono text-[11px] sm:text-xs uppercase tracking-widest font-bold text-[#0A0A0A]">
-            COIMBATORE CORRIDOR TELEMETRY LEDGER • 3 PARALLEL SERVICES
+            COIMBATORE CORRIDOR TELEMETRY LEDGER • [RED: OVERCROWDED | YELLOW: UNDERCROWDED | GREEN: NORMAL]
           </span>
           <span className="font-mono text-[9px] sm:text-[10px] text-[#6E6B65]">
             PASSENGER LOAD & FLEET ALLOCATION
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#0A0A0A] border border-[#0A0A0A] font-mono text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
           {routes.map(route => {
             const isOvercrowded = route.crowdingPercent > 100;
             const isUndercrowded = route.crowdingPercent < 50;
+            const isNormal = !isOvercrowded && !isUndercrowded;
+
+            // Apply requested block colors: Red for overcrowded, Yellow for undercrowded, Green for normal crowd
+            const blockStyle = isOvercrowded
+              ? 'bg-[#FEF2F2] border-2 border-[#DC2626] shadow-[3px_3px_0px_#DC2626]'
+              : isUndercrowded
+              ? 'bg-[#FEFCE8] border-2 border-[#CA8A04] shadow-[3px_3px_0px_#CA8A04]'
+              : 'bg-[#F0FDF4] border-2 border-[#16A34A] shadow-[3px_3px_0px_#16A34A]';
+
+            const badgeStyle = isOvercrowded
+              ? 'bg-[#DC2626] text-[#FFFFFF]'
+              : isUndercrowded
+              ? 'bg-[#CA8A04] text-[#FFFFFF]'
+              : 'bg-[#16A34A] text-[#FFFFFF]';
+
+            const actionBoxStyle = isOvercrowded
+              ? 'bg-[#FEE2E2] text-[#991B1B] border border-[#DC2626]'
+              : isUndercrowded
+              ? 'bg-[#FEF08A] text-[#854D0E] border border-[#CA8A04]'
+              : 'bg-[#DCFCE7] text-[#166534] border border-[#16A34A]';
+
             return (
-              <div key={route.id} className="p-4 sm:p-5 space-y-2.5 sm:space-y-3 bg-[#FFFFFF]">
+              <div key={route.id} className={`p-4 sm:p-5 space-y-3 ${blockStyle}`}>
                 <div className="flex items-center justify-between">
-                  <span className="text-base font-black text-[#0A0A0A]">{route.code}</span>
-                  <span className={`px-2 py-0.5 text-[9px] sm:text-[10px] font-black border border-[#0A0A0A] ${
-                    isOvercrowded
-                      ? 'bg-[#DC2626] text-[#FFFFFF] shadow-[2px_2px_0px_#0A0A0A]'
-                      : isUndercrowded
-                      ? 'bg-[#16A34A] text-[#FFFFFF] shadow-[2px_2px_0px_#0A0A0A]'
-                      : 'bg-[#FAF8F5] text-[#0A0A0A]'
-                  }`}>
-                    {route.crowdingPercent}% {isOvercrowded ? '🔥 CROWDING TOO HIGH' : isUndercrowded ? '🌿 CROWDING TOO LOW' : 'BALANCED'}
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-base font-black text-[#0A0A0A]">{route.code}</span>
+                    <span className="text-[10px] font-black uppercase">
+                      {isOvercrowded ? '(RED BLOCK)' : isUndercrowded ? '(YELLOW BLOCK)' : '(GREEN BLOCK)'}
+                    </span>
+                  </div>
+                  <span className={`px-2 py-0.5 text-[9px] sm:text-[10px] font-black border border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] ${badgeStyle}`}>
+                    {route.crowdingPercent}% {isOvercrowded ? '🚨 OVERCROWDED' : isUndercrowded ? '📉 UNDERCROWDED' : '✅ NORMAL CROWD'}
                   </span>
                 </div>
 
-                <div className="font-sans text-xs text-[#6E6B65]">
+                <div className="font-sans text-xs text-[#0A0A0A] font-semibold">
                   {isTamil ? route.tamilName : route.name}
                 </div>
 
-                {/* Highlighted Fleet Allocation Action Box */}
-                <div className={`p-2 border border-[#0A0A0A] font-mono text-[10px] sm:text-[11px] ${
-                  route.id === 'route-a'
-                    ? 'bg-[#FEF08A] text-[#0A0A0A]'
-                    : route.id === 'route-b'
-                    ? 'bg-[#BBF7D0] text-[#0A0A0A]'
-                    : 'bg-[#FAF8F5] text-[#0A0A0A]'
-                }`}>
+                {/* Block Fleet Action Box */}
+                <div className={`p-2.5 font-mono text-[10px] sm:text-[11px] ${actionBoxStyle}`}>
                   <div className="flex justify-between items-center">
                     <span className="font-black uppercase text-[9px] sm:text-[10px]">
-                      {route.id === 'route-a' ? '⚡ FLEET DEMAND:' : route.id === 'route-b' ? '🔄 REALLOCATION:' : 'FLEET ALLOCATION:'}
+                      {route.id === 'route-a' ? '⚡ FLEET DEMAND:' : route.id === 'route-b' ? '🔄 REALLOCATION:' : 'STATUS:'}
                     </span>
                     <span className="font-black text-[10px] sm:text-[11px]">
                       {route.id === 'route-a'
                         ? (optimizationApplied ? '8 units (+2 Extra Deployed)' : '👉 +2 EXTRA BUSES NEEDED')
                         : route.id === 'route-b'
                         ? (optimizationApplied ? '4 units (1 Switched to Rte 12)' : '👉 1 BUS TO SWITCH TO RTE 12')
-                        : '4 units (Standard)'}
+                        : '4 units (Normal & Steady)'}
                     </span>
                   </div>
                 </div>
 
-                <div className="space-y-1 pt-1 border-t border-[#E2DBD0] text-[10px] sm:text-[11px]">
+                <div className="space-y-1 pt-1 border-t border-[#0A0A0A]/20 text-[10px] sm:text-[11px]">
                   <div className="flex justify-between">
                     <span className="text-[#6E6B65]">DEMAND:</span>
-                    <span>{route.demandPerHour} pax/hr</span>
+                    <span className="font-bold">{route.demandPerHour} pax/hr</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#6E6B65]">AVG WAIT:</span>
@@ -316,7 +381,7 @@ export default function OperatorDashboard() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#6E6B65]">HEADWAY:</span>
-                    <span>{route.headwayMin} min</span>
+                    <span className="font-bold">{route.headwayMin} min</span>
                   </div>
                 </div>
               </div>
