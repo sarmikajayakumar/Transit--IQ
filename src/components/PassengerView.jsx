@@ -386,21 +386,39 @@ export default function PassengerView() {
                         </span>
                       )}
                     </div>
-                    <p className="font-mono text-[11px] sm:text-xs text-[#6E6B65]">
-                      {route.id === 'route-a'
-                        ? "Sathy Road direct • High crowd corridor (needs +2 extra buses)"
-                        : route.id === 'route-b'
-                        ? "Trichy Road • 60% empty seats, fast moving express"
-                        : "Avinashi Road • Moderate passenger flow, steady transit"}
-                    </p>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <p className="font-mono text-[11px] sm:text-xs text-[#6E6B65]">
+                        {route.id === 'route-a'
+                          ? "Sathy Road direct • IT Corridor"
+                          : route.id === 'route-b'
+                          ? "Trichy Road • 60% empty seats, fast express"
+                          : "Avinashi Road • Moderate passenger flow, steady transit"}
+                      </p>
+                      {route.id === 'route-a' && (
+                        <span className="px-1.5 py-0.5 bg-[#FEF08A] text-[#991B1B] border border-[#DC2626] font-mono text-[9px] font-black">
+                          ⚠️ CROWDING TOO HIGH (134%) • NEEDS +2 EXTRA BUSES
+                        </span>
+                      )}
+                      {route.id === 'route-b' && (
+                        <span className="px-1.5 py-0.5 bg-[#BBF7D0] text-[#166534] border border-[#16A34A] font-mono text-[9px] font-black">
+                          🌿 CROWDING TOO LOW (40%) • 1 BUS TO SWITCH TO RTE 12
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Right Metrics Strip */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 md:flex items-center gap-2.5 sm:gap-6 font-mono text-[11px] sm:text-xs shrink-0 w-full md:w-auto pt-2.5 md:pt-0 border-t md:border-t-0 border-[#E2DBD0]">
                     <div>
                       <span className="text-[9px] sm:text-[10px] text-[#6E6B65] block uppercase">Crowding</span>
-                      <span className={`font-bold ${isOvercrowded ? 'underline text-[#DC2626]' : isRecommended ? 'text-[#16A34A]' : ''}`}>
-                        {route.crowdingPercent}% {isOvercrowded ? '(HEAVY)' : route.crowdingPercent < 50 ? '(SEATS)' : '(MOD)'}
+                      <span className={`font-mono text-xs font-black px-1.5 py-0.5 border ${
+                        isOvercrowded
+                          ? 'bg-[#FEF2F2] text-[#DC2626] border-[#DC2626]'
+                          : route.crowdingPercent < 50
+                          ? 'bg-[#F0FDF4] text-[#16A34A] border-[#16A34A]'
+                          : 'bg-[#FAF8F5] text-[#0A0A0A] border-[#0A0A0A]'
+                      }`}>
+                        {route.crowdingPercent}% {isOvercrowded ? 'TOO HIGH' : route.crowdingPercent < 50 ? 'TOO LOW' : 'MOD'}
                       </span>
                     </div>
 
@@ -466,11 +484,31 @@ export default function PassengerView() {
                     {r.id === 'route-b' ? 'In 2 min (08:32)' : r.id === 'route-c' ? 'In 6 min (08:36)' : 'In 12 min (08:42)'}
                   </td>
                   <td className="py-2.5 sm:py-3">Every {r.headwayMin}m</td>
-                  <td className="py-2.5 sm:py-3 font-bold">
-                    {r.crowdingPercent}% {r.crowdingPercent > 100 ? '[FULL]' : '[COMFORTABLE]'}
+                  <td className="py-2.5 sm:py-3">
+                    <span className={`px-2 py-0.5 font-mono text-[10px] font-black border ${
+                      r.crowdingPercent > 100
+                        ? 'bg-[#FEE2E2] text-[#DC2626] border-[#DC2626]'
+                        : r.crowdingPercent < 50
+                        ? 'bg-[#DCFCE7] text-[#16A34A] border-[#16A34A]'
+                        : 'bg-[#FAF8F5] text-[#0A0A0A] border-[#0A0A0A]'
+                    }`}>
+                      {r.crowdingPercent}% {r.crowdingPercent > 100 ? 'TOO HIGH' : r.crowdingPercent < 50 ? 'TOO LOW' : 'BALANCED'}
+                    </span>
                   </td>
                   <td className="py-2.5 sm:py-3 font-mono text-[10px] sm:text-[11px]">
-                    {r.id === 'route-a' ? (optimizationApplied ? '+2 Relief Buses Active' : 'Extra Buses Needed') : r.id === 'route-b' ? 'Seats Guaranteed' : 'Standard Headway'}
+                    {r.id === 'route-a' ? (
+                      <span className="px-2 py-0.5 bg-[#FEF08A] text-[#0A0A0A] border border-[#0A0A0A] font-black">
+                        {optimizationApplied ? '✅ +2 Relief Buses Deployed' : '👉 +2 Extra Buses Needed'}
+                      </span>
+                    ) : r.id === 'route-b' ? (
+                      <span className="px-2 py-0.5 bg-[#BBF7D0] text-[#0A0A0A] border border-[#0A0A0A] font-black">
+                        {optimizationApplied ? '✅ 1 Bus Switched to Rte 12' : '👉 1 Bus to Switch to Rte 12'}
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 bg-[#FAF8F5] text-[#6E6B65] border border-[#E2DBD0]">
+                        Standard Headway
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}

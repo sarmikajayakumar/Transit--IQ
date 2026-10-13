@@ -138,7 +138,7 @@ function DashboardContent() {
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center sm:justify-start">
             <span className="font-bold text-[#0A0A0A]">TRANSIT.IQ</span>
             <span>•</span>
-            <span className="uppercase">Chennai Intelligent Public Transport Optimization</span>
+            <span className="uppercase">Coimbatore Intelligent Public Transport Optimization</span>
           </div>
           <div className="flex items-center gap-3 sm:gap-4">
             <span className="text-[#0A0A0A] font-bold">SIMULATED DEMO</span>
