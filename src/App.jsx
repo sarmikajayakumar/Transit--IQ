@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TransitProvider, useTransit } from './context/TransitContext';
 import Header from './components/Header';
@@ -7,10 +7,29 @@ import TransitMap from './components/TransitMap';
 import PassengerView from './components/PassengerView';
 import OperatorDashboard from './components/OperatorDashboard';
 import CorridorTelemetrySheet from './components/CorridorTelemetrySheet';
+import { MessageSquare, ArrowDown, ArrowUp } from 'lucide-react';
+import { scrollToChat } from './lib/navigation';
 
 function DashboardContent() {
   const { role, language } = useTransit();
   const isTamil = language === 'ta';
+  const [isBelowChatbot, setIsBelowChatbot] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const chatEl = document.getElementById('chat-area');
+      if (!chatEl) return;
+      const rect = chatEl.getBoundingClientRect();
+      // When the bottom of the chatbot is above 150px from viewport top,
+      // the user is scrolled below the chatbot -> show ABOVE arrowmark (↑).
+      // Otherwise, the user is above or currently viewing the chatbot -> show BELOW arrowmark (↓).
+      setIsBelowChatbot(rect.bottom < 150);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#F6F3EC] text-[#0A0A0A] flex flex-col font-sans selection:bg-[#0A0A0A] selection:text-[#F6F3EC] overflow-x-hidden">
@@ -94,7 +113,27 @@ function DashboardContent() {
         </div>
       </main>
 
-      {/* 4. Editorial Archival Footer */}
+      {/* 4. Fixed Floating Popup named "Chat" */}
+      <motion.button
+        onClick={scrollToChat}
+        whileHover={{ scale: 1.05, y: -2 }}
+        whileTap={{ scale: 0.95 }}
+        className="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-50 flex items-center gap-2.5 px-3.5 py-2.5 sm:px-4 sm:py-3 bg-[#0A0A0A] text-[#F6F3EC] border-2 border-[#0A0A0A] shadow-[4px_4px_0px_#6E6B65] hover:shadow-[5px_5px_0px_#0A0A0A] font-mono text-xs sm:text-sm font-bold uppercase tracking-wider cursor-pointer hover:bg-[#FFFFFF] hover:text-[#0A0A0A] transition-all group"
+        title={isBelowChatbot ? (isTamil ? "AI சேட்பாட் (மேலே செல்லவும்)" : "Chat (Scroll up to AI Chatbot)") : (isTamil ? "AI சேட்பாட் (கீழே செல்லவும்)" : "Chat (Scroll down to AI Chatbot)")}
+        aria-label="Fixed Chat Popup"
+      >
+        <MessageSquare className="w-4 h-4 stroke-[2.2] group-hover:scale-110 transition-transform text-[#F6F3EC] group-hover:text-[#0A0A0A]" />
+        <span className="font-bold tracking-wider">{isTamil ? "உரையாடல் (Chat)" : "Chat"}</span>
+        <span className="flex items-center pl-1 border-l border-[#F6F3EC]/40 group-hover:border-[#0A0A0A]/40">
+          {isBelowChatbot ? (
+            <ArrowUp className="w-4 h-4 stroke-[2.8]" />
+          ) : (
+            <ArrowDown className="w-4 h-4 stroke-[2.8]" />
+          )}
+        </span>
+      </motion.button>
+
+      {/* 5. Editorial Archival Footer */}
       <footer className="border-t border-[#0A0A0A] bg-[#FFFFFF] py-6 sm:py-8 px-4 sm:px-10 lg:px-14 text-[11px] sm:text-xs font-mono text-[#6E6B65]">
         <div className="max-w-[1520px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center sm:justify-start">
