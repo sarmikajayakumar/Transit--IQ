@@ -347,6 +347,83 @@ app.get('/api/supabase/status', async (req, res) => {
   }
 });
 
+// High-Fidelity Text-to-Speech Endpoint supporting authentic Tamil & English
+app.get('/api/tts', async (req, res) => {
+  const { text, lang = 'ta' } = req.query;
+  if (!text || !text.trim()) {
+    return res.status(400).send("Text query is required");
+  }
+
+  try {
+    // Strip markdown formatting, emojis, brackets and symbols that hinder speech synthesis
+    const cleanText = text
+      .replace(/[*_#`~[\]()>]/g, ' ')
+      .replace(/https?:\/\/\S+/g, '')
+      .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (!cleanText) {
+      return res.status(400).send("Cleaned text is empty");
+    }
+
+    // Split text into chunks <= 150 chars to adhere to upstream TTS limits
+    const sentences = cleanText.match(/[^.!?\n]+[.!?\n]*/g) || [cleanText];
+    const chunks = [];
+    let cur = "";
+
+    for (const s of sentences) {
+      if ((cur + " " + s).trim().length <= 150) {
+        cur = (cur + " " + s).trim();
+      } else {
+        if (cur) chunks.push(cur);
+        if (s.length > 150) {
+          const words = s.split(' ');
+          let wChunk = "";
+          for (const w of words) {
+            if ((wChunk + " " + w).trim().length <= 150) {
+              wChunk = (wChunk + " " + w).trim();
+            } else {
+              if (wChunk) chunks.push(wChunk);
+              wChunk = w;
+            }
+          }
+          if (wChunk) chunks.push(wChunk);
+          cur = "";
+        } else {
+          cur = s.trim();
+        }
+      }
+    }
+    if (cur) chunks.push(cur);
+
+    // Limit to max 3 chunks for swift and responsive speech output
+    const safeChunks = chunks.slice(0, 3);
+
+    const buffers = await Promise.all(
+      safeChunks.map(async (chunk) => {
+        const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunk)}&tl=${encodeURIComponent(lang)}&client=tw-ob`;
+        const resp = await fetch(url, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+          }
+        });
+        if (!resp.ok) throw new Error(`Upstream TTS returned ${resp.status}`);
+        return Buffer.from(await resp.arrayBuffer());
+      })
+    );
+
+    const combinedBuffer = Buffer.concat(buffers);
+    res.setHeader('Content-Type', 'audio/mpeg');
+    res.setHeader('Content-Length', combinedBuffer.length);
+    res.setHeader('Cache-Control', 'public, max-age=3600');
+    return res.send(combinedBuffer);
+  } catch (err) {
+    console.error("TTS endpoint error:", err.message);
+    return res.status(500).json({ error: "TTS generation failed", details: err.message });
+  }
+});
+
 // Chatbot API Endpoint
 app.post('/api/chat', async (req, res) => {
   const { message, role = 'passenger', language = 'en' } = req.body;

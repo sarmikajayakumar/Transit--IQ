@@ -60,15 +60,7 @@ function DashboardContent() {
           </div>
 
           {/* Right Column (5 of 12 cols = ~42% width): Bilingual Tamil/English AI Copilot */}
-          <div id="chat-area" className="lg:col-span-5 xl:col-span-5 space-y-4 sticky top-6 scroll-mt-6 transition-all duration-300">
-            <div className="flex items-center justify-between font-mono text-xs">
-              <span className="font-bold text-[#0A0A0A] uppercase tracking-wider">
-                [COPILOT DIALOGUE]
-              </span>
-              <span className="text-[#6E6B65]">
-                GROQ LLM + LOCAL LOGIC
-              </span>
-            </div>
+          <div id="chat-area" className="lg:col-span-5 xl:col-span-5 sticky top-6 scroll-mt-6 transition-all duration-300">
             <Chatbot />
           </div>
 

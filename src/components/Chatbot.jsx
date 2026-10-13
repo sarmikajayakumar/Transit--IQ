@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTransit } from '../context/TransitContext';
-import { Send, Volume2, VolumeX, RotateCcw } from 'lucide-react';
+import { Send, Volume2, VolumeX, RotateCcw, Square } from 'lucide-react';
 import { RadarWaveSvg, TransitCrosshairSvg } from './CustomIcons';
 
 export default function Chatbot() {
@@ -12,47 +12,161 @@ export default function Chatbot() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [speechEnabled, setSpeechEnabled] = useState(false);
-  const messagesEndRef = useRef(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [currentSpeakingId, setCurrentSpeakingId] = useState(null);
 
-  useEffect(() => {
+  const messagesEndRef = useRef(null);
+  const audioRef = useRef(null);
+
+  // Helper to generate the structured welcome message according to role and language
+  const getInitialWelcomeMessage = (currentRole, currentIsTamil) => {
     let welcomeText = "";
-    if (role === 'operator') {
-      welcomeText = isTamil
+    if (currentRole === 'operator') {
+      welcomeText = currentIsTamil
         ? `[டிப்போ கட்டுப்பாட்டு அறை AI]: வழித்தட நெரிசல், கூடுதல் பேருந்து ஒதுக்கீடு (+2), கத்திப்பாரா வெள்ள மாற்றுப்பாதை, மற்றும் பழுதான பேருந்து TN-01-N-4429 நிவாரண பணிகள் குறித்த எந்தவொரு தகவலையும் கேட்கலாம்.`
         : `[DEPOT OPERATIONS AI]: Transit dispatch copilot ready. Ask me regarding corridor crowding balancing, Kathipara flood diversions, headway adjustments, or breakdown relief unit status.`;
     } else {
-      welcomeText = isTamil
+      welcomeText = currentIsTamil
         ? `[பயணிகள் வழிகாட்டி AI]: வணக்கம்! சென்னை சென்ட்ரல் - தாம்பரம் வழித்தடத்தில் கூட்டம் குறைந்த பேருந்துகள், மழை மாற்றுப்பாதைகள், மற்றும் பழுதான பேருந்துக்கான மாற்று வழிகள் பற்றி என்னிடம் கேட்கலாம்.`
         : `[PASSENGER COPILOT AI]: Welcome commuter. Inquire regarding optimal less-crowded buses, flood detour durations, live timetable headways, or breakdown prior notices.`;
     }
 
-    setMessages([
+    return [
       {
-        id: 'welcome',
+        id: 'welcome-' + Date.now(),
         sender: 'bot',
         text: welcomeText,
         source: 'TransitIQ AI',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
-    ]);
+    ];
+  };
+
+  // Immediate halt for all audio playback (both HTML5 Audio and Web Speech Synthesis)
+  const stopSpeech = () => {
+    if (audioRef.current) {
+      try {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      } catch (e) {
+        console.warn("Audio pause error:", e);
+      }
+    }
+    if (window.speechSynthesis) {
+      try {
+        window.speechSynthesis.cancel();
+      } catch (e) {
+        console.warn("SpeechSynthesis cancel error:", e);
+      }
+    }
+    setIsSpeaking(false);
+    setCurrentSpeakingId(null);
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      stopSpeech();
+    };
+  }, []);
+
+  // Update initial welcome message on role or language switch
+  useEffect(() => {
+    stopSpeech();
+    setMessages(getInitialWelcomeMessage(role, isTamil));
   }, [role, language]);
 
+  // Auto-scroll when messages update
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
-  const speakText = (text) => {
-    if (!speechEnabled || !window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = isTamil ? 'ta-IN' : 'en-US';
-    utterance.rate = 1.0;
-    window.speechSynthesis.speak(utterance);
+  // Reset conversation handler: stops speech, resets input, and restores initial welcome message
+  const handleResetChat = () => {
+    stopSpeech();
+    setInput('');
+    setMessages(getInitialWelcomeMessage(role, isTamil));
+  };
+
+  // High-fidelity speech synthesizer using backend Google TTS proxy (supports authentic Tamil!) with fallback
+  const speakText = async (text, messageId = null) => {
+    if (!text) return;
+    stopSpeech();
+
+    const containsTamil = /[\u0B80-\u0BFF]/.test(text);
+    const targetLang = containsTamil || isTamil ? 'ta' : 'en';
+
+    setIsSpeaking(true);
+    if (messageId) {
+      setCurrentSpeakingId(messageId);
+    }
+
+    try {
+      const ttsUrl = `/api/tts?text=${encodeURIComponent(text)}&lang=${targetLang}`;
+      const audio = new Audio(ttsUrl);
+      audioRef.current = audio;
+
+      audio.onended = () => {
+        setIsSpeaking(false);
+        setCurrentSpeakingId(null);
+        audioRef.current = null;
+      };
+
+      audio.onerror = (e) => {
+        console.warn("Backend TTS stream error, falling back to Web Speech API:", e);
+        audioRef.current = null;
+        if (window.speechSynthesis) {
+          const utterance = new SpeechSynthesisUtterance(text.slice(0, 250));
+          utterance.lang = targetLang === 'ta' ? 'ta-IN' : 'en-US';
+          utterance.onend = () => {
+            setIsSpeaking(false);
+            setCurrentSpeakingId(null);
+          };
+          utterance.onerror = () => {
+            setIsSpeaking(false);
+            setCurrentSpeakingId(null);
+          };
+          window.speechSynthesis.speak(utterance);
+        } else {
+          setIsSpeaking(false);
+          setCurrentSpeakingId(null);
+        }
+      };
+
+      await audio.play();
+    } catch (err) {
+      console.warn("Audio playback interrupted or failed:", err);
+      if (window.speechSynthesis) {
+        try {
+          const utterance = new SpeechSynthesisUtterance(text.slice(0, 250));
+          utterance.lang = targetLang === 'ta' ? 'ta-IN' : 'en-US';
+          utterance.onend = () => {
+            setIsSpeaking(false);
+            setCurrentSpeakingId(null);
+          };
+          utterance.onerror = () => {
+            setIsSpeaking(false);
+            setCurrentSpeakingId(null);
+          };
+          window.speechSynthesis.speak(utterance);
+        } catch (synthErr) {
+          setIsSpeaking(false);
+          setCurrentSpeakingId(null);
+        }
+      } else {
+        setIsSpeaking(false);
+        setCurrentSpeakingId(null);
+      }
+    }
   };
 
   const handleSend = async (textToSend) => {
     const msgText = (textToSend || input).trim();
     if (!msgText || loading) return;
+
+    // Stop active audio when sending a query
+    stopSpeech();
 
     const userMsg = {
       id: Date.now().toString(),
@@ -80,11 +194,12 @@ export default function Chatbot() {
 
       const data = await response.json();
       const botReply = data.reply || "No reply generated.";
+      const botMsgId = (Date.now() + 1).toString();
 
       setMessages(prev => [
         ...prev,
         {
-          id: (Date.now() + 1).toString(),
+          id: botMsgId,
           sender: 'bot',
           text: botReply,
           source: data.source || 'TransitIQ AI',
@@ -92,22 +207,29 @@ export default function Chatbot() {
         }
       ]);
 
-      if (speechEnabled) speakText(botReply);
+      if (speechEnabled) {
+        speakText(botReply, botMsgId);
+      }
     } catch (err) {
       const fallbackReply = isTamil
         ? `நேரலை தகவல்: வழித்தடம் 15B-ல் குறைந்த கூட்டம் (42%), வழித்தடம் 29C-ல் அதிக கூட்டம் (128%). பழுதான பேருந்து 29C-க்கு நிவாரணப் பேருந்து 5 நிமிடங்களில் வரும்.`
         : `Corridor Telemetry: Route 15B has comfortable seating (42% capacity). Route 29C is critically congested (128%). Relief bus TN-01-N-8802 is 5 minutes away for broken-down bus 29C.`;
 
+      const botMsgId = (Date.now() + 1).toString();
       setMessages(prev => [
         ...prev,
         {
-          id: (Date.now() + 1).toString(),
+          id: botMsgId,
           sender: 'bot',
           text: fallbackReply,
           source: 'TransitIQ Engine',
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
       ]);
+
+      if (speechEnabled) {
+        speakText(fallbackReply, botMsgId);
+      }
     } finally {
       setLoading(false);
     }
@@ -138,19 +260,58 @@ export default function Chatbot() {
         </div>
 
         <div className="flex items-center gap-1.5">
+          {/* Voice Reader Button: If actively speaking, clicking immediately STOPS. Otherwise toggles voice. */}
           <button
-            onClick={() => setSpeechEnabled(prev => !prev)}
-            className={`p-1.5 border border-[#0A0A0A] transition-all ${
-              speechEnabled ? 'bg-[#0A0A0A] text-[#F6F3EC]' : 'bg-[#FAF8F5] text-[#0A0A0A] hover:bg-[#E2DBD0]'
+            onClick={() => {
+              if (isSpeaking) {
+                stopSpeech();
+              } else {
+                const nextState = !speechEnabled;
+                setSpeechEnabled(nextState);
+                if (nextState && messages.length > 0) {
+                  const lastBotMsg = [...messages].reverse().find(m => m.sender === 'bot');
+                  if (lastBotMsg) speakText(lastBotMsg.text, lastBotMsg.id);
+                }
+              }
+            }}
+            className={`px-2 py-1.5 border border-[#0A0A0A] flex items-center gap-1 font-mono text-[10px] font-bold uppercase transition-all ${
+              isSpeaking
+                ? 'bg-[#EF4444] text-[#FFFFFF] animate-pulse border-[#EF4444]'
+                : speechEnabled
+                ? 'bg-[#0A0A0A] text-[#F6F3EC]'
+                : 'bg-[#FAF8F5] text-[#0A0A0A] hover:bg-[#E2DBD0]'
             }`}
-            title="Toggle Voice Readout"
+            title={
+              isSpeaking
+                ? (isTamil ? "உடனடியாக பேச்சை நிறுத்து" : "Stop Speaking Immediately")
+                : speechEnabled
+                ? (isTamil ? "குரல் வாசிப்பு இயக்கத்தில் உள்ளது (நிறுத்த கிளிக் செய்யவும்)" : "Voice Readout Active (Click to disable)")
+                : (isTamil ? "குரல் வாசிப்பை இயக்கு" : "Enable Voice Readout")
+            }
           >
-            {speechEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+            {isSpeaking ? (
+              <>
+                <Square className="w-3 h-3 fill-current" />
+                <span>{isTamil ? "நிறுத்து" : "STOP"}</span>
+              </>
+            ) : speechEnabled ? (
+              <>
+                <Volume2 className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">VOICE ON</span>
+              </>
+            ) : (
+              <>
+                <VolumeX className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">VOICE OFF</span>
+              </>
+            )}
           </button>
+
+          {/* Reset / Refresh Chat Button: Restores initial welcome message & stops speech */}
           <button
-            onClick={() => setMessages([])}
+            onClick={handleResetChat}
             className="p-1.5 border border-[#0A0A0A] bg-[#FAF8F5] text-[#0A0A0A] hover:bg-[#E2DBD0] transition-colors"
-            title="Clear Chat"
+            title={isTamil ? "உரையாடலை மீட்டமை (வரவேற்பு செய்தி)" : "Reset Chat (Show Welcome Message)"}
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
@@ -180,7 +341,43 @@ export default function Chatbot() {
                 }`}
               >
                 <span>{msg.source || 'COMMUTER'}</span>
-                <span>{msg.time}</span>
+
+                <div className="flex items-center gap-2">
+                  {msg.sender === 'bot' && (
+                    <button
+                      onClick={() => {
+                        if (isSpeaking && currentSpeakingId === msg.id) {
+                          stopSpeech();
+                        } else {
+                          speakText(msg.text, msg.id);
+                        }
+                      }}
+                      className={`flex items-center gap-1 px-1.5 py-0.5 border text-[9px] uppercase font-mono font-bold transition-colors ${
+                        isSpeaking && currentSpeakingId === msg.id
+                          ? 'border-[#EF4444] bg-[#EF4444] text-[#FFFFFF]'
+                          : 'border-[#0A0A0A] bg-[#FAF8F5] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-[#FFFFFF]'
+                      }`}
+                      title={
+                        isSpeaking && currentSpeakingId === msg.id
+                          ? (isTamil ? "நிறுத்து" : "Stop")
+                          : (isTamil ? "கேள் (குரல் வாசிப்பு)" : "Listen (Voice)")
+                      }
+                    >
+                      {isSpeaking && currentSpeakingId === msg.id ? (
+                        <>
+                          <Square className="w-2.5 h-2.5 fill-current" />
+                          <span>{isTamil ? "நிறுத்து" : "STOP"}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Volume2 className="w-2.5 h-2.5" />
+                          <span>{isTamil ? "கேள்" : "LISTEN"}</span>
+                        </>
+                      )}
+                    </button>
+                  )}
+                  <span>{msg.time}</span>
+                </div>
               </div>
             </div>
           </div>
