@@ -15,6 +15,13 @@ export function TransitProvider({ children }) {
   const [peakSurgeActive, setPeakSurgeActive] = useState(true);
   const [optimizationApplied, setOptimizationApplied] = useState(false);
   
+  // Specific route searched or inspected by the user across journey planner and telemetry sheet
+  const [searchedRouteId, setSearchedRouteId] = useState('route-a');
+  const [searchQuery, setSearchQuery] = useState({
+    origin: "Gandhipuram Central Bus Stand",
+    destination: "Saravanampatti (CHIL SEZ)"
+  });
+  
   const [breakdownAlert, setBreakdownAlert] = useState({
     active: true,
     busId: "TN-38-N-2914",
@@ -137,6 +144,10 @@ export function TransitProvider({ children }) {
         applyOptimization,
         revertOptimization,
         resetAll,
+        searchedRouteId,
+        setSearchedRouteId,
+        searchQuery,
+        setSearchQuery,
         t
       }}
     >

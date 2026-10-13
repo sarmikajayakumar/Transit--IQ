@@ -4,6 +4,7 @@ import { useTransit } from '../context/TransitContext';
 import { CorridorBranchSvg, TransitCrosshairSvg, RadarWaveSvg, TechnicalGearSvg } from './CustomIcons';
 import { MessageSquare } from 'lucide-react';
 import { scrollToChat } from '../lib/navigation';
+import Chatbot from './Chatbot';
 
 export default function EditorialHeroCanvas() {
   const {
@@ -180,70 +181,9 @@ export default function EditorialHeroCanvas() {
 
           </div>
 
-          {/* RIGHT COLUMN (5 of 12 cols = ~42% width): Stark High-Contrast Telemetry Ledger */}
-          <div className="lg:col-span-5 bg-[#FFFFFF] border border-[#0A0A0A] p-4 sm:p-6 lg:p-7 shadow-[4px_4px_0px_#0A0A0A] sm:shadow-[6px_6px_0px_#0A0A0A]">
-            
-            <div className="flex items-center justify-between border-b border-[#0A0A0A] pb-2.5 sm:pb-3 mb-4 sm:mb-5">
-              <span className="font-mono text-[11px] sm:text-xs uppercase tracking-widest font-bold text-[#0A0A0A]">
-                CORRIDOR TELEMETRY SHEET
-              </span>
-              <span className="font-mono text-[9px] sm:text-[10px] text-[#6E6B65]">
-                LIVE REFRESH: 15s
-              </span>
-            </div>
-
-            {/* High-contrast metrics rows */}
-            <div className="space-y-3 sm:space-y-4 font-mono">
-              
-              <div className="flex items-baseline justify-between border-b border-[#E2DBD0] pb-2">
-                <span className="text-[11px] sm:text-xs text-[#6E6B65] uppercase">Corridor Demand</span>
-                <span className="text-base sm:text-lg font-bold text-[#0A0A0A]">
-                  880 <span className="text-[10px] sm:text-xs font-normal text-[#6E6B65]">pax/hr</span>
-                </span>
-              </div>
-
-              <div className="flex items-baseline justify-between border-b border-[#E2DBD0] pb-2">
-                <span className="text-[11px] sm:text-xs text-[#6E6B65] uppercase">Average Waiting Time</span>
-                <div className="text-right">
-                  <span className="text-lg sm:text-xl font-black text-[#0A0A0A]">
-                    {avgWait} min
-                  </span>
-                  {optimizationApplied && (
-                    <span className="block text-[9px] sm:text-[10px] text-[#6E6B65]">
-                      (↓ 52% reduction applied)
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex items-baseline justify-between border-b border-[#E2DBD0] pb-2">
-                <span className="text-[11px] sm:text-xs text-[#6E6B65] uppercase">Peak Crowding %</span>
-                <div className="text-right">
-                  <span className="text-lg sm:text-xl font-black text-[#0A0A0A]">
-                    {maxCrowd}%
-                  </span>
-                  <span className="block text-[9px] sm:text-[10px] text-[#6E6B65]">
-                    {maxCrowd > 100 ? "[CRITICAL OVERCROWDING]" : "[WITHIN CAPACITY]"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-baseline justify-between border-b border-[#E2DBD0] pb-2">
-                <span className="text-[11px] sm:text-xs text-[#6E6B65] uppercase">Active Fleet Units</span>
-                <span className="text-base sm:text-lg font-bold text-[#0A0A0A]">
-                  {optimizationApplied ? "17 Buses (+2 Extra)" : "15 Buses Scheduled"}
-                </span>
-              </div>
-
-              <div className="flex items-baseline justify-between pt-1">
-                <span className="text-[11px] sm:text-xs text-[#6E6B65] uppercase">Corridor Fleet Status</span>
-                <span className="text-[11px] sm:text-xs font-bold text-[#0A0A0A] uppercase">
-                  {breakdownAlert.active ? "Panagal Park (Relief En Route)" : "All Routes Flowing"}
-                </span>
-              </div>
-
-            </div>
-
+          {/* RIGHT COLUMN (5 of 12 cols = ~42% width): AI ASSISTANT (Swapped to replace Corridor Telemetry Sheet) */}
+          <div id="chat-area" className="lg:col-span-5 scroll-mt-6">
+            <Chatbot />
           </div>
 
         </div>

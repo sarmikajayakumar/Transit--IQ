@@ -1,11 +1,18 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTransit } from '../context/TransitContext';
 import { TechnicalGearSvg, CorridorBranchSvg } from './CustomIcons';
 import { ArrowRight, MapPin, Clock, Search, ArrowRightLeft, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function PassengerView() {
-  const { routes, breakdownAlert, optimizationApplied, language } = useTransit();
+  const {
+    routes,
+    breakdownAlert,
+    optimizationApplied,
+    language,
+    setSearchedRouteId,
+    setSearchQuery
+  } = useTransit();
   const isTamil = language === 'ta';
   
   const [origin, setOrigin] = useState("Gandhipuram Central Bus Stand");
@@ -72,6 +79,9 @@ export default function PassengerView() {
     setHasSearched(true);
     setShowOriginSuggestions(false);
     setShowDestSuggestions(false);
+    if (setSearchQuery) {
+      setSearchQuery({ origin: originInput, destination: destInput });
+    }
   };
 
   // Identify direct or nearby routes connecting origin & destination
@@ -117,6 +127,13 @@ export default function PassengerView() {
   }, [origin, destination, routes]);
 
   const { scoredRoutes, optimalRoute } = routeEvaluation;
+
+  // Synchronize searched route with global telemetry sheet
+  useEffect(() => {
+    if (optimalRoute && setSearchedRouteId) {
+      setSearchedRouteId(optimalRoute.id);
+    }
+  }, [optimalRoute, setSearchedRouteId]);
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -366,7 +383,12 @@ export default function PassengerView() {
               return (
                 <div
                   key={route.id}
-                  onClick={() => setSelectedRouteId(route.id)}
+                  onClick={() => {
+                    setSelectedRouteId(route.id);
+                    if (setSearchedRouteId) {
+                      setSearchedRouteId(route.id);
+                    }
+                  }}
                   className={`p-3.5 sm:p-5 cursor-pointer transition-colors flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 border-l-4 ${
                     isOvercrowded
                       ? 'border-l-[#DC2626] bg-[#FEF2F2]/40 hover:bg-[#FEF2F2]/70'

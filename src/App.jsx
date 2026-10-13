@@ -7,6 +7,7 @@ import TransitMap from './components/TransitMap';
 import PassengerView from './components/PassengerView';
 import OperatorDashboard from './components/OperatorDashboard';
 import Chatbot from './components/Chatbot';
+import CorridorTelemetrySheet from './components/CorridorTelemetrySheet';
 import { MessageSquare } from 'lucide-react';
 import { scrollToChat } from './lib/navigation';
 
@@ -82,9 +83,9 @@ function DashboardContent() {
             <TransitMap />
           </div>
 
-          {/* Right Column: AI Copilot Hub - Sticky ONLY on desktop, static on mobile without awkward jumping */}
-          <div id="chat-area" className="lg:col-span-5 xl:col-span-5 lg:sticky lg:top-6 scroll-mt-6">
-            <Chatbot />
+          {/* Right Column: Corridor Telemetry Sheet (Swapped with AI Assistant) */}
+          <div className="lg:col-span-5 xl:col-span-5 lg:sticky lg:top-6">
+            <CorridorTelemetrySheet />
           </div>
 
         </div>
