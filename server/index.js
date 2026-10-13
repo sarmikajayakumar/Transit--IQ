@@ -25,129 +25,127 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Transit simulation state
 let transitState = {
-  activeCorridor: "Chennai Central - Tambaram Corridor",
+  activeCorridor: "Gandhipuram - Saravanampatti IT Corridor",
   weather: "Clear (Normal Traffic Watch)",
   peakHour: true,
   congestionHotspots: [
     {
       id: "hotspot-1",
-      name: "Kathipara Junction & Guindy Corridor",
-      tamilName: "கத்திப்பாரா சந்திப்பு & கிண்டி வழித்தடம்",
-      status: "High Commuter Surge (Queue Overflows)",
-      tamilStatus: "அதிக கூட்ட நெரிசல் (கூடுதல் பேருந்துகள் தேவை)",
-      affectedRoutes: ["Route 29C (Anna Salai Direct)"],
-      recommendation: "Deploy +2 relief buses to absorb surge",
-      tamilRecommendation: "29C-க்கு +2 கூடுதல் பேருந்துகள் ஒதுக்குதல்",
-      lat: 13.0067,
-      lng: 80.2023,
+      name: "Avinashi Road Flyover / Peelamedu Underpass",
+      tamilName: "அவினாசி சாலை மேம்பாலம் / பீளமேடு சுரங்கப்பாதை",
+      status: "Monsoon Waterlogging & Commuter Queue Overflow [SIMULATED]",
+      tamilStatus: "மழைநீர் தேக்கம் & உச்ச கூட்ட நெரிசல் [மாதிரித் தரவு]",
+      affectedRoutes: ["Route 70 (Airport Express)", "Route 15"],
+      recommendation: "Deploy +2 relief buses and divert traffic via Trichy Road",
+      tamilRecommendation: "70-க்கு +2 கூடுதல் பேருந்துகள், திருச்சி ரோடு வழி திருப்புதல்",
+      lat: 11.0264,
+      lng: 77.0105,
       radius: 650
     },
     {
       id: "hotspot-2",
-      name: "Velachery Main Junction",
-      tamilName: "வேளச்சேரி பிரதான சந்திப்பு",
-      status: "Steady Commuter Flow",
-      tamilStatus: "சீரான பயணிகள் இயக்கம்",
-      affectedRoutes: ["Route 21M (Express Velachery)"],
-      recommendation: "Regular 15-minute headway maintained",
-      tamilRecommendation: "வழக்கமான 15 நிமிட இடைவேளை தொடர்கிறது",
-      lat: 12.9792,
-      lng: 80.2212,
-      radius: 400
+      name: "CODISSIA Trade Fair Complex",
+      tamilName: "கொடிசியா தொழிற்காட்சி அரங்கம்",
+      status: "Industrial Expo Event Commuter Surge [SIMULATED]",
+      tamilStatus: "தொழிற்காட்சி கூடுதல் கூட்டம் [மாதிரித் தரவு]",
+      affectedRoutes: ["Route 70"],
+      recommendation: "+3 Extra shuttle buses deployed to absorb passenger overflow",
+      tamilRecommendation: "+3 கூடுதல் ஷட்டில் பேருந்துகள் இயக்கம்",
+      lat: 11.0360,
+      lng: 77.0340,
+      radius: 450
     }
   ],
   breakdowns: [
     {
-      busId: "TN-01-N-4429",
-      routeNumber: "29C",
-      routeName: "Central to Tambaram via Mount Road",
-      tamilRouteName: "மத்திய நிலையம் - தாம்பரம் (மவுண்ட் ரோடு வழி)",
-      location: "Near T. Nagar Panagal Park",
-      tamilLocation: "தி.நகர் பனகல் பார்க் அருகில்",
-      issue: "Engine Cooling System Failure",
-      tamilIssue: "இயந்திர குளிர்விப்பு அமைப்பு கோளாறு",
+      busId: "TN-38-N-2914",
+      routeNumber: "12",
+      routeName: "Gandhipuram to Saravanampatti IT Park via Ganapathy",
+      tamilRouteName: "காந்திபுரம் - சரவணம்பட்டி (கணபதி வழி)",
+      location: "Near Ganapathy Signal (Sathy Road)",
+      tamilLocation: "கணபதி சிக்னல் அருகில் (சத்தி ரோடு)",
+      issue: "Alternator & Electrical Circuit Failure",
+      tamilIssue: "ஆல்டர்னேட்டர் & மின்சுற்று கோளாறு",
       status: "Repairs In Progress - Passengers Evacuated to Platform",
       tamilStatus: "பழுதுபார்க்கும் பணி நடக்கிறது - பயணிகள் மேடையில்",
-      backupReliefBus: "TN-01-N-8802 (Relief Express)",
-      reliefETA: "5 minutes away",
-      tamilReliefETA: "5 நிமிடங்களில் வந்து சேரும்",
-      recommendedAlternates: ["Route 15B (Arriving 2 mins, 40% crowd)", "Route 70 Express (Arriving 4 mins, 55% crowd)"],
-      tamilRecommendedAlternates: ["வழித்தடம் 15B (2 நிமிடங்களில் வரும், 40% கூட்டம்)", "வழித்தடம் 70 விரைவு (4 நிமிடங்களில் வரும், 55% கூட்டம்)"],
+      backupReliefBus: "TN-38-N-6602 (Relief Express)",
+      reliefETA: "4 minutes away",
+      tamilReliefETA: "4 நிமிடங்களில் வந்து சேரும்",
+      recommendedAlternates: ["Route 3A (Arriving 3 mins, 40% crowd)", "Route 70 (Arriving 5 mins, 76% crowd)"],
+      tamilRecommendedAlternates: ["வழித்தடம் 3A (3 நிமிடங்களில் வரும், 40% கூட்டம்)", "வழித்தடம் 70 (5 நிமிடங்களில் வரும், 76% கூட்டம்)"],
       timestamp: new Date().toLocaleTimeString()
     }
   ],
   routes: [
     {
       id: "route-a",
-      name: "Route 29C",
-      subtitle: "Chennai Central ↔ Tambaram (Mount Road Corridor)",
-      tamilName: "வழித்தடம் 29C (மத்திய நிலையம் ↔ தாம்பரம்)",
+      name: "Route 12",
+      subtitle: "Gandhipuram ↔ Saravanampatti IT Corridor (via Sathy Road)",
+      tamilName: "வழித்தடம் 12 (காந்திபுரம் ↔ சரவணம்பட்டி தகவல் தொழில்நுட்ப பாதை)",
       status: "OVERCROWDED (NEEDS EXTRA BUSES)",
       tamilStatus: "அதிக கூட்டம் (கூடுதல் பேருந்துகள் தேவை)",
-      crowdingPercent: 128,
-      demandPerHour: 420,
+      crowdingPercent: 134,
+      demandPerHour: 480,
       busCapacity: 70,
       busesPerHour: 4,
       headwayMin: 15,
-      avgWaitMin: 14,
+      avgWaitMin: 15.4,
       color: "#EF4444",
-      alert: "Heavy crowding! Extra buses recommended or board Route 15B.",
-      tamilAlert: "அதிக நெரிசல்! கூடுதல் பேருந்துகள் இயக்கப்படுகின்றன அல்லது 15B தேர்ந்தெடுக்கவும்.",
+      alert: "Heavy IT rush! Extra buses recommended or board Route 3A.",
+      tamilAlert: "அதிக நெரிசல்! கூடுதல் பேருந்துகள் இயக்கப்படுகின்றன அல்லது 3A தேர்ந்தெடுக்கவும்.",
       stops: [
-        "Chennai Central", "LIC / Anna Salai", "Thousand Lights",
-        "Teynamppet", "Nandanam", "Saidapet", "Guindy",
-        "Kathipara", "Airport", "Pallavaram", "Tambaram"
+        "Gandhipuram Central Bus Stand", "GP Signal", "Ganapathy Bus Stop",
+        "Sivanandapuram", "Prozone Mall Junction", "Saravanampatti CHIL SEZ"
       ]
     },
     {
       id: "route-b",
-      name: "Route 15B",
-      subtitle: "Central ↔ Tambaram via 100ft Inner Ring Road (Alternate)",
-      tamilName: "வழித்தடம் 15B (100 அடி உள்வட்டச் சாலை வழி)",
+      name: "Route 3A",
+      subtitle: "Ukkadam ↔ Singanallur via Sungam & Trichy Road (Alternate)",
+      tamilName: "வழித்தடம் 3A (உக்கடம் ↔ சிங்கநல்லூர் திருச்சி ரோடு வழி)",
       status: "OPTIMAL (SEATS AVAILABLE)",
       tamilStatus: "சிறந்தது (இருக்கைகள் உள்ளன)",
-      crowdingPercent: 42,
-      demandPerHour: 180,
+      crowdingPercent: 40,
+      demandPerHour: 160,
       busCapacity: 70,
       busesPerHour: 5,
       headwayMin: 12,
-      avgWaitMin: 5,
+      avgWaitMin: 5.5,
       color: "#10B981",
-      alert: "Fast moving, seats guaranteed, 58% empty capacity.",
-      tamilAlert: "வேகமாக செல்லும், 58% காலி இருக்கைகள், சிறந்த தேர்வு.",
+      alert: "Fast moving, seats guaranteed, 60% empty capacity.",
+      tamilAlert: "வேகமாக செல்லும், 60% காலி இருக்கைகள், சிறந்த தேர்வு.",
       stops: [
-        "Chennai Central", "Egmore", "Chetpet", "Aminjikarai",
-        "Koyambedu", "Ashok Nagar", "Ekkatuthangal", "Guindy Estate",
-        "Pallavaram", "Chromepet", "Tambaram"
+        "Ukkadam Bus Terminal", "Town Hall Clock Tower", "Sungam Bypass",
+        "Ramanathapuram Junction", "Alvernia School", "Singanallur Bus Terminal"
       ]
     },
     {
       id: "route-c",
-      name: "Route 21M",
-      subtitle: "Central ↔ Tambaram via Velachery Bypass",
-      tamilName: "வழித்தடம் 21M (வேளச்சேரி புறவழிச்சாலை)",
+      name: "Route 70",
+      subtitle: "Gandhipuram ↔ CODISSIA & Airport via Avinashi Road",
+      tamilName: "வழித்தடம் 70 (காந்திபுரம் ↔ கொடிசியா & விமான நிலையம் அவினாசி ரோடு வழி)",
       status: "MODERATE",
       tamilStatus: "மிதமான கூட்டம்",
-      crowdingPercent: 78,
-      demandPerHour: 280,
+      crowdingPercent: 76,
+      demandPerHour: 310,
       busCapacity: 70,
       busesPerHour: 4,
       headwayMin: 15,
-      avgWaitMin: 8,
+      avgWaitMin: 7.8,
       color: "#F59E0B",
-      alert: "Steady flow, standard 15 min headway.",
-      tamilAlert: "சீரான இயக்கம், 15 நிமிட இடைவேளை.",
+      alert: "Steady flow, standard 15 min headway on Avinashi Road.",
+      tamilAlert: "சீரான இயக்கம், அவினாசி சாலையில் 15 நிமிட இடைவேளை.",
       stops: [
-        "Chennai Central", "Marina Beach", "Mylapore", "Adyar",
-        "SRP Tools", "Velachery", "Medavakkam", "Tambaram East"
+        "Gandhipuram Central", "Lakshmi Mills", "Fun Republic Mall",
+        "Peelamedu PSG Tech", "Hope College", "CODISSIA Complex", "Coimbatore Airport"
       ]
     }
   ],
   optimizationApplied: false,
   optimizationMetrics: {
-    before: { avgWait: "14.2 min", maxCrowding: "128%", serviceHeadway: "15 min" },
-    after: { avgWait: "6.8 min", maxCrowding: "84%", serviceHeadway: "7.5 min" },
-    action: "Deployed +2 relief buses to crowded Route 29C & reallocated idle capacity from Route 15B"
+    before: { avgWait: "15.4 min", maxCrowding: "134%", serviceHeadway: "15 min" },
+    after: { avgWait: "6.2 min", maxCrowding: "82%", serviceHeadway: "7.5 min" },
+    action: "Deployed +2 relief buses to crowded Route 12 & reallocated idle capacity from Route 3A"
   }
 };
 
@@ -159,74 +157,74 @@ function generateSmartFallback(message, role, language) {
   if (role === 'operator') {
     if (isTamil) {
       if (msgLower.includes('breakdown') || msgLower.includes('பழுது') || msgLower.includes('என்ஜின்')) {
-        return `🛠️ [டிப்போ மேலாளர் எச்சரிக்கை - பழுது தகவல்]:
-பேருந்து எண் TN-01-N-4429 (வழித்தடம் 29C) தி.நகர் பனகல் பார்க் அருகில் பழுதாகியுள்ளது.
-- நிவாரண பேருந்து TN-01-N-8802 உடனே அனுப்பப்பட்டுள்ளது (வருகை: 5 நிமிடங்கள்).
-- பயணிகள் மாற்றுப் பேருந்தான 15B-க்கு வழிகாட்டப்பட்டுள்ளனர்.
+        return `🛠️ [டிப்போ மேலாளர் எச்சரிக்கை - கோவை வழித்தட பழுது]:
+பேருந்து எண் TN-38-N-2914 (வழித்தடம் 12) கணபதி சிக்னல் (சத்தி ரோடு) அருகில் பழுதாகியுள்ளது.
+- நிவாரண பேருந்து TN-38-N-6602 உடனடியாக அனுப்பப்பட்டுள்ளது (வருகை: 4 நிமிடங்கள்).
+- பயணிகள் மாற்றுப் பேருந்தான 3A அல்லது 70-க்கு வழிகாட்டப்பட்டுள்ளனர்.
 - பழுதுநீக்கும் மொபைல் குழு சம்பவ இடத்திற்கு விரைந்துள்ளது.`;
       }
-      return `📊 [TransitIQ இயக்குனர் பகுப்பாய்வு - வழித்தட உகப்பாக்கம்]:
-- அதிக கூட்டம் உள்ள வழித்தடம் 29C-ல் உச்சநேர நெரிசல் 128% எட்டியுள்ளது (காத்திருப்பு: 14 நிமி). இதற்கு +2 கூடுதல் பேருந்துகள் உடனடியாகத் தேவை!
-- குறைந்த கூட்டம் உள்ள வழித்தடம் 15B-ல் (42% ஆக்கிரமிப்பு) பேருந்துகளைக் குறைத்து/சீரமைத்து, அந்த கூடுதல் பேருந்துகளை நெரிசல் மிகுந்த 29C வழித்தடத்திற்கு ஒதுக்க AI பரிந்துரைக்கிறது.
-- இதன் மூலம் ஒட்டுமொத்த காத்திருப்பு நேரம் 14 நிமிடத்திலிருந்து 6.8 நிமிடங்களாகக் குறையும், நெரிசல் 84%-ஆகக் கட்டுப்படும்!`;
+      return `📊 [TransitIQ கோவை இயக்குனர் பகுப்பாய்வு - வழித்தட உகப்பாக்கம்]:
+- அதிக கூட்டம் உள்ள காந்திபுரம் - சரவணம்பட்டி வழித்தடம் 12-ல் உச்சநேர நெரிசல் 134% எட்டியுள்ளது (காத்திருப்பு: 15.4 நிமி). இதற்கு +2 கூடுதல் பேருந்துகள் உடனடியாகத் தேவை!
+- குறைந்த கூட்டம் உள்ள உக்கடம் - சிங்காநல்லூர் வழித்தடம் 3A-ல் (40% ஆக்கிரமிப்பு) பேருந்துகளைக் குறைத்து/சீரமைத்து, அந்த கூடுதல் பேருந்துகளை நெரிசல் மிகுந்த வழித்தடம் 12-க்கு ஒதுக்க AI பரிந்துரைக்கிறது.
+- இதன் மூலம் ஒட்டுமொத்த காத்திருப்பு நேரம் 15.4 நிமிடத்திலிருந்து 6.2 நிமிடங்களாகக் குறையும், நெரிசல் 82%-ஆகக் கட்டுப்படும்!`;
     } else {
       if (msgLower.includes('breakdown') || msgLower.includes('repair') || msgLower.includes('bus')) {
-        return `🛠️ [Depot Commander Alert - Fleet Incident]:
-Bus TN-01-N-4429 (Route 29C) reported engine cooling failure at T. Nagar Panagal Park.
-- Relief bus TN-01-N-8802 dispatched immediately (ETA: 5 mins).
-- Automated prior broadcast sent to waiting passengers recommending Route 15B.
-- Mobile breakdown crane unit en route.`;
+        return `🛠️ [Depot Commander Alert - Coimbatore Fleet Incident]:
+Bus TN-38-N-2914 (Route 12) reported electrical alternator failure at Ganapathy Signal (Sathy Road).
+- Standby relief unit TN-38-N-6602 dispatched immediately from Gandhipuram Depot (ETA: 4 mins).
+- Automated prior broadcast sent to waiting passengers recommending Route 3A & Route 70.
+- Mobile repair team deployed.`;
       }
-      return `📊 [TransitIQ Corridor Optimization Intelligence]:
-- Crowded Corridors Need Extra Buses: Route 29C reached 128% capacity with an average wait time of 14.2 minutes.
-- Low Demand Corridors Need Fewer Buses: Route 15B operates at only 42% capacity with ample seating.
-- Immediate AI Action: Reallocate and deploy 2 extra buses to Route 29C while maintaining efficient low-frequency allocation on Route 15B. This slashes average wait times by 52% (down to 6.8 mins).`;
+      return `📊 [TransitIQ Coimbatore Corridor Optimization Intelligence]:
+- Crowded Corridors Need Extra Buses: Route 12 (Gandhipuram ↔ Saravanampatti IT Park) reached 134% capacity with an average wait time of 15.4 minutes.
+- Low Demand Corridors Need Fewer Buses: Route 3A (Ukkadam ↔ Singanallur) operates at only 40% capacity with ample seating.
+- Immediate AI Action: Reallocate and deploy 2 extra buses to Route 12 while maintaining efficient low-frequency allocation on Route 3A. This slashes average wait times down to 6.2 mins (↓ 58% reduction).`;
     }
   } else {
     // Passenger mode
     if (isTamil) {
       if (msgLower.includes('breakdown') || msgLower.includes('பழுது') || msgLower.includes('நின்று')) {
         return `⚠️ [முக்கிய பயணிகள் அறிவிப்பு - பேருந்து பழுது]:
-தி.நகர் பனகல் பார்க் அருகில் இயங்கி வந்த வழித்தடம் 29C (பேருந்து TN-01-N-4429) இயந்திரக் கோளாறு காரணமாக நிறுத்தப்பட்டுள்ளது.
-✅ கவலைப்பட வேண்டாம்! மாற்று நிவாரண பேருந்து TN-01-N-8802 இன்னும் 5 நிமிடங்களில் அங்கு வந்து சேரும்.
-👉 உடனடி பயணம் செய்ய: வழித்தடம் 15B (2 நிமிடங்களில் வரும், இருக்கைகள் காலியாக உள்ளன) தேர்ந்தெடுக்கலாம்!`;
+கணபதி சிக்னல் அருகில் இயங்கி வந்த வழித்தடம் 12 (பேருந்து TN-38-N-2914) ஆல்டர்னேட்டர் கோளாறு காரணமாக நிறுத்தப்பட்டுள்ளது.
+✅ கவலைப்பட வேண்டாம்! மாற்று நிவாரண பேருந்து TN-38-N-6602 இன்னும் 4 நிமிடங்களில் அங்கு வந்து சேரும்.
+👉 உடனடி பயணம் செய்ய: வழித்தடம் 3A அல்லது அவினாசி சாலை வழித்தடம் 70 தேர்ந்தெடுக்கலாம்!`;
       }
-      if (msgLower.includes('route') || msgLower.includes('எந்த') || msgLower.includes('பேருந்து') || msgLower.includes('நேரம்') || msgLower.includes('கூட்டம்')) {
-        return `🚍 [TransitIQ பயண வழிகாட்டி]:
-நீங்கள் சென்னை மத்திய நிலையத்திலிருந்து தாம்பரம் செல்ல விரும்பினால்:
-1. ⭐ சிறந்த தேர்வு: வழித்தடம் 15B (இன்னும் 2 நிமிடங்களில் வரும், 42% கூட்டம் மட்டுமே, காலியிடங்கள் உள்ளன).
-2. வழித்தடம் 21M: இன்னும் 6 நிமிடங்களில் வரும் (78% கூட்டம், வேளச்சேரி வழி).
-3. வழித்தடம் 29C: அதிக நெரிசல் (128% கூட்டம்) - இதற்கு கூடுதல் பேருந்துகள் இயக்கப்பட்டு வருகின்றன.
-கூட்டம் இல்லாத சௌகரியமான பயணத்திற்கு வழித்தடம் 15B-ஐத் தேர்ந்தெடுக்கவும்!`;
+      if (msgLower.includes('route') || msgLower.includes('எந்த') || msgLower.includes('பேருந்து') || msgLower.includes('நேரம்') || msgLower.includes('கூட்டம்') || msgLower.includes('கோவை') || msgLower.includes('சரவணம்பட்டி')) {
+        return `🚍 [TransitIQ கோவை பயண வழிகாட்டி]:
+நீங்கள் கோவையில் பயணம் செய்யும்போது:
+1. ⭐ சிறந்த தேர்வு (இருக்கைகள் உறுதி): வழித்தடம் 3A (உக்கடம் ↔ சிங்காநல்லூர், 40% கூட்டம் மட்டுமே, 5.5 நிமி காத்திருப்பு).
+2. வழித்தடம் 70 (காந்திபுரம் ↔ கொடிசியா & விமான நிலையம், 76% கூட்டம்).
+3. வழித்தடம் 12 (காந்திபுரம் ↔ சரவணம்பட்டி, 134% கூட்டம்) - இதற்கு கூடுதல் பேருந்துகள் இயக்கப்பட்டு வருகின்றன.
+கூட்டம் இல்லாத சௌகரியமான பயணத்திற்கு வழித்தடம் 3A-ஐத் தேர்ந்தெடுக்கவும்!`;
       }
-      return `வணக்கம்! நான் உங்கள் TransitIQ பேருந்து உதவியாளர்.
-- எந்தப் பேருந்து எடுக்க வேண்டும்?
+      return `வணக்கம்! நான் உங்கள் TransitIQ கோவை பேருந்து உதவியாளர்.
+- எந்தப் பேருந்து எடுக்க வேண்டும் (சரவணம்பட்டி, பீளமேடு, உக்கடம், காந்திபுரம்)?
 - கூட்டம் குறைந்த வழித்தடங்கள் எவை?
-- நெரிசலைத் தவிர்க்க கூடுதல் பேருந்துகள் எங்கு இயக்கப்படுகின்றன?
+- அவினாசி சாலை மற்றும் சத்தி ரோட்டில் கூடுதல் பேருந்துகள் எங்கு இயக்கப்படுகின்றன?
 - பழுதான பேருந்துக்கான நிவாரணப் பேருந்து நேரம் என்ன?
 எந்தக் கேள்வியும் கேளுங்கள், உங்களுக்கு உதவ நான் தயாராக உள்ளேன்!`;
     } else {
       if (msgLower.includes('breakdown') || msgLower.includes('repair') || msgLower.includes('broke')) {
         return `⚠️ [Prior Breakdown Notice - Passenger Alert]:
-Route 29C (Bus TN-01-N-4429) experienced an engine issue near T. Nagar Panagal Park.
-✅ Relief Bus TN-01-N-8802 has already been dispatched and will arrive in 5 minutes!
-👉 Fast Alternate: Board Route 15B arriving in 2 minutes (42% occupancy, plenty of seats available).`;
+Route 12 (Bus TN-38-N-2914) experienced an electrical issue near Ganapathy Signal on Sathy Road.
+✅ Relief Bus TN-38-N-6602 has already been dispatched and will arrive in 4 minutes!
+👉 Fast Alternate: Board Route 3A (Trichy Road) or Route 70 (Avinashi Road) arriving in 3 minutes.`;
       }
-      if (msgLower.includes('which bus') || msgLower.includes('suggest') || msgLower.includes('timing') || msgLower.includes('crowd') || msgLower.includes('optimize')) {
-        return `🚍 [TransitIQ Optimal Route Suggestion]:
-For traveling Central ↔ Tambaram:
-1. 🌟 Recommended: Route 15B (Arriving in 2 mins, only 42% crowd, smooth road, seats guaranteed).
-2. Route 21M: Arriving in 6 mins (78% crowd, steady transit).
-3. Route 29C: Overcrowded (128% capacity) — receiving extra relief buses.
-We recommend boarding Route 15B to save 12 minutes of waiting and travel in comfort!`;
+      if (msgLower.includes('which bus') || msgLower.includes('suggest') || msgLower.includes('timing') || msgLower.includes('crowd') || msgLower.includes('optimize') || msgLower.includes('coimbatore')) {
+        return `🚍 [TransitIQ Optimal Coimbatore Route Suggestion]:
+Key Coimbatore Transit Corridors:
+1. 🌟 Recommended: Route 3A (Ukkadam ↔ Singanallur, arriving in 3 mins, only 40% crowd, seats guaranteed).
+2. Route 70: Gandhipuram ↔ CODISSIA & Airport (76% crowd, steady Avinashi Road transit).
+3. Route 12: Overcrowded (134% IT rush) — receiving +2 extra relief buses right now.
+We recommend boarding Route 3A or Route 70 to save 10+ minutes and travel comfortably!`;
       }
-      return `Hello! I am your TransitIQ Smart Passenger Assistant.
+      return `Hello! I am your TransitIQ Coimbatore Smart Transit Assistant.
 I can help you with:
-- Finding the fastest & least crowded bus routes
-- Route optimization insights (where extra buses are deployed)
+- Finding the fastest & least crowded routes across Coimbatore (Gandhipuram, Saravanampatti, Ukkadam, Singanallur, Peelamedu)
+- Route optimization insights (where extra buses are deployed on Avinashi Road & Sathy Road)
 - Advance notification for broken-down buses with relief bus ETAs
 - Live timings, fares, and optimal transfer points.
-How can I assist your journey today?`;
+How can I assist your Coimbatore journey today?`;
     }
   }
 }
@@ -406,32 +404,32 @@ app.post('/api/chat', async (req, res) => {
 
   // System prompt tailored according to role and language
   const systemPrompt = role === 'operator'
-    ? `You are TransitIQ Depot Operations AI, an intelligent transit dispatch & fleet management copilot for bus operators and depot managers.
+    ? `You are TransitIQ Depot Operations AI, an intelligent transit dispatch & fleet management copilot for bus operators and depot managers in Coimbatore City.
 CURRENT LIVE CONTEXT:
-- Corridor: Chennai Central ↔ Tambaram (3 parallel routes: Route 29C, Route 15B, Route 21M).
-- Route 29C status: Overcrowded (128% capacity, 14 min wait). Needs +2 extra buses to reduce headway and wait times.
-- Route 15B status: Optimal (42% capacity, 5 min wait, empty seats). Needs fewer buses to prevent running empty vehicles.
-- Route 21M status: Moderate (78% capacity, 8 min wait).
-- Active Breakdown: Bus TN-01-N-4429 on Route 29C suffered engine failure at T. Nagar Panagal park. Relief bus TN-01-N-8802 dispatched (5 mins away).
-- Recommendation Rule: Crowding >100% requires adding 2 buses to crowded routes, reducing wait to 6.8 mins and crowding to 84%.
+- Corridor: Gandhipuram ↔ Saravanampatti IT Corridor (3 parallel routes: Route 12, Route 3A, Route 70).
+- Route 12 status: Overcrowded (134% capacity, 15.4 min wait). Needs +2 extra buses to reduce headway and wait times.
+- Route 3A status: Optimal (40% capacity, 5.5 min wait, empty seats). Needs fewer buses to prevent running empty vehicles.
+- Route 70 status: Moderate (76% capacity, 7.8 min wait on Avinashi Road).
+- Active Breakdown: Bus TN-38-N-2914 on Route 12 suffered electrical failure at Ganapathy Signal on Sathy Road. Standby relief bus TN-38-N-6602 dispatched (4 mins away).
+- Recommendation Rule: Crowding >100% requires adding 2 buses to crowded routes, reducing wait to 6.2 mins and crowding to 82%.
 
 YOUR INSTRUCTIONS:
 - You are addressing the BUS OPERATOR / DEPOT MANAGER.
-- Provide data-driven, operational advice on scheduling, headways, bus additions to crowded sectors, and mechanical breakdown dispatch.
+- Provide data-driven, operational advice on scheduling, headways, bus additions to crowded sectors, and mechanical breakdown dispatch in Coimbatore.
 - Emphasize the core route optimization rule: crowded areas need extra buses, and less-crowded areas need low buses to balance overall fleet efficiency.
 - If language is Tamil (${isTamil ? 'YES' : 'NO'}), answer thoroughly and naturally in TAMIL (தமிழ்).
 - Keep responses professional, clear, concise (3-5 sentences), and cite the simulation figures. Always mention that data is simulated for the project demo.`
-    : `You are TransitIQ Passenger Assistant, a friendly and accurate AI helper for public transit passengers.
+    : `You are TransitIQ Passenger Assistant, a friendly and accurate AI helper for public transit passengers in Coimbatore City.
 CURRENT LIVE CONTEXT:
-- Corridor: Chennai Central ↔ Tambaram.
-- Route 29C: Highly crowded (128% full), long wait (14 mins) — receiving extra relief buses.
-- Route 15B: Best route! Less crowded (only 42% full, plenty of seats), arrives every 5-12 mins.
-- Route 21M: Moderate crowd (78%), steady transit.
-- Bus Breakdown Alert: Bus TN-01-N-4429 (Route 29C) is broken down at T. Nagar. Tell passenger NOT to worry: Relief bus TN-01-N-8802 arrives in 5 mins, or they can hop on Route 15B immediately (arriving in 2 mins).
+- Corridor: Coimbatore City (Gandhipuram, Saravanampatti, Ukkadam, Singanallur, Peelamedu, Hope College, CODISSIA, Airport).
+- Route 12: Highly crowded (134% full), long wait (15.4 mins) — receiving extra relief buses.
+- Route 3A: Best route! Less crowded (only 40% full, plenty of seats), arrives every 5-12 mins.
+- Route 70: Moderate crowd (76%), steady transit along Avinashi Road.
+- Bus Breakdown Alert: Bus TN-38-N-2914 (Route 12) is broken down at Ganapathy Signal. Tell passenger NOT to worry: Relief bus TN-38-N-6602 arrives in 4 mins, or they can hop on Route 3A or Route 70 immediately.
 
 YOUR INSTRUCTIONS:
 - You are addressing a PASSENGER.
-- Be helpful, polite, reassuring, and give direct guidance on which bus to take, how to avoid crowds, and breakdown relief options.
+- Be helpful, polite, reassuring, and give direct guidance on which bus to take, how to avoid crowds, and breakdown relief options in Coimbatore.
 - If language is Tamil (${isTamil ? 'YES' : 'NO'}), answer fluently and politely in TAMIL (தமிழ்).
 - Keep answers under 4 sentences with clear bullet points. Mention simulated transit intelligence.`;
 

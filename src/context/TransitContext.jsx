@@ -17,37 +17,37 @@ export function TransitProvider({ children }) {
   
   const [breakdownAlert, setBreakdownAlert] = useState({
     active: true,
-    busId: "TN-01-N-4429",
-    routeCode: "29C",
-    location: "Near T. Nagar Panagal Park",
-    tamilLocation: "தி.நகர் பனகல் பார்க் அருகில்",
-    issue: "Engine Cooling System Failure",
-    tamilIssue: "இயந்திர குளிர்விப்பு அமைப்பு கோளாறு",
-    reliefBus: "TN-01-N-8802 (Standby Express)",
-    reliefETA: "5 min",
-    tamilReliefETA: "5 நிமிடங்கள்",
-    alternateRoutes: ["15B (Departs in 2m)", "70 Express (Departs in 4m)"],
-    tamilAlternates: ["வழித்தடம் 15B (2 நிமிடத்தில் புறப்படும்)", "வழித்தடம் 70 (4 நிமிடத்தில் புறப்படும்)"],
-    passengersAffected: 84
+    busId: "TN-38-N-2914",
+    routeCode: "12",
+    location: "Near Ganapathy Signal (Sathy Road)",
+    tamilLocation: "கணபதி சிக்னல் அருகில் (சத்தி ரோடு)",
+    issue: "Alternator & Electrical Circuit Failure",
+    tamilIssue: "ஆல்டர்னேட்டர் & மின்சுற்று கோளாறு",
+    reliefBus: "TN-38-N-6602 (Standby Express)",
+    reliefETA: "4 min",
+    tamilReliefETA: "4 நிமிடங்கள்",
+    alternateRoutes: ["3A (Departs in 3m)", "70 Express (Departs in 5m)"],
+    tamilAlternates: ["வழித்தடம் 3A (3 நிமிடத்தில் புறப்படும்)", "வழித்தடம் 70 (5 நிமிடத்தில் புறப்படும்)"],
+    passengersAffected: 48
   });
 
   const t = translations[language] || translations.en;
 
   // Function to apply AI optimization recommendation:
-  // Dynamically reallocates fleet: adds +2 buses to crowded Route 29C to reduce wait times,
-  // while keeping less-crowded Route 15B balanced without wasteful empty runs.
+  // Dynamically reallocates fleet: adds +2 buses to crowded Route 12 to reduce wait times,
+  // while keeping less-crowded Route 3A balanced without wasteful empty runs.
   const applyOptimization = () => {
     setOptimizationApplied(true);
     setRoutes(prev => prev.map(r => {
       if (r.id === 'route-a') {
         return {
           ...r,
-          crowdingPercent: 84,
+          crowdingPercent: 82,
           busesPerHour: 8,
           headwayMin: 7.5,
-          avgWaitMin: 6.8,
+          avgWaitMin: 6.2,
           status: "OPTIMIZED",
-          statusBadge: "+2 Extra Buses Deployed",
+          statusBadge: "+2 Extra Buses Deployed [SIMULATED]",
           color: "#10B981"
         };
       }
@@ -67,8 +67,8 @@ export function TransitProvider({ children }) {
         if (r.id === 'route-a') {
           return {
             ...r,
-            crowdingPercent: next ? 128 : 88,
-            avgWaitMin: next ? 14.2 : 9.5
+            crowdingPercent: next ? 134 : 88,
+            avgWaitMin: next ? 15.4 : 9.5
           };
         }
         return r;
@@ -92,18 +92,18 @@ export function TransitProvider({ children }) {
     setOptimizationApplied(false);
     setBreakdownAlert({
       active: true,
-      busId: "TN-01-N-4429",
-      routeCode: "29C",
-      location: "Near T. Nagar Panagal Park",
-      tamilLocation: "தி.நகர் பனகல் பார்க் அருகில்",
-      issue: "Engine Cooling System Failure",
-      tamilIssue: "இயந்திர குளிர்விப்பு அமைப்பு கோளாறு",
-      reliefBus: "TN-01-N-8802 (Standby Express)",
-      reliefETA: "5 min",
-      tamilReliefETA: "5 நிமிடங்கள்",
-      alternateRoutes: ["15B (Departs in 2m)", "70 Express (Departs in 4m)"],
-      tamilAlternates: ["வழித்தடம் 15B (2 நிமிடத்தில் புறப்படும்)", "வழித்தடம் 70 (4 நிமிடத்தில் புறப்படும்)"],
-      passengersAffected: 84
+      busId: "TN-38-N-2914",
+      routeCode: "12",
+      location: "Near Ganapathy Signal (Sathy Road)",
+      tamilLocation: "கணபதி சிக்னல் அருகில் (சத்தி ரோடு)",
+      issue: "Alternator & Electrical Circuit Failure",
+      tamilIssue: "ஆல்டர்னேட்டர் & மின்சுற்று கோளாறு",
+      reliefBus: "TN-38-N-6602 (Standby Express)",
+      reliefETA: "4 min",
+      tamilReliefETA: "4 நிமிடங்கள்",
+      alternateRoutes: ["3A (Departs in 3m)", "70 Express (Departs in 5m)"],
+      tamilAlternates: ["வழித்தடம் 3A (3 நிமிடத்தில் புறப்படும்)", "வழித்தடம் 70 (5 நிமிடத்தில் புறப்படும்)"],
+      passengersAffected: 48
     });
   };
 

@@ -1,236 +1,227 @@
-// Coordinates for Chennai Corridor (Chennai Central to Tambaram)
+// =========================================================================
+// TransitIQ — Coimbatore City (Tamil Nadu, India) Master Telemetry Dataset
+// All crowd and demand parameters are marked as ESTIMATED / SIMULATED.
+// =========================================================================
+
+// Coimbatore City Geographical Anchor (Gandhipuram / City Center)
 export const CORRIDOR_COORDINATES = {
-  center: [13.0100, 80.2000],
+  center: [11.0168, 76.9673],
   zoom: 12
 };
 
 export const INITIAL_ROUTES = [
   {
     id: "route-a",
-    code: "29C",
-    name: "Route 29C (Anna Salai Direct)",
-    tamilName: "வழித்தடம் 29C (அண்ணா சாலை வழி)",
-    corridor: "Central ↔ Tambaram",
+    code: "12",
+    name: "Route 12 (Gandhipuram ↔ Saravanampatti IT Corridor)",
+    tamilName: "வழித்தடம் 12 (காந்திபுரம் ↔ சரவணம்பட்டி தகவல் தொழில்நுட்ப பாதை)",
+    corridor: "Gandhipuram ↔ Saravanampatti",
     color: "#EF4444",
-    status: "OVERCROWDED",
-    statusBadge: "Critical Congestion",
-    crowdingPercent: 128,
-    demandPerHour: 420,
+    status: "OVERCROWDED (NEEDS EXTRA BUSES)",
+    statusBadge: "Critical Congestion [SIMULATED]",
+    crowdingPercent: 134,
+    demandPerHour: 480,
     busCapacity: 70,
     busesPerHour: 4,
     headwayMin: 15,
-    avgWaitMin: 14.2,
-    travelTimeMin: 58,
+    avgWaitMin: 15.4,
+    travelTimeMin: 42,
     detourTimeMin: 0,
-    fare: "₹30",
+    fare: "₹25",
     hasBreakdown: true,
+    isSimulated: true,
     path: [
-      [13.0827, 80.2707], // Central
-      [13.0645, 80.2612], // LIC
-      [13.0520, 80.2505], // Thousand Lights
-      [13.0410, 80.2450], // Teynampet
-      [13.0280, 80.2410], // Nandanam
-      [13.0180, 80.2220], // Saidapet
-      [13.0067, 80.2023], // Kathipara
-      [12.9820, 80.1650], // Airport
-      [12.9675, 80.1491], // Pallavaram
-      [12.9249, 80.1260]  // Tambaram
+      [11.0168, 76.9673], // Gandhipuram Central Bus Stand
+      [11.0250, 76.9740], // GP Signal / Sathy Road
+      [11.0385, 76.9802], // Ganapathy Bus Stop
+      [11.0550, 76.9880], // Sivanandapuram
+      [11.0700, 76.9920], // Prozone Mall Junction
+      [11.0827, 76.9960]  // Saravanampatti CHIL SEZ
     ],
     stops: [
-      { name: "Chennai Central", tamilName: "சென்னை மத்திய நிலையம்", lat: 13.0827, lng: 80.2707, crowded: "high" },
-      { name: "LIC / Anna Salai", tamilName: "எல்.ஐ.சி / அண்ணா சாலை", lat: 13.0645, lng: 80.2612, crowded: "high" },
-      { name: "Thousand Lights", tamilName: "ஆயிரம் விளக்கு", lat: 13.0520, lng: 80.2505, crowded: "high" },
-      { name: "Teynampet", tamilName: "தேனாம்பேட்டை", lat: 13.0410, lng: 80.2450, crowded: "high" },
-      { name: "Nandanam", tamilName: "நந்தனம்", lat: 13.0280, lng: 80.2410, crowded: "high" },
-      { name: "Saidapet", tamilName: "சைதாப்பேட்டை", lat: 13.0180, lng: 80.2220, crowded: "high" },
-      { name: "Guindy / Kathipara", tamilName: "கிண்டி / கத்திப்பாரா", lat: 13.0067, lng: 80.2023, crowded: "high" },
-      { name: "Chennai Airport", tamilName: "சென்னை விமான நிலையம்", lat: 12.9820, lng: 80.1650, crowded: "moderate" },
-      { name: "Pallavaram", tamilName: "பல்லாவரம்", lat: 12.9675, lng: 80.1491, crowded: "high" },
-      { name: "Tambaram Terminal", tamilName: "தாம்பரம் முனையம்", lat: 12.9249, lng: 80.1260, crowded: "high" }
+      { name: "Gandhipuram Central Bus Stand", tamilName: "காந்திபுரம் மத்திய பேருந்து நிலையம்", lat: 11.0168, lng: 76.9673, crowded: "high" },
+      { name: "GP Signal / Sathy Road", tamilName: "ஜி.பி சிக்னல் / சத்தி ரோடு", lat: 11.0250, lng: 76.9740, crowded: "high" },
+      { name: "Ganapathy Bus Stop", tamilName: "கணபதி பேருந்து நிறுத்தம்", lat: 11.0385, lng: 76.9802, crowded: "high" },
+      { name: "Sivanandapuram", tamilName: "சிவானந்தாபுரம்", lat: 11.0550, lng: 76.9880, crowded: "high" },
+      { name: "Prozone Mall Junction", tamilName: "புரோஸோன் மால் சந்திப்பு", lat: 11.0700, lng: 76.9920, crowded: "high" },
+      { name: "Saravanampatti (CHIL SEZ)", tamilName: "சரவணம்பட்டி தகவல் தொழில்நுட்ப பூங்கா", lat: 11.0827, lng: 76.9960, crowded: "high" }
     ]
   },
   {
     id: "route-b",
-    code: "15B",
-    name: "Route 15B (100ft Inner Ring Road)",
-    tamilName: "வழித்தடம் 15B (100 அடி உள்வட்டச் சாலை)",
-    corridor: "Central ↔ Tambaram",
+    code: "3A",
+    name: "Route 3A (Ukkadam ↔ Singanallur via Trichy Road)",
+    tamilName: "வழித்தடம் 3A (உக்கடம் ↔ சிங்கநல்லூர் திருச்சி ரோடு வழி)",
+    corridor: "Ukkadam ↔ Singanallur",
     color: "#10B981",
-    status: "OPTIMAL",
-    statusBadge: "Seats Available",
-    crowdingPercent: 42,
-    demandPerHour: 180,
+    status: "OPTIMAL (SEATS AVAILABLE)",
+    statusBadge: "Seats Free [SIMULATED]",
+    crowdingPercent: 40,
+    demandPerHour: 160,
     busCapacity: 70,
     busesPerHour: 5,
     headwayMin: 12,
-    avgWaitMin: 5.2,
-    travelTimeMin: 46,
+    avgWaitMin: 5.5,
+    travelTimeMin: 28,
     detourTimeMin: 0,
-    fare: "₹28",
+    fare: "₹20",
     hasBreakdown: false,
+    isSimulated: true,
     path: [
-      [13.0827, 80.2707], // Central
-      [13.0732, 80.2609], // Egmore
-      [13.0725, 80.2390], // Chetpet
-      [13.0700, 80.2150], // Aminjikarai
-      [13.0690, 80.1948], // Koyambedu
-      [13.0360, 80.2110], // Ashok Nagar
-      [13.0210, 80.2030], // Ekkatuthangal
-      [12.9820, 80.1650], // Airport
-      [12.9516, 80.1402], // Chromepet
-      [12.9249, 80.1260]  // Tambaram
+      [10.9934, 76.9610], // Ukkadam Bus Terminal
+      [10.9965, 76.9605], // Town Hall
+      [10.9950, 76.9720], // Sungam Bypass
+      [10.9942, 76.9890], // Ramanathapuram Junction
+      [10.9980, 77.0100], // Alvernia / Trichy Road
+      [10.9997, 77.0252]  // Singanallur Bus Terminal
     ],
     stops: [
-      { name: "Chennai Central", tamilName: "சென்னை மத்திய நிலையம்", lat: 13.0827, lng: 80.2707, crowded: "low" },
-      { name: "Egmore", tamilName: "எழும்பூர்", lat: 13.0732, lng: 80.2609, crowded: "low" },
-      { name: "Chetpet", tamilName: "சேத்துப்பட்டு", lat: 13.0725, lng: 80.2390, crowded: "low" },
-      { name: "Aminjikarai", tamilName: "அமிஞ்சிக்கரை", lat: 13.0700, lng: 80.2150, crowded: "low" },
-      { name: "Koyambedu", tamilName: "கோயம்பேடு", lat: 13.0690, lng: 80.1948, crowded: "low" },
-      { name: "Ashok Nagar", tamilName: "அசோக் நகர்", lat: 13.0360, lng: 80.2110, crowded: "low" },
-      { name: "Ekkatuthangal", tamilName: "ஈக்காட்டுத்தாங்கல்", lat: 13.0210, lng: 80.2030, crowded: "low" },
-      { name: "Chennai Airport", tamilName: "விமான நிலையம்", lat: 12.9820, lng: 80.1650, crowded: "low" },
-      { name: "Chromepet", tamilName: "குரோம்பேட்டை", lat: 12.9516, lng: 80.1402, crowded: "low" },
-      { name: "Tambaram Terminal", tamilName: "தாம்பரம் முனையம்", lat: 12.9249, lng: 80.1260, crowded: "low" }
+      { name: "Ukkadam Bus Terminal", tamilName: "உக்கடம் பேருந்து முனையம்", lat: 10.9934, lng: 76.9610, crowded: "low" },
+      { name: "Town Hall Clock Tower", tamilName: "டவுன் ஹால் மணிக்கூண்டு", lat: 10.9965, lng: 76.9605, crowded: "low" },
+      { name: "Sungam Bypass", tamilName: "சுங்கம் புறவழிச்சாலை", lat: 10.9950, lng: 76.9720, crowded: "low" },
+      { name: "Ramanathapuram Junction", tamilName: "ராமநாதபுரம் சந்திப்பு", lat: 10.9942, lng: 76.9890, crowded: "low" },
+      { name: "Alvernia School", tamilName: "அல்வர்னியா பள்ளி", lat: 10.9980, lng: 77.0100, crowded: "low" },
+      { name: "Singanallur Bus Terminal", tamilName: "சிங்கநல்லூர் பேருந்து நிலையம்", lat: 10.9997, lng: 77.0252, crowded: "low" }
     ]
   },
   {
     id: "route-c",
-    code: "21M",
-    name: "Route 21M (Velachery Coastal Bypass)",
-    tamilName: "வழித்தடம் 21M (வேளச்சேரி புறவழிச்சாலை)",
-    corridor: "Central ↔ Tambaram",
+    code: "70",
+    name: "Route 70 (Gandhipuram ↔ CODISSIA & Airport via Avinashi Road)",
+    tamilName: "வழித்தடம் 70 (காந்திபுரம் ↔ கொடிசியா & விமான நிலையம் அவினாசி ரோடு வழி)",
+    corridor: "Gandhipuram ↔ Airport",
     color: "#F59E0B",
     status: "MODERATE",
-    statusBadge: "Standing Room",
-    crowdingPercent: 78,
-    demandPerHour: 280,
+    statusBadge: "Standing Room [SIMULATED]",
+    crowdingPercent: 76,
+    demandPerHour: 310,
     busCapacity: 70,
     busesPerHour: 4,
     headwayMin: 15,
-    avgWaitMin: 8.0,
-    travelTimeMin: 52,
+    avgWaitMin: 7.8,
+    travelTimeMin: 36,
     detourTimeMin: 0,
-    fare: "₹32",
+    fare: "₹28",
     hasBreakdown: false,
+    isSimulated: true,
     path: [
-      [13.0827, 80.2707], // Central
-      [13.0500, 80.2824], // Marina Beach
-      [13.0336, 80.2678], // Mylapore
-      [13.0064, 80.2575], // Adyar
-      [12.9910, 80.2450], // SRP Tools OMR
-      [12.9792, 80.2212], // Velachery
-      [12.9180, 80.1910], // Medavakkam
-      [12.9249, 80.1260]  // Tambaram East
+      [11.0168, 76.9673], // Gandhipuram
+      [11.0190, 76.9850], // Lakshmi Mills
+      [11.0250, 77.0020], // Fun Republic Mall
+      [11.0264, 77.0105], // Peelamedu (PSG Tech)
+      [11.0279, 77.0182], // Hope College
+      [11.0360, 77.0340], // CODISSIA
+      [11.0300, 77.0434]  // Airport
     ],
     stops: [
-      { name: "Chennai Central", tamilName: "சென்னை மத்திய நிலையம்", lat: 13.0827, lng: 80.2707, crowded: "moderate" },
-      { name: "Marina Beach", tamilName: "மெரினா கடற்கரை", lat: 13.0500, lng: 80.2824, crowded: "moderate" },
-      { name: "Mylapore", tamilName: "மயிலாப்பூர்", lat: 13.0336, lng: 80.2678, crowded: "moderate" },
-      { name: "Adyar Depot", tamilName: "அடையாறு டிப்போ", lat: 13.0064, lng: 80.2575, crowded: "moderate" },
-      { name: "SRP Tools (OMR)", tamilName: "எஸ்.ஆர்.பி டூல்ஸ்", lat: 12.9910, lng: 80.2450, crowded: "moderate" },
-      { name: "Velachery Junction", tamilName: "வேளச்சேரி சந்திப்பு", lat: 12.9792, lng: 80.2212, crowded: "moderate" },
-      { name: "Medavakkam", tamilName: "மேடவாக்கம்", lat: 12.9180, lng: 80.1910, crowded: "moderate" },
-      { name: "Tambaram East", tamilName: "கிழக்கு தாம்பரம்", lat: 12.9249, lng: 80.1260, crowded: "moderate" }
+      { name: "Gandhipuram Central", tamilName: "காந்திபுரம் மத்திய நிலையம்", lat: 11.0168, lng: 76.9673, crowded: "moderate" },
+      { name: "Lakshmi Mills", tamilName: "லட்சுமி மில்ஸ்", lat: 11.0190, lng: 78.9850, crowded: "moderate" },
+      { name: "Fun Republic Mall", tamilName: "ஃபன் ரிபப்ளிக் மால்", lat: 11.0250, lng: 77.0020, crowded: "moderate" },
+      { name: "Peelamedu (PSG Tech)", tamilName: "பீளமேடு பி.எஸ்.ஜி", lat: 11.0264, lng: 77.0105, crowded: "high" },
+      { name: "Hope College", tamilName: "ஹோப் காலேஜ்", lat: 11.0279, lng: 77.0182, crowded: "high" },
+      { name: "CODISSIA Complex", tamilName: "கொடிசியா அரங்கம்", lat: 11.0360, lng: 77.0340, crowded: "high" },
+      { name: "Coimbatore Airport", tamilName: "கோவை விமான நிலையம்", lat: 11.0300, lng: 77.0434, crowded: "moderate" }
     ]
   }
 ];
 
+// Hourly demand simulation for Coimbatore peak rush vs lean times
 export const HOURLY_DEMAND_CURVE = [
-  { slot: "05:00", demandA: 60, demandB: 40, demandC: 45, peak: false },
-  { slot: "06:00", demandA: 110, demandB: 70, demandC: 80, peak: false },
-  { slot: "07:00", demandA: 240, demandB: 120, demandC: 150, peak: false },
-  { slot: "08:00", demandA: 420, demandB: 180, demandC: 280, peak: true },  // Peak 1
-  { slot: "09:00", demandA: 440, demandB: 195, demandC: 295, peak: true },  // Peak 1
-  { slot: "10:00", demandA: 380, demandB: 160, demandC: 240, peak: true },  // Peak 1
-  { slot: "11:00", demandA: 190, demandB: 110, demandC: 140, peak: false },
-  { slot: "12:00", demandA: 160, demandB: 95, demandC: 120, peak: false },
-  { slot: "13:00", demandA: 175, demandB: 100, demandC: 130, peak: false },
-  { slot: "14:00", demandA: 180, demandB: 105, demandC: 135, peak: false },
-  { slot: "15:00", demandA: 210, demandB: 120, demandC: 150, peak: false },
-  { slot: "16:00", demandA: 290, demandB: 150, demandC: 190, peak: false },
-  { slot: "17:00", demandA: 410, demandB: 185, demandC: 275, peak: true },  // Peak 2
-  { slot: "18:00", demandA: 460, demandB: 200, demandC: 310, peak: true },  // Peak 2
-  { slot: "19:00", demandA: 430, demandB: 190, demandC: 290, peak: true },  // Peak 2
-  { slot: "20:00", demandA: 320, demandB: 140, demandC: 210, peak: false },
-  { slot: "21:00", demandA: 200, demandB: 100, demandC: 130, peak: false },
-  { slot: "22:00", demandA: 120, demandB: 60, demandC: 75, peak: false }
+  { slot: "05:00", demandA: 65, demandB: 35, demandC: 45, peak: false },
+  { slot: "06:00", demandA: 115, demandB: 60, demandC: 75, peak: false },
+  { slot: "07:00", demandA: 260, demandB: 110, demandC: 160, peak: false },
+  { slot: "08:00", demandA: 450, demandB: 160, demandC: 290, peak: true },  // Morning IT Rush
+  { slot: "09:00", demandA: 480, demandB: 170, demandC: 310, peak: true },  // Morning IT Rush
+  { slot: "10:00", demandA: 410, demandB: 150, demandC: 260, peak: true },  // Morning IT Rush
+  { slot: "11:00", demandA: 200, demandB: 100, demandC: 140, peak: false },
+  { slot: "12:00", demandA: 170, demandB: 85, demandC: 120, peak: false },  // Lean Noon
+  { slot: "13:00", demandA: 180, demandB: 90, demandC: 125, peak: false },
+  { slot: "14:00", demandA: 190, demandB: 95, demandC: 130, peak: false },
+  { slot: "15:00", demandA: 220, demandB: 110, demandC: 155, peak: false },
+  { slot: "16:00", demandA: 310, demandB: 140, demandC: 200, peak: false },
+  { slot: "17:00", demandA: 440, demandB: 175, demandC: 285, peak: true },  // Evening Rush
+  { slot: "18:00", demandA: 490, demandB: 190, demandC: 320, peak: true },  // Evening Rush
+  { slot: "19:00", demandA: 460, demandB: 180, demandC: 300, peak: true },  // Evening Rush
+  { slot: "20:00", demandA: 330, demandB: 130, demandC: 215, peak: false },
+  { slot: "21:00", demandA: 210, demandB: 90, demandC: 135, peak: false },
+  { slot: "22:00", demandA: 125, demandB: 50, demandC: 80, peak: false }
 ];
 
 export const LIVE_BUSES = [
   {
     id: "bus-1",
-    regNo: "TN-01-N-4429",
-    routeCode: "29C",
-    currentLocation: "T. Nagar Panagal Park",
-    tamilLocation: "தி.நகர் பனகல் பார்க்",
+    regNo: "TN-38-N-2914",
+    routeCode: "12",
+    currentLocation: "Ganapathy Signal (Sathy Road)",
+    tamilLocation: "கணபதி சிக்னல் (சத்தி ரோடு)",
     status: "BROKEN_DOWN",
-    occupancy: "132% (Overcrowded)",
+    occupancy: "136% (Overcrowded) [SIMULATED]",
     speed: 0,
-    lat: 13.0410,
-    lng: 80.2450,
-    nextStop: "Saidapet",
-    driver: "M. Kumar",
-    heading: "Southbound"
+    lat: 11.0385,
+    lng: 76.9802,
+    nextStop: "Sivanandapuram",
+    driver: "A. Selvanathan",
+    heading: "Northbound to Saravanampatti"
   },
   {
     id: "bus-2",
-    regNo: "TN-01-N-8802",
-    routeCode: "29C (Relief)",
-    currentLocation: "Nandanam Signal",
-    tamilLocation: "நந்தனம் சிக்னல்",
+    regNo: "TN-38-N-6602",
+    routeCode: "12 (Relief)",
+    currentLocation: "Gandhipuram Depot Exit",
+    tamilLocation: "காந்திபுரம் டிப்போ நுழைவு",
     status: "EN_ROUTE_RELIEF",
-    occupancy: "0% (Empty Relief)",
-    speed: 38,
-    lat: 13.0310,
-    lng: 80.2420,
-    nextStop: "T. Nagar Relief Point (ETA 5 min)",
-    driver: "K. Selvam",
-    heading: "Southbound"
+    occupancy: "0% (Empty Relief) [SIMULATED]",
+    speed: 36,
+    lat: 11.0250,
+    lng: 76.9740,
+    nextStop: "Ganapathy Signal Relief Point (ETA 4 min)",
+    driver: "M. Karthikeyan",
+    heading: "Northbound"
   },
   {
     id: "bus-3",
-    regNo: "TN-01-N-7215",
-    routeCode: "15B",
-    currentLocation: "Koyambedu Flyover",
-    tamilLocation: "கோயம்பேடு மேம்பாலம்",
+    regNo: "TN-38-N-4112",
+    routeCode: "3A",
+    currentLocation: "Sungam Bypass Flyover",
+    tamilLocation: "சுங்கம் பைபாஸ் மேம்பாலம்",
     status: "ON_TIME",
-    occupancy: "38% (Seats Free)",
-    speed: 42,
-    lat: 13.0690,
-    lng: 80.1948,
-    nextStop: "Ashok Nagar (ETA 3 min)",
-    driver: "R. Venkatesh",
-    heading: "Southbound"
+    occupancy: "38% (Seats Free) [SIMULATED]",
+    speed: 44,
+    lat: 10.9950,
+    lng: 76.9720,
+    nextStop: "Ramanathapuram (ETA 3 min)",
+    driver: "R. Soundararajan",
+    heading: "Eastbound"
   },
   {
     id: "bus-4",
-    regNo: "TN-01-N-3190",
-    routeCode: "15B",
-    currentLocation: "Ekkatuthangal Metro",
-    tamilLocation: "ஈக்காட்டுத்தாங்கல் மெட்ரோ",
+    regNo: "TN-38-N-5580",
+    routeCode: "3A",
+    currentLocation: "Ramanathapuram Signal",
+    tamilLocation: "ராமநாதபுரம் சிக்னல்",
     status: "ON_TIME",
-    occupancy: "45% (Comfortable)",
+    occupancy: "42% (Comfortable) [SIMULATED]",
     speed: 40,
-    lat: 13.0210,
-    lng: 80.2030,
-    nextStop: "Guindy Industrial (ETA 4 min)",
-    driver: "S. Murugan",
-    heading: "Southbound"
+    lat: 10.9942,
+    lng: 76.9890,
+    nextStop: "Singanallur Terminal (ETA 5 min)",
+    driver: "K. Balamurugan",
+    heading: "Eastbound"
   },
   {
     id: "bus-5",
-    regNo: "TN-01-N-6641",
-    routeCode: "21M",
-    currentLocation: "Velachery Bypass",
-    tamilLocation: "வேளச்சேரி புறவழிச்சாலை",
+    regNo: "TN-38-N-7201",
+    routeCode: "70",
+    currentLocation: "Hope College Junction",
+    tamilLocation: "ஹோப் காலேஜ் சந்திப்பு",
     status: "ON_TIME",
-    occupancy: "78% (Moderate)",
-    speed: 35,
-    lat: 12.9792,
-    lng: 80.2212,
-    nextStop: "Medavakkam (ETA 8 min)",
-    driver: "P. Rajesh",
-    heading: "Southbound"
+    occupancy: "76% (Moderate) [SIMULATED]",
+    speed: 38,
+    lat: 11.0279,
+    lng: 77.0182,
+    nextStop: "CODISSIA (ETA 4 min)",
+    driver: "P. Loganathan",
+    heading: "Eastbound to Airport"
   }
 ];
 
@@ -238,31 +229,31 @@ export const ACTIVE_HAZARDS = [
   {
     id: "hazard-1",
     type: "HIGH_DENSITY_SURGE",
-    name: "Kathipara Junction & Guindy Corridor",
-    tamilName: "கத்திப்பாரா சந்திப்பு & கிண்டி வழித்தடம்",
-    waterDepth: "Peak Passenger Density",
-    tamilDepth: "உச்ச நேர கூட்ட நெரிசல்",
-    impact: "High queue overflow (128% capacity) — requires extra buses",
-    tamilImpact: "கூட்ட நெரிசல் அதிகம் (128%) — கூடுதல் பேருந்துகள் தேவை",
-    detourAction: "Deploy +2 relief buses to Route 29C & route passengers to 15B",
-    tamilDetour: "29C-க்கு +2 கூடுதல் பேருந்துகள் இயக்கம், பயணிகளை 15B-க்கு மாற்றுதல்",
-    lat: 13.0067,
-    lng: 80.2023,
+    name: "Avinashi Road Flyover / Peelamedu Underpass",
+    tamilName: "அவினாசி சாலை மேம்பாலம் / பீளமேடு சுரங்கப்பாதை",
+    waterDepth: "Monsoon Waterlogging (1.4 ft) [SIMULATED]",
+    tamilDepth: "மழைநீர் தேக்கம் (1.4 அடி) [மாதிரித் தரவு]",
+    impact: "Slow moving traffic with lane restriction — requires extra buses",
+    tamilImpact: "மெதுவான போக்குவரத்து நெரிசல் — கூடுதல் பேருந்துகள் தேவை",
+    detourAction: "Deploy +2 relief buses to Route 12 & divert airport commuters via Trichy Road",
+    tamilDetour: "வழித்தடம் 12-க்கு +2 கூடுதல் பேருந்துகள் இயக்கம், பயணிகளை திருச்சி ரோடு வழி திருப்புதல்",
+    lat: 11.0264,
+    lng: 77.0105,
     severity: "high"
   },
   {
     id: "hazard-2",
     type: "MODERATE_QUEUE",
-    name: "Velachery Main Junction",
-    tamilName: "வேளச்சேரி பிரதான சந்திப்பு",
-    waterDepth: "Moderate Density (78%)",
-    tamilDepth: "மிதமான நெரிசல் (78%)",
-    impact: "Normal passenger flow with 15 min headway",
-    tamilImpact: "வழக்கமான 15 நிமிட இடைவேளையில் சீரான இயக்கம்",
-    detourAction: "Standard timetable operational",
-    tamilDetour: "வழக்கமான அட்டவணை இயக்கம்",
-    lat: 12.9792,
-    lng: 80.2212,
+    name: "CODISSIA Trade Fair Complex Event Surge",
+    tamilName: "கொடிசியா தொழிற்காட்சி அரங்கம் கூட்ட நெரிசல்",
+    waterDepth: "Industrial Expo Passenger Overflow [SIMULATED]",
+    tamilDepth: "தொழிற்காட்சி கூடுதல் கூட்டம் [மாதிரித் தரவு]",
+    impact: "Passenger overflow on Avinashi Road",
+    tamilImpact: "அவினாசி சாலையில் கூடுதல் பயணிகள் நெரிசல்",
+    detourAction: "+3 Extra shuttle buses deployed to absorb passenger overflow",
+    tamilDetour: "+3 கூடுதல் ஷட்டில் பேருந்துகள் இயக்கம்",
+    lat: 11.0360,
+    lng: 77.0340,
     severity: "medium"
   }
 ];

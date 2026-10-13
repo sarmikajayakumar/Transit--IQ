@@ -42,8 +42,8 @@ export default function OperatorDashboard() {
 
             <p className="font-sans text-xs text-[#6E6B65] max-w-2xl leading-relaxed">
               {isTamil
-                ? "வழித்தடம் 29C-ல் 128% அதிக கூட்டம் நிலவுகிறது (கூடுதல் பேருந்துகள் தேவை). சமாந்திர வழித்தடம் 15B-ல் 42% மட்டுமே கூட்டம் உள்ளதால் (குறைந்த பேருந்துகள் போதும்), 2 கூடுதல் பேருந்துகளை 29C-க்கு இயக்கி நெரிசலைச் சமன் செய்கிறது."
-                : "Route 29C exhibits critical passenger overcrowding (128% capacity, needs extra buses). Parallel corridor Route 15B has light demand (42% capacity, needs fewer buses). Optimization rule: deploy 2 extra buses to Route 29C while maintaining efficient low-frequency allocation on Route 15B."}
+                ? "காந்திபுரம் - சரவணம்பட்டி வழித்தடம் 12-ல் 134% அதிக கூட்டம் நிலவுகிறது (கூடுதல் பேருந்துகள் தேவை). சமாந்திர வழித்தடம் 3A-ல் 40% மட்டுமே கூட்டம் உள்ளதால் (குறைந்த பேருந்துகள் போதும்), 2 கூடுதல் பேருந்துகளை வழித்தடம் 12-க்கு இயக்கி நெரிசலைச் சமன் செய்கிறது."
+                : "Route 12 (Gandhipuram ↔ Saravanampatti) exhibits critical passenger overcrowding (134% capacity, needs extra buses). Parallel corridor Route 3A has light demand (40% capacity, needs fewer buses). Optimization rule: deploy 2 extra buses to Route 12 while maintaining efficient low-frequency allocation on Route 3A."}
             </p>
           </div>
 

@@ -35,7 +35,7 @@ export default function EditorialHeroCanvas() {
           TRANSIT.IQ
         </div>
         <div className="absolute -bottom-10 right-0 text-[18vw] sm:text-[14vw] font-mono font-bold tracking-widest text-[#0A0A0A]/[0.025] leading-none whitespace-nowrap">
-          13.0827°N 80.2707°E
+          11.0168°N 76.9558°E
         </div>
 
         {/* Architectural Hairline Grid Rules */}
@@ -73,7 +73,7 @@ export default function EditorialHeroCanvas() {
                 </span>
                 <span className="h-px w-6 sm:w-8 bg-[#0A0A0A]/40 hidden sm:block"></span>
                 <span className="font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-[#6E6B65]">
-                  CORRIDOR 01 • CHENNAI CENTRAL ↔ TAMBARAM
+                  CORRIDOR 01 • GANDHIPURAM ↔ SARAVANAMPATTI (COIMBATORE)
                 </span>
               </div>
 

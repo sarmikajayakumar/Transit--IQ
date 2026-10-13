@@ -35,7 +35,7 @@ export default function Header() {
                 </span>
               </div>
               <p className="font-mono text-[10px] sm:text-[11px] text-[#6E6B65] uppercase tracking-wider mt-0.5">
-                {isTamil ? "சென்னை பொதுப் போக்குவரத்து உகப்பாக்கம்" : "Corridor Telemetry & Route Optimization Engine"}
+                {isTamil ? "கோவை பொதுப் போக்குவரத்து உகப்பாக்கம்" : "Coimbatore Corridor Telemetry & Route Optimization Engine"}
               </p>
             </div>
           </div>
@@ -44,7 +44,7 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-5 font-mono text-[11px] text-[#0A0A0A]">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#0A0A0A] rounded-full animate-ping"></span>
-              <span className="font-semibold tracking-wider uppercase">13°04'N 80°14'E</span>
+              <span className="font-semibold tracking-wider uppercase">11°01'N 76°58'E (COIMBATORE)</span>
             </div>
             
             <div className="h-4 w-px bg-[#0A0A0A]/20"></div>

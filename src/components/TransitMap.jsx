@@ -252,7 +252,7 @@ export default function TransitMap() {
           </div>
           ${isBroken ? `
             <div style="margin-top: 6px; padding: 4px 6px; border: 1px solid #0A0A0A; background: #FAF8F5; font-size: 11px;">
-              <strong>Relief bus TN-01-N-8802</strong> dispatched (ETA 5 mins)!
+              <strong>Relief bus TN-38-N-6602</strong> dispatched (ETA 4 mins)!
             </div>
           ` : ''}
         </div>
@@ -331,7 +331,7 @@ export default function TransitMap() {
 
         {/* External Link */}
         <a
-          href="https://www.google.com/maps/dir/Chennai+Central,+Kannappar+Thidal,+Periamet,+Chennai,+Tamil+Nadu/Tambaram,+Chennai,+Tamil+Nadu"
+          href="https://www.google.com/maps/dir/Gandhipuram+Central+Bus+Stand,+Gandhipuram,+Coimbatore,+Tamil+Nadu/Saravanampatti,+Coimbatore,+Tamil+Nadu"
           target="_blank"
           rel="noopener noreferrer"
           className="px-2.5 sm:px-3 py-1 font-mono text-[11px] sm:text-xs uppercase tracking-wider border border-[#0A0A0A] bg-[#0A0A0A] text-[#F6F3EC] hover:bg-transparent hover:text-[#0A0A0A] transition-all flex items-center justify-center gap-1.5 shrink-0"
@@ -348,11 +348,11 @@ export default function TransitMap() {
         {activeLayer !== 'google_embed' && (
           <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-[1000] bg-[#FFFFFF] border border-[#0A0A0A] px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-mono shadow-[2px_2px_0px_#0A0A0A] sm:shadow-[3px_3px_0px_#0A0A0A] flex items-center gap-2 sm:gap-3 max-w-[90%] truncate">
             <span className="font-bold">ROUTES:</span>
-            <span>29C</span>
+            <span>12</span>
             <span className="text-[#6E6B65]">|</span>
-            <span className="font-bold text-[#16A34A]">15B</span>
+            <span className="font-bold text-[#16A34A]">3A</span>
             <span className="text-[#6E6B65]">|</span>
-            <span>21M</span>
+            <span>70</span>
           </div>
         )}
 
@@ -374,7 +374,7 @@ export default function TransitMap() {
               loading="lazy"
               allowFullScreen
               referrerPolicy="no-referrer-when-downgrade"
-              src="https://maps.google.com/maps?q=Chennai%20Central%20to%20Tambaram&t=&z=12&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?q=Gandhipuram+to+Saravanampatti+Coimbatore&t=&z=12&ie=UTF8&iwloc=&output=embed"
             />
           </div>
         )}

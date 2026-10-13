@@ -23,12 +23,12 @@ export default function Chatbot() {
     let welcomeText = "";
     if (currentRole === 'operator') {
       welcomeText = currentIsTamil
-        ? `[டிப்போ கட்டுப்பாட்டு அறை AI]: வழித்தட நெரிசல் பகுப்பாய்வு, அதிக கூட்டமுள்ள பகுதிகளுக்கு கூடுதல் பேருந்து ஒதுக்கீடு (+2), குறைந்த கூட்டமுள்ள வழித்தடங்களில் பேருந்துகளைச் சீரமைத்தல், மற்றும் பழுதான பேருந்து TN-01-N-4429 நிவாரண பணிகள் குறித்த தகவல்களைக் கேட்கலாம்.`
-        : `[DEPOT OPERATIONS AI]: Transit dispatch copilot ready. Ask me regarding route optimization, extra bus allocation for crowded corridors, scaling down idle buses on low-demand routes, or breakdown relief status.`;
+        ? `[டிப்போ கட்டுப்பாட்டு அறை AI]: கோவை வழித்தட நெரிசல் பகுப்பாய்வு, காந்திபுரம் - சரவணம்பட்டி வழித்தடத்திற்கு கூடுதல் பேருந்து ஒதுக்கீடு (+2), உக்கடம் - சிங்காநல்லூர் குறைந்த கூட்டமுள்ள வழித்தடங்களில் பேருந்துகளைச் சீரமைத்தல், மற்றும் பழுதான பேருந்து TN-38-N-2914 நிவாரண பணிகள் குறித்த தகவல்களைக் கேட்கலாம்.`
+        : `[DEPOT OPERATIONS AI]: Coimbatore transit dispatch copilot ready. Ask me regarding route optimization, extra bus allocation for crowded Gandhipuram ↔ Saravanampatti corridor, scaling down idle buses on low-demand routes, or breakdown relief status.`;
     } else {
       welcomeText = currentIsTamil
-        ? `[பயணிகள் வழிகாட்டி AI]: வணக்கம்! சென்னை சென்ட்ரல் - தாம்பரம் வழித்தடத்தில் கூட்டம் குறைந்த பேருந்துகள், பயண நேரம், கட்டணம், மற்றும் பழுதான பேருந்துக்கான நிவாரண மாற்று வழிகள் பற்றி என்னிடம் கேட்கலாம்.`
-        : `[PASSENGER COPILOT AI]: Welcome commuter. Inquire regarding optimal less-crowded buses with available seats, live timetable headways, fares, or breakdown prior notices.`;
+        ? `[பயணிகள் வழிகாட்டி AI]: வணக்கம்! கோவையில் காந்திபுரம், சரவணம்பட்டி, உக்கடம், சிங்காநல்லூர், பீளமேடு வழித்தடங்களில் கூட்டம் குறைந்த பேருந்துகள், பயண நேரம், கட்டணம், மற்றும் பழுதான பேருந்துக்கான நிவாரண மாற்று வழிகள் பற்றி என்னிடம் கேட்கலாம்.`
+        : `[PASSENGER COPILOT AI]: Welcome commuter. Inquire regarding optimal less-crowded buses across Coimbatore (Gandhipuram, Saravanampatti, Ukkadam, Peelamedu, CODISSIA), live timetable headways, fares, or breakdown prior notices.`;
     }
 
     return [
@@ -217,8 +217,8 @@ export default function Chatbot() {
       }
     } catch (err) {
       const fallbackReply = isTamil
-        ? `நேரலை தகவல்: அதிக நெரிசல் உள்ள வழித்தடம் 29C-க்கு கூடுதல் பேருந்துகள் ஒதுக்கப்படுகின்றன. குறைந்த கூட்டம் உள்ள வழித்தடம் 15B-ல் (42%) இருக்கைகள் காலியாக உள்ளன. பழுதான பேருந்து 29C-க்கு நிவாரணப் பேருந்து 5 நிமிடங்களில் வரும்.`
-        : `Corridor Telemetry: Crowded Route 29C (128%) is allocated extra buses. Lean route 15B has comfortable seating (42% capacity). Relief bus TN-01-N-8802 is 5 minutes away for broken-down bus 29C.`;
+        ? `நேரலை தகவல்: அதிக நெரிசல் உள்ள வழித்தடம் 12-க்கு (காந்திபுரம் - சரவணம்பட்டி) கூடுதல் பேருந்துகள் ஒதுக்கப்படுகின்றன. குறைந்த கூட்டம் உள்ள வழித்தடம் 3A-ல் (40%) இருக்கைகள் காலியாக உள்ளன. பழுதான பேருந்து 12-க்கு நிவாரணப் பேருந்து TN-38-N-6602 இன்னும் 4 நிமிடங்களில் வரும்.`
+        : `Corridor Telemetry: Crowded Route 12 (134%) is allocated extra buses. Lean route 3A has comfortable seating (40% capacity). Relief bus TN-38-N-6602 is 4 minutes away for broken-down bus 12.`;
 
       const botMsgId = (Date.now() + 1).toString();
       setMessages(prev => [

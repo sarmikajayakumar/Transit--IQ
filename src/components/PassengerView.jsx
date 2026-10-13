@@ -8,20 +8,27 @@ export default function PassengerView() {
   const { routes, breakdownAlert, optimizationApplied, language } = useTransit();
   const isTamil = language === 'ta';
   
-  const [origin, setOrigin] = useState("Chennai Central");
-  const [destination, setDestination] = useState("Tambaram");
+  const [origin, setOrigin] = useState("Gandhipuram Central Bus Stand");
+  const [destination, setDestination] = useState("Saravanampatti (CHIL SEZ)");
   const [selectedRouteId, setSelectedRouteId] = useState("route-b");
 
   const stopsList = [
-    "Chennai Central",
-    "Egmore / LIC",
-    "T. Nagar / Panagal Park",
-    "Koyambedu",
-    "Guindy / Kathipara",
-    "Velachery Junction",
-    "Chennai Airport",
-    "Chromepet",
-    "Tambaram"
+    "Gandhipuram Central Bus Stand",
+    "Ukkadam Bus Terminal",
+    "Singanallur Bus Terminal",
+    "Coimbatore Junction Railway Station",
+    "Peelamedu (PSG Tech)",
+    "Hope College (Avinashi Road)",
+    "CODISSIA Trade Fair Complex",
+    "Coimbatore International Airport",
+    "Saravanampatti (CHIL SEZ)",
+    "Saibaba Colony",
+    "Thudiyalur",
+    "RS Puram",
+    "Town Hall",
+    "Brookefields Mall",
+    "Fun Republic Mall",
+    "Vadavalli Terminal"
   ];
 
   return (
@@ -67,8 +74,8 @@ export default function PassengerView() {
               </span>
               <p className="mt-1 text-[#0A0A0A] text-[11px] sm:text-xs">
                 {isTamil
-                  ? "வழித்தடம் 15B இன்னும் 2 நிமிடத்தில் வரும் (42% கூட்டம் மட்டுமே, காலியிடங்கள் உள்ளன)."
-                  : "Hop on Route 15B arriving in 2 mins (only 42% crowd, plenty of empty seats)."}
+                  ? "வழித்தடம் 3A இன்னும் 3 நிமிடத்தில் வரும் (40% கூட்டம் மட்டுமே, காலியிடங்கள் உள்ளன)."
+                  : "Hop on Route 3A arriving in 3 mins (only 40% crowd, plenty of empty seats)."}
               </p>
             </div>
 
@@ -89,7 +96,7 @@ export default function PassengerView() {
             </p>
           </div>
           <span className="font-mono text-[10px] sm:text-xs text-[#0A0A0A]">
-            CORRIDOR: 01 (CENTRAL ↔ TAMBARAM)
+            CORRIDOR: 01 (GANDHIPURAM ↔ SARAVANAMPATTI)
           </span>
         </div>
 
