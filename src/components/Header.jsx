@@ -27,8 +27,8 @@ export default function Header() {
             <TransitCrosshairSvg className="w-7 h-7 sm:w-8 sm:h-8 shrink-0 text-[#0A0A0A]" />
             <div>
               <div className="flex items-baseline gap-2 sm:gap-3">
-                <span className="font-serif text-xl sm:text-2xl md:text-3xl font-normal tracking-tight text-[#0A0A0A]">
-                  TRANSIT<span className="font-sans font-black">.IQ</span>
+                <span className="font-display text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-[#0A0A0A]">
+                  TRANSIT<span className="font-bold text-[#6E6B65]">.IQ</span>
                 </span>
                 <span className="font-mono text-[9px] sm:text-[10px] tracking-widest uppercase text-[#6E6B65] border border-[#0A0A0A] px-1 sm:px-1.5 py-0.5">
                   SYS.V2.6

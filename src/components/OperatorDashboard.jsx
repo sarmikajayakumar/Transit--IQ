@@ -34,7 +34,7 @@ export default function OperatorDashboard() {
               </span>
             </div>
             
-            <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl font-normal text-[#0A0A0A]">
+            <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-semibold text-[#0A0A0A]">
               {isTamil
                 ? "விதிமுறை: கூட்ட நெரிசல் > 100% எட்டியதால் +2 கூடுதல் பேருந்துகளை இயக்க பரிந்துரை"
                 : "Rule Trigger: Crowding > 100% necessitates Extra Bus Allocation & Headway Reduction"}

@@ -25,14 +25,19 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        serif: ['Newsreader', 'Georgia', 'serif'],
-        mono: ['JetBrains Mono', 'SFMono-Regular', 'Menlo', 'monospace'],
-        tamil: ['Noto Sans Tamil', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+        serif: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+        tamil: ['"Noto Sans Tamil"', '"Plus Jakarta Sans"', 'sans-serif'],
       },
       letterSpacing: {
-        tighter: '-0.04em',
-        widest: '0.18em',
+        tighter: '-0.03em',
+        tight: '-0.015em',
+        normal: '0',
+        wide: '0.025em',
+        wider: '0.05em',
+        widest: '0.08em',
       }
     },
   },

@@ -46,7 +46,7 @@ export default function PassengerView() {
                   </span>
                 </div>
                 
-                <h4 className="font-serif text-base sm:text-lg font-bold text-[#0A0A0A] mt-1">
+                <h4 className="font-display text-base sm:text-lg font-semibold text-[#0A0A0A] mt-1">
                   {isTamil
                     ? `${breakdownAlert.tamilLocation} — ${breakdownAlert.tamilIssue}`
                     : `${breakdownAlert.location} — ${breakdownAlert.issue}`}
@@ -81,7 +81,7 @@ export default function PassengerView() {
         
         <div className="border-b border-[#0A0A0A] pb-3 sm:pb-4 mb-5 sm:mb-6 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 sm:gap-2">
           <div>
-            <h3 className="font-serif text-xl sm:text-2xl text-[#0A0A0A]">
+            <h3 className="font-display text-xl sm:text-2xl font-bold text-[#0A0A0A]">
               Journey Planner & Route Evaluation
             </h3>
             <p className="font-mono text-[10px] sm:text-xs text-[#6E6B65] uppercase tracking-wider mt-0.5">
@@ -152,7 +152,7 @@ export default function PassengerView() {
                       <span className="font-mono text-sm sm:text-base font-black text-[#0A0A0A]">
                         {route.code}
                       </span>
-                      <span className="font-serif text-sm sm:text-base text-[#0A0A0A]">
+                      <span className="font-sans font-semibold text-sm sm:text-base text-[#0A0A0A]">
                         {isTamil ? route.tamilName : route.name}
                       </span>
                       {isRecommended && (

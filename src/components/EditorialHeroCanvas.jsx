@@ -31,7 +31,7 @@ export default function EditorialHeroCanvas() {
           ========================================================================= */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
         {/* Massive Architectural Ghost Typography */}
-        <div className="absolute -top-6 -left-10 text-[22vw] sm:text-[18vw] font-serif font-black tracking-tighter text-[#0A0A0A]/[0.03] leading-none whitespace-nowrap">
+        <div className="absolute -top-6 -left-10 text-[22vw] sm:text-[18vw] font-display font-black tracking-tighter text-[#0A0A0A]/[0.03] leading-none whitespace-nowrap">
           TRANSIT.IQ
         </div>
         <div className="absolute -bottom-10 right-0 text-[18vw] sm:text-[14vw] font-mono font-bold tracking-widest text-[#0A0A0A]/[0.025] leading-none whitespace-nowrap">
@@ -93,9 +93,9 @@ export default function EditorialHeroCanvas() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-[#0A0A0A] font-normal leading-[1.12] sm:leading-[1.08] tracking-tight"
+              className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-[#0A0A0A] font-bold leading-[1.15] sm:leading-[1.1] tracking-tight"
             >
-              Public Transit <span className="italic font-light">Demand</span> & Route Optimization.
+              Public Transit <span className="font-light text-[#6E6B65]">Demand</span> & Route Optimization.
             </motion.h1>
 
             {/* Bilingual Subtitle */}
