@@ -76,29 +76,7 @@ export default function PassengerView() {
         </div>
       )}
 
-      {/* 2. Route Optimization & Capacity Reallocation Advisory */}
-      <div className="border border-[#0A0A0A] bg-[#FAF8F5] p-3.5 sm:p-4 flex items-start gap-3 sm:gap-4">
-        <div className="w-7 h-7 sm:w-8 sm:h-8 border border-[#0A0A0A] bg-[#0A0A0A] text-[#F6F3EC] flex items-center justify-center shrink-0 mt-0.5">
-          <CorridorBranchSvg className="w-4 h-4 sm:w-5 sm:h-5 invert" />
-        </div>
-        <div className="flex-1 font-mono text-xs">
-          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-            <span className="font-bold uppercase tracking-wider text-[#0A0A0A] text-[11px] sm:text-xs">
-              ROUTE OPTIMIZATION ADVISORY:
-            </span>
-            <span className="text-[#6E6B65] text-[10px] sm:text-xs">
-              DYNAMIC FLEET BALANCING
-            </span>
-          </div>
-          <p className="font-sans text-xs text-[#0A0A0A] mt-1 leading-relaxed">
-            {isTamil
-              ? "நெரிசல் மிக்க வழித்தடம் 29C-க்கு கூடுதல் பேருந்துகள் இயக்கப்படுகின்றன (காத்திருப்பு நேரம் 6.8 நிமிடங்களாகக் குறைகிறது). குறைந்த கூட்டம் உள்ள வழித்தடம் 15B-ல் (42% ஆக்கிரமிப்பு) போதுமான இருக்கைகள் உள்ளன — பயணிகள் விரைவான பயணத்திற்கு 15B-ஐத் தேர்ந்தெடுக்கலாம்!"
-              : "High-crowd corridors (Route 29C at 128% surge) are allocated extra relief buses to cut wait times, while low-crowd corridors (Route 15B at 42%) maintain streamlined service with guaranteed open seats. Commuters save 10+ minutes by boarding Route 15B."}
-          </p>
-        </div>
-      </div>
-
-      {/* 3. Journey Planner: Editorial Route Selector & Corridors Ledger */}
+      {/* 2. Journey Planner: Editorial Route Selector & Corridors Ledger */}
       <div className="border border-[#0A0A0A] bg-[#FFFFFF] p-4 sm:p-6 lg:p-8 shadow-[4px_4px_0px_#0A0A0A] sm:shadow-[6px_6px_0px_#0A0A0A]">
         
         <div className="border-b border-[#0A0A0A] pb-3 sm:pb-4 mb-5 sm:mb-6 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 sm:gap-2">

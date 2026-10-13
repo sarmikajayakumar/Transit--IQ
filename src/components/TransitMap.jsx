@@ -44,14 +44,15 @@ export default function TransitMap() {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const layersGroupRef = useRef(null);
-  const currentTileLayerRef = useRef(null);
+  const tileLayersRef = useRef({});
 
   const [activeLayer, setActiveLayer] = useState('google_traffic');
   const { routes, buses, hazards, breakdownAlert, optimizationApplied, language } = useTransit();
   const isTamil = language === 'ta';
 
+  // 1. Initialize map and tile layers once
   useEffect(() => {
-    if (activeLayer === 'google_embed' || !mapContainerRef.current) return;
+    if (!mapContainerRef.current) return;
 
     if (!mapInstanceRef.current) {
       const map = L.map(mapContainerRef.current, {
@@ -61,23 +62,70 @@ export default function TransitMap() {
         attributionControl: false
       });
 
+      // Pre-instantiate and cache all Google tile layers
+      const cachedLayers = {};
+      Object.entries(GOOGLE_MAP_LAYERS).forEach(([key, config]) => {
+        cachedLayers[key] = L.tileLayer(config.url, {
+          subdomains: config.subdomains,
+          maxZoom: config.maxZoom,
+          attribution: config.attribution,
+          keepBuffer: 4,
+          updateWhenIdle: false
+        });
+      });
+      tileLayersRef.current = cachedLayers;
+
+      // Add initial layer
+      const initialLayer = cachedLayers['google_traffic'] || Object.values(cachedLayers)[0];
+      if (initialLayer) {
+        initialLayer.addTo(map);
+      }
+
       layersGroupRef.current = L.layerGroup().addTo(map);
       mapInstanceRef.current = map;
+
+      // Ensure proper sizing
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 150);
     }
 
+    return () => {
+      // Keep map persistent across component lifecycle if unmounted conditionally
+    };
+  }, []);
+
+  // 2. Handle tile layer switching safely
+  useEffect(() => {
     const map = mapInstanceRef.current;
+    if (!map || activeLayer === 'google_embed') return;
 
-    if (currentTileLayerRef.current) {
-      map.removeLayer(currentTileLayerRef.current);
+    const cachedLayers = tileLayersRef.current;
+    const targetLayer = cachedLayers[activeLayer];
+
+    // Remove any currently attached tile layers
+    Object.values(cachedLayers).forEach(layer => {
+      if (map.hasLayer(layer)) {
+        map.removeLayer(layer);
+      }
+    });
+
+    // Add selected layer and ensure it stays behind vector polylines/markers
+    if (targetLayer) {
+      targetLayer.addTo(map);
+      if (targetLayer.bringToBack) {
+        targetLayer.bringToBack();
+      }
     }
 
-    const layerConfig = GOOGLE_MAP_LAYERS[activeLayer] || GOOGLE_MAP_LAYERS.google_traffic;
-    const tileLayer = L.tileLayer(layerConfig.url, {
-      subdomains: layerConfig.subdomains,
-      maxZoom: layerConfig.maxZoom,
-      attribution: layerConfig.attribution
-    }).addTo(map);
-    currentTileLayerRef.current = tileLayer;
+    // Invalidate map size so Leaflet recalculates and redraws tiles smoothly
+    map.invalidateSize();
+  }, [activeLayer]);
+
+  // 3. Update overlays (routes, hotspots, stops, buses)
+  useEffect(() => {
+    const map = mapInstanceRef.current;
+    if (!map || !layersGroupRef.current) return;
 
     const layerGroup = layersGroupRef.current;
     layerGroup.clearLayers();
@@ -211,13 +259,7 @@ export default function TransitMap() {
       `);
     });
 
-  }, [activeLayer, routes, buses, hazards, breakdownAlert, optimizationApplied, language]);
-
-  const focusLocation = (coords, zoom = 14) => {
-    if (mapInstanceRef.current) {
-      mapInstanceRef.current.flyTo(coords, zoom, { duration: 1.2 });
-    }
-  };
+  }, [routes, buses, hazards, breakdownAlert, optimizationApplied, language]);
 
   return (
     <div className="relative border border-[#0A0A0A] bg-[#FFFFFF] shadow-[4px_4px_0px_#0A0A0A] sm:shadow-[6px_6px_0px_#0A0A0A]">
@@ -300,58 +342,10 @@ export default function TransitMap() {
 
       </div>
 
-      {/* Quick Jump Hotspot Bar */}
-      <div className="bg-[#FFFFFF] px-3 sm:px-4 py-1.5 sm:py-2 border-b border-[#0A0A0A] flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar font-mono text-[10px] sm:text-[11px]">
-        <span className="text-[#6E6B65] uppercase shrink-0">Focus:</span>
-        <button
-          onClick={() => focusLocation([13.0067, 80.2023], 15)}
-          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap shrink-0 transition-colors"
-        >
-          [Kathipara Hotspot]
-        </button>
-        <button
-          onClick={() => focusLocation([13.0410, 80.2450], 16)}
-          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap shrink-0 transition-colors"
-        >
-          [T. Nagar Breakdown (29C)]
-        </button>
-        <button
-          onClick={() => focusLocation([13.0827, 80.2707], 15)}
-          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap shrink-0 transition-colors"
-        >
-          [Chennai Central]
-        </button>
-        <button
-          onClick={() => focusLocation([12.9249, 80.1260], 15)}
-          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap shrink-0 transition-colors"
-        >
-          [Tambaram Terminal]
-        </button>
-        <button
-          onClick={() => focusLocation(CORRIDOR_COORDINATES.center, CORRIDOR_COORDINATES.zoom)}
-          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] text-[#6E6B65] whitespace-nowrap shrink-0 transition-colors"
-        >
-          [Reset]
-        </button>
-      </div>
-
-      {/* Map View with Responsive Viewport Heights */}
-      {activeLayer === 'google_embed' ? (
-        <div className="w-full h-[340px] sm:h-[440px] lg:h-[520px] relative bg-[#EEE9DE]">
-          <iframe
-            title="Google Maps Live Corridor"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            loading="lazy"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-            src="https://maps.google.com/maps?q=Chennai%20Central%20to%20Tambaram&t=&z=12&ie=UTF8&iwloc=&output=embed"
-          />
-        </div>
-      ) : (
-        <div className="relative">
-          {/* Map Overlay Route Code Bar */}
+      {/* Map View: Keep Leaflet container always mounted to prevent canvas destruction */}
+      <div className="relative w-full h-[340px] sm:h-[440px] lg:h-[520px]">
+        {/* Map Overlay Route Code Bar */}
+        {activeLayer !== 'google_embed' && (
           <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-[1000] bg-[#FFFFFF] border border-[#0A0A0A] px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-mono shadow-[2px_2px_0px_#0A0A0A] sm:shadow-[3px_3px_0px_#0A0A0A] flex items-center gap-2 sm:gap-3 max-w-[90%] truncate">
             <span className="font-bold">ROUTES:</span>
             <span>29C</span>
@@ -360,14 +354,31 @@ export default function TransitMap() {
             <span className="text-[#6E6B65]">|</span>
             <span>21M</span>
           </div>
+        )}
 
-          <div
-            ref={mapContainerRef}
-            className="w-full h-[340px] sm:h-[440px] lg:h-[520px] z-10"
-            style={{ width: '100%' }}
-          />
-        </div>
-      )}
+        {/* Leaflet Map Container */}
+        <div
+          ref={mapContainerRef}
+          className="w-full h-full z-10"
+          style={{ display: activeLayer === 'google_embed' ? 'none' : 'block' }}
+        />
+
+        {/* Google Embed Iframe (shown only when selected) */}
+        {activeLayer === 'google_embed' && (
+          <div className="w-full h-full relative bg-[#EEE9DE]">
+            <iframe
+              title="Google Maps Live Corridor"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              src="https://maps.google.com/maps?q=Chennai%20Central%20to%20Tambaram&t=&z=12&ie=UTF8&iwloc=&output=embed"
+            />
+          </div>
+        )}
+      </div>
 
     </div>
   );
