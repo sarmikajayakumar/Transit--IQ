@@ -220,20 +220,20 @@ export default function TransitMap() {
   };
 
   return (
-    <div className="relative border border-[#0A0A0A] bg-[#FFFFFF] shadow-[6px_6px_0px_#0A0A0A]">
+    <div className="relative border border-[#0A0A0A] bg-[#FFFFFF] shadow-[4px_4px_0px_#0A0A0A] sm:shadow-[6px_6px_0px_#0A0A0A]">
       
       {/* Top Map Toolbar: Layer Selector & External Link */}
-      <div className="bg-[#FAF8F5] px-4 py-3 border-b border-[#0A0A0A] flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div className="bg-[#FAF8F5] px-3 sm:px-4 py-2 sm:py-3 border-b border-[#0A0A0A] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 text-xs">
         
         {/* Layer Selector */}
-        <div className="flex items-center flex-wrap gap-1.5">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-[#6E6B65] mr-1">
-            Google Maps Layer:
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto py-0.5">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-[#6E6B65] mr-1 shrink-0">
+            Layers:
           </span>
 
           <button
             onClick={() => setActiveLayer('google_traffic')}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider border transition-all ${
+            className={`px-2.5 sm:px-3 py-1 font-mono text-[11px] sm:text-xs uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all ${
               activeLayer === 'google_traffic'
                 ? 'bg-[#0A0A0A] text-[#F6F3EC] border-[#0A0A0A]'
                 : 'bg-transparent text-[#0A0A0A] border-[#0A0A0A] hover:bg-[#E2DBD0]'
@@ -244,7 +244,7 @@ export default function TransitMap() {
 
           <button
             onClick={() => setActiveLayer('google_roadmap')}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider border transition-all ${
+            className={`px-2.5 sm:px-3 py-1 font-mono text-[11px] sm:text-xs uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all ${
               activeLayer === 'google_roadmap'
                 ? 'bg-[#0A0A0A] text-[#F6F3EC] border-[#0A0A0A]'
                 : 'bg-transparent text-[#0A0A0A] border-[#0A0A0A] hover:bg-[#E2DBD0]'
@@ -255,7 +255,7 @@ export default function TransitMap() {
 
           <button
             onClick={() => setActiveLayer('google_satellite')}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider border transition-all ${
+            className={`px-2.5 sm:px-3 py-1 font-mono text-[11px] sm:text-xs uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all ${
               activeLayer === 'google_satellite'
                 ? 'bg-[#0A0A0A] text-[#F6F3EC] border-[#0A0A0A]'
                 : 'bg-transparent text-[#0A0A0A] border-[#0A0A0A] hover:bg-[#E2DBD0]'
@@ -266,7 +266,7 @@ export default function TransitMap() {
 
           <button
             onClick={() => setActiveLayer('google_terrain')}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider border transition-all ${
+            className={`px-2.5 sm:px-3 py-1 font-mono text-[11px] sm:text-xs uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all ${
               activeLayer === 'google_terrain'
                 ? 'bg-[#0A0A0A] text-[#F6F3EC] border-[#0A0A0A]'
                 : 'bg-transparent text-[#0A0A0A] border-[#0A0A0A] hover:bg-[#E2DBD0]'
@@ -277,13 +277,13 @@ export default function TransitMap() {
 
           <button
             onClick={() => setActiveLayer('google_embed')}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider border transition-all ${
+            className={`px-2.5 sm:px-3 py-1 font-mono text-[11px] sm:text-xs uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all ${
               activeLayer === 'google_embed'
                 ? 'bg-[#0A0A0A] text-[#F6F3EC] border-[#0A0A0A]'
                 : 'bg-transparent text-[#0A0A0A] border-[#0A0A0A] hover:bg-[#E2DBD0]'
             }`}
           >
-            {isTamil ? "கூகுள் நேரலை பிரேம்" : "Live Frame"}
+            {isTamil ? "நேரலை பிரேம்" : "Live Frame"}
           </button>
         </div>
 
@@ -292,52 +292,52 @@ export default function TransitMap() {
           href="https://www.google.com/maps/dir/Chennai+Central,+Kannappar+Thidal,+Periamet,+Chennai,+Tamil+Nadu/Tambaram,+Chennai,+Tamil+Nadu"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-3 py-1 font-mono text-xs uppercase tracking-wider border border-[#0A0A0A] bg-[#0A0A0A] text-[#F6F3EC] hover:bg-transparent hover:text-[#0A0A0A] transition-all flex items-center gap-1.5"
+          className="px-2.5 sm:px-3 py-1 font-mono text-[11px] sm:text-xs uppercase tracking-wider border border-[#0A0A0A] bg-[#0A0A0A] text-[#F6F3EC] hover:bg-transparent hover:text-[#0A0A0A] transition-all flex items-center justify-center gap-1.5 shrink-0"
         >
-          <span>{isTamil ? "கூகுள் மேப்ஸில் திற" : "Open in Google Maps"}</span>
+          <span>{isTamil ? "கூகுள் மேப்ஸ்" : "Google Maps"}</span>
           <ExternalLink className="w-3 h-3" />
         </a>
 
       </div>
 
       {/* Quick Jump Hotspot Bar */}
-      <div className="bg-[#FFFFFF] px-4 py-2 border-b border-[#0A0A0A] flex items-center gap-2 overflow-x-auto font-mono text-[11px]">
+      <div className="bg-[#FFFFFF] px-3 sm:px-4 py-1.5 sm:py-2 border-b border-[#0A0A0A] flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar font-mono text-[10px] sm:text-[11px]">
         <span className="text-[#6E6B65] uppercase shrink-0">Focus:</span>
         <button
           onClick={() => focusLocation([13.0067, 80.2023], 15)}
-          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap transition-colors"
+          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap shrink-0 transition-colors"
         >
           [Kathipara Hotspot]
         </button>
         <button
           onClick={() => focusLocation([13.0410, 80.2450], 16)}
-          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap transition-colors"
+          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap shrink-0 transition-colors"
         >
           [T. Nagar Breakdown (29C)]
         </button>
         <button
           onClick={() => focusLocation([13.0827, 80.2707], 15)}
-          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap transition-colors"
+          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap shrink-0 transition-colors"
         >
           [Chennai Central]
         </button>
         <button
           onClick={() => focusLocation([12.9249, 80.1260], 15)}
-          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap transition-colors"
+          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap shrink-0 transition-colors"
         >
           [Tambaram Terminal]
         </button>
         <button
           onClick={() => focusLocation(CORRIDOR_COORDINATES.center, CORRIDOR_COORDINATES.zoom)}
-          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] text-[#6E6B65] whitespace-nowrap transition-colors"
+          className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] text-[#6E6B65] whitespace-nowrap shrink-0 transition-colors"
         >
           [Reset]
         </button>
       </div>
 
-      {/* Map View */}
+      {/* Map View with Responsive Viewport Heights */}
       {activeLayer === 'google_embed' ? (
-        <div className="w-full h-[460px] sm:h-[540px] relative bg-[#EEE9DE]">
+        <div className="w-full h-[340px] sm:h-[440px] lg:h-[520px] relative bg-[#EEE9DE]">
           <iframe
             title="Google Maps Live Corridor"
             width="100%"
@@ -352,18 +352,18 @@ export default function TransitMap() {
       ) : (
         <div className="relative">
           {/* Map Overlay Route Code Bar */}
-          <div className="absolute top-3 left-3 z-[1000] bg-[#FFFFFF] border border-[#0A0A0A] px-3 py-1.5 text-xs font-mono shadow-[3px_3px_0px_#0A0A0A] flex items-center gap-3">
+          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-[1000] bg-[#FFFFFF] border border-[#0A0A0A] px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-mono shadow-[2px_2px_0px_#0A0A0A] sm:shadow-[3px_3px_0px_#0A0A0A] flex items-center gap-2 sm:gap-3 max-w-[90%] truncate">
             <span className="font-bold">ROUTES:</span>
-            <span>29C (Anna Salai)</span>
+            <span>29C</span>
             <span className="text-[#6E6B65]">|</span>
-            <span className="font-bold text-[#16A34A]">15B (Ring Rd)</span>
+            <span className="font-bold text-[#16A34A]">15B</span>
             <span className="text-[#6E6B65]">|</span>
-            <span>21M (Velachery)</span>
+            <span>21M</span>
           </div>
 
           <div
             ref={mapContainerRef}
-            className="w-full h-[460px] sm:h-[540px] z-10"
+            className="w-full h-[340px] sm:h-[440px] lg:h-[520px] z-10"
             style={{ width: '100%' }}
           />
         </div>

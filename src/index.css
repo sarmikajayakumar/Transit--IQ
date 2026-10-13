@@ -5,16 +5,29 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
   body {
     @apply bg-[#F6F3EC] text-[#0A0A0A] min-h-screen font-sans;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
   /* Fine editorial hairline rules */
   hr {
     @apply border-[#E2DBD0];
   }
+}
+
+/* Hide scrollbar utility for touch scroll strips */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Custom editorial scrollbars */
