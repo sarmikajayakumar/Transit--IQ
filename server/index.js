@@ -156,29 +156,43 @@ function generateSmartFallback(message, role, language) {
 
   if (role === 'operator') {
     if (isTamil) {
-      if (msgLower.includes('breakdown') || msgLower.includes('பழுது') || msgLower.includes('என்ஜின்')) {
+      if (msgLower.includes('breakdown') || msgLower.includes('பழுது') || msgLower.includes('என்ஜின்') || msgLower.includes('2914')) {
         return `🛠️ [டிப்போ மேலாளர் எச்சரிக்கை - கோவை வழித்தட பழுது]:
 பேருந்து எண் TN-38-N-2914 (வழித்தடம் 12) கணபதி சிக்னல் (சத்தி ரோடு) அருகில் பழுதாகியுள்ளது.
 - நிவாரண பேருந்து TN-38-N-6602 உடனடியாக அனுப்பப்பட்டுள்ளது (வருகை: 4 நிமிடங்கள்).
 - பயணிகள் மாற்றுப் பேருந்தான 3A அல்லது 70-க்கு வழிகாட்டப்பட்டுள்ளனர்.
 - பழுதுநீக்கும் மொபைல் குழு சம்பவ இடத்திற்கு விரைந்துள்ளது.`;
       }
+      if (msgLower.includes('overcrowd') || msgLower.includes('undercrowd') || msgLower.includes('நெரிசல்') || msgLower.includes('ரத்து') || msgLower.includes('கூடுதல் பேருந்து') || msgLower.includes('குறைந்த')) {
+        return `📊 [TransitIQ கோவை இயக்குனர் பகுப்பாய்வு - வழித்தட உகப்பாக்கம்]:
+1. 🚨 அதிக கூட்டம் (OVERCROWDED): வழித்தடம் 12 (காந்திபுரம் ↔ சரவணம்பட்டி IT காரிடார்) 134% நெரிசலில் இயங்குகிறது. 480 பயணிகள்/மணி, காத்திருப்பு 15.4 நிமிடம்.
+   👉 கட்டளை: உடனடியாக +2 கூடுதல் நிவாரணப் பேருந்துகளை ஒதுக்கீடு செய்! இதனால் காத்திருப்பு 6.2 நிமிடங்களாகக் குறையும்.
+2. 📉 குறைந்த கூட்டம் (UNDERCROWDED): வழித்தடம் 3A (உக்கடம் ↔ சிங்காநல்லூர்) 40% நெரிசலில் 60% காலி இருக்கைகளுடன் இயங்குகிறது (160 பயணிகள்/மணி).
+   👉 கட்டளை: வீணாக ஓடும் 1 பேருந்தை ரத்து செய்து, அந்த வளத்தை வழித்தடம் 12-க்கு மாற்று! இதனால் எரிபொருள் சேமிக்கப்படும், அட்டவணை 15 நிமிட இடைவெளியில் சீராக இருக்கும்.`;
+      }
       return `📊 [TransitIQ கோவை இயக்குனர் பகுப்பாய்வு - வழித்தட உகப்பாக்கம்]:
 - அதிக கூட்டம் உள்ள காந்திபுரம் - சரவணம்பட்டி வழித்தடம் 12-ல் உச்சநேர நெரிசல் 134% எட்டியுள்ளது (காத்திருப்பு: 15.4 நிமி). இதற்கு +2 கூடுதல் பேருந்துகள் உடனடியாகத் தேவை!
-- குறைந்த கூட்டம் உள்ள உக்கடம் - சிங்காநல்லூர் வழித்தடம் 3A-ல் (40% ஆக்கிரமிப்பு) பேருந்துகளைக் குறைத்து/சீரமைத்து, அந்த கூடுதல் பேருந்துகளை நெரிசல் மிகுந்த வழித்தடம் 12-க்கு ஒதுக்க AI பரிந்துரைக்கிறது.
+- குறைந்த கூட்டம் உள்ள உக்கடம் - சிங்காநல்லூர் வழித்தடம் 3A-ல் (40% ஆக்கிரமிப்பு) 1 வீண் பேருந்தை ரத்து செய்து, அந்த பேருந்தை நெரிசல் மிகுந்த வழித்தடம் 12-க்கு ஒதுக்க AI பரிந்துரைக்கிறது.
 - இதன் மூலம் ஒட்டுமொத்த காத்திருப்பு நேரம் 15.4 நிமிடத்திலிருந்து 6.2 நிமிடங்களாகக் குறையும், நெரிசல் 82%-ஆகக் கட்டுப்படும்!`;
     } else {
-      if (msgLower.includes('breakdown') || msgLower.includes('repair') || msgLower.includes('bus')) {
+      if (msgLower.includes('breakdown') || msgLower.includes('repair') || msgLower.includes('bus') || msgLower.includes('2914')) {
         return `🛠️ [Depot Commander Alert - Coimbatore Fleet Incident]:
 Bus TN-38-N-2914 (Route 12) reported electrical alternator failure at Ganapathy Signal (Sathy Road).
 - Standby relief unit TN-38-N-6602 dispatched immediately from Gandhipuram Depot (ETA: 4 mins).
 - Automated prior broadcast sent to waiting passengers recommending Route 3A & Route 70.
 - Mobile repair team deployed.`;
       }
+      if (msgLower.includes('overcrowd') || msgLower.includes('undercrowd') || msgLower.includes('extra bus') || msgLower.includes('cancel') || msgLower.includes('directive') || msgLower.includes('reallocate')) {
+        return `📊 [TransitIQ Capacity Reallocation Analysis - Coimbatore Network]:
+1. 🚨 OVERCROWDED CORRIDOR: Route 12 (Gandhipuram ↔ Saravanampatti IT Park) is operating at 134% capacity (480 pax/hr), causing 15.4 min passenger wait times and platform overflows at Ganapathy.
+   👉 DIRECTIVE: Add +2 Extra Relief Buses immediately (TN-38-N-6602 & Standby unit). Headway drops to 7.5 mins, cutting wait times to 6.2 mins.
+2. 📉 UNDERCROWDED CORRIDOR: Route 3A (Ukkadam ↔ Singanallur via Trichy Road) operates at only 40% capacity with 60% empty seats (160 pax/hr).
+   👉 DIRECTIVE: Cancel 1 idle scheduled departure and transfer the bus/driver to Route 12. Eliminates dead mileage and fuel burn while preserving a reliable 15-minute headway for Trichy Road commuters.`;
+      }
       return `📊 [TransitIQ Coimbatore Corridor Optimization Intelligence]:
 - Crowded Corridors Need Extra Buses: Route 12 (Gandhipuram ↔ Saravanampatti IT Park) reached 134% capacity with an average wait time of 15.4 minutes.
-- Low Demand Corridors Need Fewer Buses: Route 3A (Ukkadam ↔ Singanallur) operates at only 40% capacity with ample seating.
-- Immediate AI Action: Reallocate and deploy 2 extra buses to Route 12 while maintaining efficient low-frequency allocation on Route 3A. This slashes average wait times down to 6.2 mins (↓ 58% reduction).`;
+- Low Demand Corridors Need Fewer Buses: Route 3A (Ukkadam ↔ Singanallur) operates at only 40% capacity with 60% empty seating.
+- Immediate AI Action: Add +2 extra buses to Route 12 and cancel 1 idle bus on Route 3A. This slashes average wait times down to 6.2 mins (↓ 60% reduction) with zero passenger stranding.`;
     }
   } else {
     // Passenger mode
@@ -188,6 +202,12 @@ Bus TN-38-N-2914 (Route 12) reported electrical alternator failure at Ganapathy 
 கணபதி சிக்னல் அருகில் இயங்கி வந்த வழித்தடம் 12 (பேருந்து TN-38-N-2914) ஆல்டர்னேட்டர் கோளாறு காரணமாக நிறுத்தப்பட்டுள்ளது.
 ✅ கவலைப்பட வேண்டாம்! மாற்று நிவாரண பேருந்து TN-38-N-6602 இன்னும் 4 நிமிடங்களில் அங்கு வந்து சேரும்.
 👉 உடனடி பயணம் செய்ய: வழித்தடம் 3A அல்லது அவினாசி சாலை வழித்தடம் 70 தேர்ந்தெடுக்கலாம்!`;
+      }
+      if (msgLower.includes('overcrowd') || msgLower.includes('undercrowd') || msgLower.includes('நெரிசல்') || msgLower.includes('ரத்து') || msgLower.includes('கூடுதல் பேருந்து') || msgLower.includes('குறைந்த')) {
+        return `🚍 [TransitIQ பயண வழிகாட்டுதல்]:
+- அதிக கூட்டம் (134%): காந்திபுரம் - சரவணம்பட்டி வழித்தடம் 12-ல் கடுமையான நெரிசல் உள்ளதால், பயணிகள் வசதிக்காக +2 கூடுதல் பேருந்துகள் இயக்கப்படுகின்றன.
+- குறைந்த கூட்டம் (40%): உக்கடம் - சிங்காநல்லூர் வழித்தடம் 3A-ல் 1 வீண் பேருந்து ரத்து செய்யப்பட்டு வழித்தடம் 12-க்கு மாற்றப்பட்டுள்ளது; இருப்பினும் 15 நிமிடங்களுக்கு ஒரு முறை பேருந்து உண்டு!
+👉 இருக்கை வசதியுடன் நிம்மதியாகப் பயணிக்க வழித்தடம் 3A அல்லது 70 தேர்ந்தெடுக்கலாம்.`;
       }
       if (msgLower.includes('route') || msgLower.includes('எந்த') || msgLower.includes('பேருந்து') || msgLower.includes('நேரம்') || msgLower.includes('கூட்டம்') || msgLower.includes('கோவை') || msgLower.includes('சரவணம்பட்டி')) {
         return `🚍 [TransitIQ கோவை பயண வழிகாட்டி]:
@@ -209,6 +229,12 @@ Bus TN-38-N-2914 (Route 12) reported electrical alternator failure at Ganapathy 
 Route 12 (Bus TN-38-N-2914) experienced an electrical issue near Ganapathy Signal on Sathy Road.
 ✅ Relief Bus TN-38-N-6602 has already been dispatched and will arrive in 4 minutes!
 👉 Fast Alternate: Board Route 3A (Trichy Road) or Route 70 (Avinashi Road) arriving in 3 minutes.`;
+      }
+      if (msgLower.includes('overcrowd') || msgLower.includes('undercrowd') || msgLower.includes('extra bus') || msgLower.includes('cancel')) {
+        return `🚍 [TransitIQ Passenger Corridor Guidance]:
+- Overcrowded Route 12 (134% full): Operating with +2 extra deployed buses to absorb Saravanampatti IT commuter queues.
+- Undercrowded Route 3A (40% full): 1 surplus bus cancelled and transferred to Route 12 to eliminate fuel waste while keeping steady 15-min departures.
+👉 Commuter Tip: Board Route 3A or Route 70 for guaranteed seating and minimum wait times.`;
       }
       if (msgLower.includes('which bus') || msgLower.includes('suggest') || msgLower.includes('timing') || msgLower.includes('crowd') || msgLower.includes('optimize') || msgLower.includes('coimbatore')) {
         return `🚍 [TransitIQ Optimal Coimbatore Route Suggestion]:
@@ -243,42 +269,62 @@ app.post('/api/simulate', (req, res) => {
 
   if (action === 'apply_optimization') {
     transitState.optimizationApplied = true;
-    transitState.routes[0].crowdingPercent = 84;
+    transitState.routes[0].crowdingPercent = 82;
     transitState.routes[0].busesPerHour = 8;
     transitState.routes[0].headwayMin = 7.5;
-    transitState.routes[0].avgWaitMin = 6.8;
+    transitState.routes[0].avgWaitMin = 6.2;
     transitState.routes[0].status = "OPTIMIZED (+2 EXTRA BUSES)";
     transitState.routes[0].tamilStatus = "மேம்படுத்தப்பட்டது (+2 கூடுதல் பேருந்துகள்)";
     transitState.routes[0].color = "#10B981";
+
+    if (transitState.routes[1]) {
+      transitState.routes[1].crowdingPercent = 52;
+      transitState.routes[1].busesPerHour = 4;
+      transitState.routes[1].headwayMin = 15;
+      transitState.routes[1].avgWaitMin = 6.5;
+      transitState.routes[1].status = "BALANCED (-1 IDLE BUS CANCELLED/TRANSFERRED)";
+      transitState.routes[1].tamilStatus = "சீரமைக்கப்பட்டது (-1 வீண் பேருந்து ரத்து/மாற்றம்)";
+      transitState.routes[1].color = "#16A34A";
+    }
   } else if (action === 'reset_optimization') {
     transitState.optimizationApplied = false;
-    transitState.routes[0].crowdingPercent = 128;
+    transitState.routes[0].crowdingPercent = 134;
     transitState.routes[0].busesPerHour = 4;
     transitState.routes[0].headwayMin = 15;
-    transitState.routes[0].avgWaitMin = 14;
+    transitState.routes[0].avgWaitMin = 15.4;
     transitState.routes[0].status = "OVERCROWDED (NEEDS EXTRA BUSES)";
     transitState.routes[0].tamilStatus = "அதிக கூட்டம் (கூடுதல் பேருந்துகள் தேவை)";
     transitState.routes[0].color = "#EF4444";
+
+    if (transitState.routes[1]) {
+      transitState.routes[1].crowdingPercent = 40;
+      transitState.routes[1].busesPerHour = 5;
+      transitState.routes[1].headwayMin = 12;
+      transitState.routes[1].avgWaitMin = 5.5;
+      transitState.routes[1].status = "UNDERCROWDED (SEATS AVAILABLE)";
+      transitState.routes[1].tamilStatus = "குறைந்த கூட்டம் (இருக்கைகள் உள்ளன)";
+      transitState.routes[1].color = "#10B981";
+    }
   } else if (action === 'resolve_breakdown') {
     transitState.breakdowns = [];
   } else if (action === 'trigger_breakdown') {
     transitState.breakdowns = [
       {
-        busId: "TN-01-N-4429",
-        routeNumber: "29C",
-        routeName: "Central to Tambaram via Mount Road",
-        tamilRouteName: "மத்திய நிலையம் - தாம்பரம் (மவுண்ட் ரோடு வழி)",
-        location: "Near T. Nagar Panagal Park",
-        tamilLocation: "தி.நகர் பனகல் பார்க் அருகில்",
-        issue: "Engine Cooling System Failure",
-        tamilIssue: "இயந்திர குளிர்விப்பு அமைப்பு கோளாறு",
+        busId: "TN-38-N-2914",
+        routeNumber: "12",
+        routeName: "Gandhipuram to Saravanampatti IT Park via Ganapathy",
+        tamilRouteName: "காந்திபுரம் - சரவணம்பட்டி (கணபதி வழி)",
+        location: "Near Ganapathy Signal (Sathy Road)",
+        tamilLocation: "கணபதி சிக்னல் அருகில் (சத்தி ரோடு)",
+        issue: "Alternator & Electrical Circuit Failure",
+        tamilIssue: "ஆல்டர்னேட்டர் & மின்சுற்று கோளாறு",
         status: "Repairs In Progress - Passengers Evacuated to Platform",
         tamilStatus: "பழுதுபார்க்கும் பணி நடக்கிறது - பயணிகள் மேடையில்",
-        backupReliefBus: "TN-01-N-8802 (Relief Express)",
-        reliefETA: "5 minutes away",
-        tamilReliefETA: "5 நிமிடங்களில் வந்து சேரும்",
-        recommendedAlternates: ["Route 15B (Arriving 2 mins, 40% crowd)", "Route 70 Express (Arriving 4 mins, 55% crowd)"],
-        tamilRecommendedAlternates: ["வழித்தடம் 15B (2 நிமிடங்களில் வரும், 40% கூட்டம்)", "வழித்தடம் 70 விரைவு (4 நிமிடங்களில் வரும், 55% கூட்டம்)"],
+        backupReliefBus: "TN-38-N-6602 (Relief Express)",
+        reliefETA: "4 minutes away",
+        tamilReliefETA: "4 நிமிடங்களில் வந்து சேரும்",
+        recommendedAlternates: ["Route 3A (Arriving 3 mins, 40% crowd)", "Route 70 (Arriving 5 mins, 76% crowd)"],
+        tamilRecommendedAlternates: ["வழித்தடம் 3A (3 நிமிடங்களில் வரும், 40% கூட்டம்)", "வழித்தடம் 70 (5 நிமிடங்களில் வரும், 76% கூட்டம்)"],
         timestamp: new Date().toLocaleTimeString()
       }
     ];

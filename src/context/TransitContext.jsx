@@ -34,8 +34,8 @@ export function TransitProvider({ children }) {
   const t = translations[language] || translations.en;
 
   // Function to apply AI optimization recommendation:
-  // Dynamically reallocates fleet: adds +2 buses to crowded Route 12 to reduce wait times,
-  // while keeping less-crowded Route 3A balanced without wasteful empty runs.
+  // Dynamically reallocates fleet: adds +2 buses to overcrowded Route 12 (reducing wait times)
+  // while canceling/scaling down 1 excess bus on undercrowded Route 3A (preventing wasteful empty running).
   const applyOptimization = () => {
     setOptimizationApplied(true);
     setRoutes(prev => prev.map(r => {
@@ -46,9 +46,21 @@ export function TransitProvider({ children }) {
           busesPerHour: 8,
           headwayMin: 7.5,
           avgWaitMin: 6.2,
-          status: "OPTIMIZED",
+          status: "OPTIMIZED (+2 EXTRA BUSES ALLOCATED)",
           statusBadge: "+2 Extra Buses Deployed [SIMULATED]",
           color: "#10B981"
+        };
+      }
+      if (r.id === 'route-b') {
+        return {
+          ...r,
+          crowdingPercent: 52,
+          busesPerHour: 4,
+          headwayMin: 15,
+          avgWaitMin: 6.5,
+          status: "BALANCED (-1 IDLE BUS CANCELLED/TRANSFERRED)",
+          statusBadge: "-1 Idle Bus Cancelled & Transferred [SIMULATED]",
+          color: "#16A34A"
         };
       }
       return r;

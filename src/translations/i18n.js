@@ -3,7 +3,7 @@ export const translations = {
     brand: "TransitIQ",
     tagline: "AI Demand & Dynamic Route Optimization System",
     simulatedBanner: "SIMULATED DATA DEMO — PUBLIC TRANSPORT INTELLIGENCE",
-    simulatedSub: "Explainable models & rules powered by Groq GenAI for Chennai Corridor",
+    simulatedSub: "Explainable models & rules powered by Groq GenAI for Coimbatore Corridors",
     roles: {
       passenger: "Passenger Mode",
       operator: "Bus Operator / Depot",
@@ -39,8 +39,8 @@ export const translations = {
       alternateRoute: "Alternate Route",
       crowdedRoute: "High Crowding Warning",
       crowdLevel: "Crowd Density",
-      lowCrowd: "Low (<50%) - Seats Available",
-      modCrowd: "Moderate (50-80%) - Standing Room",
+      lowCrowd: "Low (<50%) - Undercrowded (Seats Available)",
+      modCrowd: "Moderate (50-80%) - Balanced Room",
       highCrowd: "High (>100%) - Overcrowded (Extra Buses Needed)",
       waitTime: "Est. Wait Time",
       travelTime: "Travel Duration",
@@ -51,39 +51,39 @@ export const translations = {
     },
     operator: {
       dashboardTitle: "Corridor Operations & Dispatch Command Center",
-      dashboardSub: "Rule-based recommendation engine for capacity balancing and fleet optimization",
-      routeComparison: "3-Route Corridor Density Comparison",
-      optimizationTitle: "AI Route Optimization Recommendation",
+      dashboardSub: "Rule-based recommendation engine: Add extra buses to overcrowded routes & cancel undercrowded buses",
+      routeComparison: "3-Route Coimbatore Corridor Density Comparison",
+      optimizationTitle: "AI Fleet Reallocation Directive",
       ruleExplainer: "Deterministic Rule Triggered",
       beforeAfterTitle: "Before vs After Optimization Impact",
-      applyOptimization: "Apply AI Recommendation (Add 2 Buses to Crowded Route)",
+      applyOptimization: "Apply AI Directive (+2 Extra to Route 12, -1 Cancelled on Route 3A)",
       revertOptimization: "Revert to Standard Schedule",
       fleetIncidents: "Live Fleet Incidents & Relief Dispatches",
-      addBusAction: "Add Bus to Corridor",
+      addBusAction: "Add Bus to Overcrowded Route",
       reduceHeadway: "Reduce Headway from 15m to 7.5m"
     },
     chatbot: {
       title: "TransitIQ AI Assistant",
-      subtitlePassenger: "Passenger Helper • Timings, Less-Crowded Routes & Fares",
-      subtitleOperator: "Depot Operations AI • Fleet Reallocation & Dispatch Logic",
+      subtitlePassenger: "Passenger Helper • Timings, Less-Crowded Routes & Fares (Coimbatore)",
+      subtitleOperator: "Depot Operations AI • Extra Bus Deployment & Cancellation Engine",
       placeholder: "Ask in English or தமிழில் கேளுங்கள்...",
       send: "Send",
       clear: "Clear Chat",
       quickPrompts: {
         passenger: [
-          "Which bus should I take to Tambaram?",
-          "How does route optimization balance bus capacity?",
-          "Is Route 15B less crowded right now?",
-          "What happened to broken down bus 29C?",
-          "தாம்பரம் செல்ல கூட்டம் குறைந்த பேருந்து எது?",
-          "நெரிசலான நேரங்களில் கூடுதல் பேருந்துகள் உள்ளதா?"
+          "Which bus to Saravanampatti IT Park is least crowded?",
+          "Why is Route 12 overcrowded and Route 3A undercrowded?",
+          "How does AI reallocate extra buses to crowded areas and cancel undercrowded ones?",
+          "What happened to broken down bus TN-38-N-2914 at Ganapathy?",
+          "சரவணம்பட்டி செல்ல கூட்டம் குறைந்த பேருந்து எது?",
+          "நெரிசலான வழித்தடத்திற்கு கூடுதல் பேருந்துகள் உள்ளதா?"
         ],
         operator: [
-          "Why does crowded Route 29C need +2 extra buses?",
-          "How do we balance buses from low-demand routes?",
-          "Explain the wait time reduction logic",
-          "Status of broken down bus TN-01-N-4429?",
-          "நெரிசலை குறைக்க பேருந்துகளை எவ்வாறு மாற்றுவது?"
+          "Why deploy +2 extra buses to Route 12 and cancel 1 bus on Route 3A?",
+          "Explain the capacity reallocation between overcrowded & undercrowded corridors",
+          "How do wait times drop from 15.4m to 6.2m after extra bus dispatch?",
+          "Status of broken down bus TN-38-N-2914 at Ganapathy Signal?",
+          "நெரிசல் மிகுந்த வழித்தடத்திற்கு கூடுதல் பேருந்து மற்றும் 3A-க்கு பேருந்து ரத்து செய்வதன் காரணம் என்ன?"
         ]
       }
     }
@@ -92,7 +92,7 @@ export const translations = {
     brand: "TransitIQ",
     tagline: "செயற்கை நுண்ணறிவு வழித்தட மேலாண்மை அமைப்பு",
     simulatedBanner: "மாதிரி தரவு செயல்முறை (SIMULATED DATA DEMO)",
-    simulatedSub: "Groq GenAI மற்றும் விதிமுறைகள் அடிப்படையில் இயங்கும் சென்னை வழித்தட நுண்ணறிவு",
+    simulatedSub: "Groq GenAI மற்றும் விதிமுறைகள் அடிப்படையில் இயங்கும் கோயம்புத்தூர் வழித்தட நுண்ணறிவு",
     roles: {
       passenger: "பயணிகள் பிரிவு",
       operator: "பேருந்து இயக்குனர் / டிப்போ",
@@ -140,12 +140,12 @@ export const translations = {
     },
     operator: {
       dashboardTitle: "டிப்போ இயக்குனர் மற்றும் வழித்தட கட்டுப்பாட்டு அறை",
-      dashboardSub: "கூட்ட நெரிசல் சமநிலை மற்றும் கூடுதல் பேருந்து ஒதுக்கீட்டிற்கான AI தீர்வு",
-      routeComparison: "3 வழித்தடங்களின் நேரலை கூட்ட ஒப்பீடு",
-      optimizationTitle: "AI வழித்தட மேம்பாட்டு பரிந்துரை",
+      dashboardSub: "கூட்ட நெரிசல் சமநிலை: நெரிசல் வழித்தடத்திற்கு கூடுதல் பேருந்து & குறைந்த நெரிசலுக்கு பேருந்து ரத்து/மாற்று",
+      routeComparison: "3 கோவை வழித்தடங்களின் நேரலை கூட்ட ஒப்பீடு",
+      optimizationTitle: "AI வழித்தட மேம்பாட்டு வழிகாட்டல்",
       ruleExplainer: "விதிமுறை தூண்டப்பட்டது",
       beforeAfterTitle: "மேம்பாட்டிற்கு முன் vs பின் ஒப்பீடு",
-      applyOptimization: "AI பரிந்துரையை செயல்படுத்து (நெரிசல் வழித்தடத்திற்கு +2 பேருந்துகள்)",
+      applyOptimization: "AI பரிந்துரையை செயல்படுத்து (+2 கூடுதல் பேருந்துகள் & -1 ரத்து/மாற்று)",
       revertOptimization: "வழக்கமான அட்டவணைக்கு மாற்று",
       fleetIncidents: "பேருந்து பழுது மற்றும் நிவாரண ஏற்பாடுகள்",
       addBusAction: "கூடுதல் பேருந்து ஒதுக்கீடு",
@@ -153,26 +153,26 @@ export const translations = {
     },
     chatbot: {
       title: "TransitIQ AI உதவியாளர்",
-      subtitlePassenger: "பயணிகள் உதவியாளர் • நேரம், கூட்டம் குறைந்த வழித்தடங்கள் & கட்டணம்",
-      subtitleOperator: "டிப்போ இயக்குனர் AI • கூடுதல் பேருந்து ஒதுக்கீடு & மேலாண்மை",
+      subtitlePassenger: "பயணிகள் உதவியாளர் • நேரம், கூட்டம் குறைந்த வழித்தடங்கள் & கட்டணம் (கோவை)",
+      subtitleOperator: "டிப்போ இயக்குனர் AI • கூடுதல் பேருந்து ஒதுக்கீடு & பேருந்து ரத்து மேலாண்மை",
       placeholder: "தமிழில் அல்லது ஆங்கிலத்தில் கேளுங்கள்...",
       send: "அனுப்பு",
       clear: "அழிக்க",
       quickPrompts: {
         passenger: [
-          "தாம்பரம் செல்ல கூட்டம் குறைந்த பேருந்து எது?",
-          "வழித்தடம் 29C-ல் கூட்ட நெரிசல் அதிகமா?",
-          "வழித்தடம் 15B-ல் காலியிடங்கள் உள்ளனவா?",
-          "பழுதான பேருந்து 29C-க்கு நிவாரணப் பேருந்து எப்போது வரும்?",
-          "Which bus is best and least crowded?",
-          "How does route optimization work?"
+          "சரவணம்பட்டி IT பார்க் செல்ல கூட்டம் குறைந்த பேருந்து எது?",
+          "வழித்தடம் 12-ல் கூட்ட நெரிசல் அதிகமா?",
+          "வழித்தடம் 3A-ல் காலியிடங்கள் உள்ளனவா?",
+          "பழுதான பேருந்து TN-38-N-2914-க்கு நிவாரணப் பேருந்து எப்போது வரும்?",
+          "நெரிசலான வழித்தடத்திற்கு கூடுதல் பேருந்து வழங்கப்படுகிறதா?",
+          "குறைந்த நெரிசல் உள்ள வழித்தடங்களில் பேருந்து ரத்து செய்யப்படுவது ஏன்?"
         ],
         operator: [
-          "கூட்டம் அதிகமுள்ள 29C வழித்தடத்திற்கு ஏன் +2 பேருந்துகள் தேவை?",
-          "குறைந்த நெரிசல் உள்ள வழித்தடங்களிலிருந்து பேருந்துகள் எப்படி சமன் செய்யப்படுகின்றன?",
-          "காத்திருப்பு நேரம் எவ்வாறு 6.8 நிமிடங்களாகக் குறைகிறது?",
-          "பழுதான பேருந்து TN-01-N-4429 நிலவரம் என்ன?",
-          "Explain the extra bus deployment logic"
+          "வழித்தடம் 12-க்கு ஏன் +2 பேருந்துகள் மற்றும் 3A-க்கு -1 பேருந்து ரத்து செய்யப்படுகிறது?",
+          "அதிக நெரிசல் மற்றும் குறைந்த நெரிசல் வழித்தடங்களை எவ்வாறு சமன் செய்கிறது?",
+          "காத்திருப்பு நேரம் எவ்வாறு 6.2 நிமிடங்களாகக் குறைகிறது?",
+          "கணபதி சிக்னலில் பழுதான பேருந்து TN-38-N-2914 நிலவரம் என்ன?",
+          "Explain the extra bus deployment and undercrowded cancellation logic"
         ]
       }
     }

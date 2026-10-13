@@ -20,30 +20,30 @@ export default function OperatorDashboard() {
   return (
     <div className="space-y-6 sm:space-y-8">
       
-      {/* 1. AI Optimization Decision Engine */}
+      {/* 1. AI Optimization Decision Engine: Overcrowded vs Undercrowded Telemetry */}
       <div className="border-2 border-[#0A0A0A] bg-[#FFFFFF] p-4 sm:p-6 lg:p-8 shadow-[4px_4px_0px_#0A0A0A] sm:shadow-[6px_6px_0px_#0A0A0A]">
         
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 sm:gap-6 border-b border-[#0A0A0A] pb-4 sm:pb-6 mb-4 sm:mb-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <span className="font-mono text-[9px] sm:text-[10px] tracking-widest uppercase bg-[#0A0A0A] text-[#F6F3EC] px-1.5 sm:px-2 py-0.5 font-bold">
-                DETERMINISTIC RULE #R-104
+                DETERMINISTIC RULE #R-104 & #R-105
               </span>
               <span className="font-mono text-[10px] sm:text-xs text-[#6E6B65]">
-                CORRIDOR CAPACITY BALANCING ALGORITHM
+                CAPACITY REALLOCATION: OVERCROWDED & UNDERCROWDED CORRIDOR ENGINE
               </span>
             </div>
             
             <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-semibold text-[#0A0A0A]">
               {isTamil
-                ? "விதிமுறை: கூட்ட நெரிசல் > 100% எட்டியதால் +2 கூடுதல் பேருந்துகளை இயக்க பரிந்துரை"
-                : "Rule Trigger: Crowding > 100% necessitates Extra Bus Allocation & Headway Reduction"}
+                ? "முடிவு: நெரிசல் மிகுந்த வழித்தடத்திற்கு கூடுதல் பேருந்து (+2) & கூட்டம் குறைந்த வழித்தடத்தில் பேருந்து ரத்து/குறைப்பு (-1)"
+                : "Fleet Directive: Add Extra Buses (+2) to Overcrowded Route & Cancel Idle Bus (-1) on Undercrowded Route"}
             </h3>
 
             <p className="font-sans text-xs text-[#6E6B65] max-w-2xl leading-relaxed">
               {isTamil
-                ? "காந்திபுரம் - சரவணம்பட்டி வழித்தடம் 12-ல் 134% அதிக கூட்டம் நிலவுகிறது (கூடுதல் பேருந்துகள் தேவை). சமாந்திர வழித்தடம் 3A-ல் 40% மட்டுமே கூட்டம் உள்ளதால் (குறைந்த பேருந்துகள் போதும்), 2 கூடுதல் பேருந்துகளை வழித்தடம் 12-க்கு இயக்கி நெரிசலைச் சமன் செய்கிறது."
-                : "Route 12 (Gandhipuram ↔ Saravanampatti) exhibits critical passenger overcrowding (134% capacity, needs extra buses). Parallel corridor Route 3A has light demand (40% capacity, needs fewer buses). Optimization rule: deploy 2 extra buses to Route 12 while maintaining efficient low-frequency allocation on Route 3A."}
+                ? "நேரலை பகுப்பாய்வு: காந்திபுரம் - சரவணம்பட்டி வழித்தடம் 12-ல் 134% கடுமையான கூட்ட நெரிசல் நிலவுகிறது (கூடுதல் பேருந்துகள் தேவை). மாறாக, உக்கடம் - சிங்காநல்லூர் வழித்தடம் 3A-ல் 40% மட்டுமே கூட்டம் உள்ளதால் 60% இருக்கைகள் காலியாக இயங்குகின்றன (குறைந்த பேருந்துகள் போதும்). எனவே, வழித்தடம் 3A-ல் 1 தேவையற்ற பேருந்தை ரத்து செய்து, அதனை நெரிசல் மிகுந்த வழித்தடம் 12-க்கு மாற்றி சமன் செய்ய AI பரிந்துரைக்கிறது."
+                : "Real-time corridor analytics: Route 12 (Gandhipuram ↔ Saravanampatti IT Park) is OVERCROWDED at 134% capacity (needs extra buses). Conversely, Route 3A (Ukkadam ↔ Singanallur) is UNDERCROWDED at 40% capacity with 60% empty seats (needs fewer buses). AI Directive: Cancel 1 idle scheduled departure on undercrowded Route 3A and reallocate +2 relief buses to overcrowded Route 12 to eliminate passenger stranding while stopping fuel waste."}
             </p>
           </div>
 
@@ -53,23 +53,88 @@ export default function OperatorDashboard() {
                 onClick={revertOptimization}
                 className="w-full sm:w-auto px-4 sm:px-5 py-2.5 font-mono text-[11px] sm:text-xs uppercase tracking-wider font-bold border border-[#0A0A0A] bg-[#FAF8F5] text-[#0A0A0A] hover:bg-[#E2DBD0] transition-colors"
               >
-                Revert to Standard Schedule
+                Revert to Baseline Schedule
               </button>
             ) : (
               <button
                 onClick={applyOptimization}
                 className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-widest font-black border-2 border-[#0A0A0A] bg-[#0A0A0A] text-[#F6F3EC] hover:bg-[#333333] shadow-[3px_3px_0px_#6E6B65] sm:shadow-[4px_4px_0px_#6E6B65] transition-all flex items-center justify-center gap-2"
               >
-                <span>⚡ EXECUTE AI RECOMMENDATION (+2 BUSES)</span>
+                <span>⚡ EXECUTE BALANCING (+2 EXTRA BUSES / -1 CANCELLED BUS)</span>
               </button>
             )}
           </div>
         </div>
 
+        {/* 2 Dedicated Side-by-Side Live Analytical Alert Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+          
+          {/* Card A: OVERCROWDED ROUTE ANALYSIS & DIRECTIVE */}
+          <div className="border-2 border-[#0A0A0A] bg-[#FAF8F5] p-4 sm:p-5 relative shadow-[3px_3px_0px_#0A0A0A]">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-2 py-0.5 bg-[#DC2626] text-[#FFFFFF]">
+                🚨 OVERCROWDED CORRIDOR DETECTED
+              </span>
+              <span className="font-mono text-xs font-bold text-[#DC2626]">134% CRITICAL LOAD</span>
+            </div>
+            
+            <h4 className="font-display text-base sm:text-lg font-bold text-[#0A0A0A] mt-1">
+              Route 12: Gandhipuram ↔ Saravanampatti IT Park
+            </h4>
+
+            <div className="mt-2.5 space-y-2 text-xs font-sans">
+              <div className="p-2.5 bg-[#FFFFFF] border border-[#0A0A0A] font-mono text-[11px]">
+                <span className="font-bold text-[#0A0A0A] block uppercase">REQUIRED ACTION:</span>
+                <span className="text-[#DC2626] font-bold">ADD +2 RELIEF BUSES IMMEDIATELY (DEPLOY TN-38-N-6602 & STANDBY 02)</span>
+              </div>
+
+              <div>
+                <span className="font-mono text-[10px] uppercase font-bold text-[#6E6B65] block">ANALYSIS & JUSTIFICATION:</span>
+                <p className="text-[#0A0A0A] leading-relaxed mt-0.5">
+                  • <b>Passenger Surge:</b> 480 passengers/hour during morning IT rush on Sathy Road against a 280 pax capacity.
+                  <br />• <b>Long Wait Time:</b> Commuters facing 15.4 minutes delay at GP Signal and Ganapathy Stop.
+                  <br />• <b>Impact of Extra Buses:</b> Slashes average waiting time from 15.4 mins down to 6.2 mins and reduces passenger crowding to 82%.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Card B: UNDERCROWDED ROUTE ANALYSIS & DIRECTIVE */}
+          <div className="border-2 border-[#0A0A0A] bg-[#FAF8F5] p-4 sm:p-5 relative shadow-[3px_3px_0px_#0A0A0A]">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-2 py-0.5 bg-[#16A34A] text-[#FFFFFF]">
+                📉 UNDERCROWDED CORRIDOR DETECTED
+              </span>
+              <span className="font-mono text-xs font-bold text-[#16A34A]">40% LEAN OCCUPANCY</span>
+            </div>
+            
+            <h4 className="font-display text-base sm:text-lg font-bold text-[#0A0A0A] mt-1">
+              Route 3A: Ukkadam ↔ Singanallur (Trichy Road)
+            </h4>
+
+            <div className="mt-2.5 space-y-2 text-xs font-sans">
+              <div className="p-2.5 bg-[#FFFFFF] border border-[#0A0A0A] font-mono text-[11px]">
+                <span className="font-bold text-[#0A0A0A] block uppercase">REQUIRED ACTION:</span>
+                <span className="text-[#16A34A] font-bold">CANCEL 1 BUS DEPARTURE & TRANSFER SURPLUS CAPACITY TO ROUTE 12</span>
+              </div>
+
+              <div>
+                <span className="font-mono text-[10px] uppercase font-bold text-[#6E6B65] block">ANALYSIS & JUSTIFICATION:</span>
+                <p className="text-[#0A0A0A] leading-relaxed mt-0.5">
+                  • <b>Under-utilization:</b> Operating at only 40% passenger occupancy with 60% empty seats (wasteful diesel burn).
+                  <br />• <b>Service Preservation:</b> Cancelling 1 departure maintains a comfortable 15-minute headway with guaranteed seating.
+                  <br />• <b>Operational Benefit:</b> Frees up 1 driver and 1 vehicle to directly eliminate the crisis bottleneck on Route 12.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
         {/* Before vs After Tabular Comparison Matrix */}
         <div>
           <div className="font-mono text-[10px] uppercase tracking-widest text-[#6E6B65] mb-2">
-            BEFORE VS AFTER OPTIMIZATION TELEMETRY MATRIX:
+            BEFORE VS AFTER OPTIMIZATION TELEMETRY MATRIX (COIMBATORE CORRIDORS):
           </div>
 
           <div className="overflow-x-auto no-scrollbar font-mono text-xs border border-[#0A0A0A]">
@@ -77,35 +142,35 @@ export default function OperatorDashboard() {
               <thead className="bg-[#FAF8F5] border-b border-[#0A0A0A] text-[9px] sm:text-[10px] uppercase text-[#6E6B65]">
                 <tr>
                   <th className="p-2.5 sm:p-3">Corridor Parameter</th>
-                  <th className="p-2.5 sm:p-3">Baseline (Before)</th>
-                  <th className="p-2.5 sm:p-3">Optimized (After Balancing)</th>
+                  <th className="p-2.5 sm:p-3">Baseline (Before Balancing)</th>
+                  <th className="p-2.5 sm:p-3">Optimized (After Extra Bus & Cancellation)</th>
                   <th className="p-2.5 sm:p-3">Net System Impact</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E2DBD0] text-[11px] sm:text-xs">
                 <tr>
+                  <td className="p-2.5 sm:p-3 font-bold">Overcrowded Route 12 (Saravanampatti)</td>
+                  <td className="p-2.5 sm:p-3 text-[#DC2626] font-bold">134% Load • 4 buses/hr (Needs Extra)</td>
+                  <td className="p-2.5 sm:p-3 font-bold text-[#16A34A]">82% Load • 8 buses/hr (+2 Extra Buses)</td>
+                  <td className="p-2.5 sm:p-3 font-bold text-[#16A34A]">Wait cut from 15.4m to 6.2m (↓ 60%)</td>
+                </tr>
+                <tr>
+                  <td className="p-2.5 sm:p-3 font-bold">Undercrowded Route 3A (Trichy Road)</td>
+                  <td className="p-2.5 sm:p-3 text-[#6E6B65]">40% Load • 5 buses/hr (Idle Capacity)</td>
+                  <td className="p-2.5 sm:p-3 font-bold text-[#0A0A0A]">52% Load • 4 buses/hr (-1 Bus Cancelled)</td>
+                  <td className="p-2.5 sm:p-3 font-bold text-[#16A34A]">Zero empty runs • 18L fuel saved/day</td>
+                </tr>
+                <tr>
                   <td className="p-2.5 sm:p-3 font-bold">Average Passenger Waiting Time</td>
-                  <td className="p-2.5 sm:p-3 text-[#6E6B65]">14.2 min</td>
-                  <td className="p-2.5 sm:p-3 font-bold text-[#0A0A0A]">6.8 min</td>
-                  <td className="p-2.5 sm:p-3 font-bold text-[#16A34A]">↓ 52% Wait Reduction</td>
+                  <td className="p-2.5 sm:p-3 text-[#6E6B65]">15.4 min average bottleneck</td>
+                  <td className="p-2.5 sm:p-3 font-bold text-[#0A0A0A]">6.2 min citywide average</td>
+                  <td className="p-2.5 sm:p-3 font-bold text-[#16A34A]">↓ 58% Commuter Wait Reduction</td>
                 </tr>
                 <tr>
-                  <td className="p-2.5 sm:p-3 font-bold">High Crowding Route (29C)</td>
-                  <td className="p-2.5 sm:p-3 text-[#6E6B65]">128% (Needs Extra Buses)</td>
-                  <td className="p-2.5 sm:p-3 font-bold text-[#0A0A0A]">84% (+2 Extra Relief Buses)</td>
-                  <td className="p-2.5 sm:p-3 font-bold text-[#16A34A]">Crowding Reduced by 44%</td>
-                </tr>
-                <tr>
-                  <td className="p-2.5 sm:p-3 font-bold">Low Crowding Route (15B)</td>
-                  <td className="p-2.5 sm:p-3 text-[#6E6B65]">42% (Low Demand Corridor)</td>
-                  <td className="p-2.5 sm:p-3 font-bold text-[#0A0A0A]">42% (Lean Fleet Maintained)</td>
-                  <td className="p-2.5 sm:p-3 font-bold text-[#16A34A]">Zero Wasted / Empty Runs</td>
-                </tr>
-                <tr>
-                  <td className="p-2.5 sm:p-3 font-bold">Service Headway Frequency</td>
-                  <td className="p-2.5 sm:p-3 text-[#6E6B65]">Every 15 min (4 buses/hr)</td>
-                  <td className="p-2.5 sm:p-3 font-bold text-[#0A0A0A]">Every 7.5 min (8 buses/hr)</td>
-                  <td className="p-2.5 sm:p-3 font-bold">Capacity Doubled on Bottleneck</td>
+                  <td className="p-2.5 sm:p-3 font-bold">Corridor Service Headway Frequency</td>
+                  <td className="p-2.5 sm:p-3 text-[#6E6B65]">Every 15 min on critical line</td>
+                  <td className="p-2.5 sm:p-3 font-bold text-[#0A0A0A]">Every 7.5 min on Route 12</td>
+                  <td className="p-2.5 sm:p-3 font-bold">Bottleneck Dissolved</td>
                 </tr>
               </tbody>
             </table>
@@ -118,7 +183,7 @@ export default function OperatorDashboard() {
       <div className="border border-[#0A0A0A] bg-[#FFFFFF] p-4 sm:p-6 shadow-[4px_4px_0px_#0A0A0A] sm:shadow-[6px_6px_0px_#0A0A0A]">
         <div className="border-b border-[#0A0A0A] pb-3 mb-4 flex items-center justify-between">
           <span className="font-mono text-[11px] sm:text-xs uppercase tracking-widest font-bold text-[#0A0A0A]">
-            CORRIDOR TELEMETRY LEDGER • 3 PARALLEL SERVICES
+            COIMBATORE CORRIDOR TELEMETRY LEDGER • 3 PARALLEL SERVICES
           </span>
           <span className="font-mono text-[9px] sm:text-[10px] text-[#6E6B65]">
             PASSENGER LOAD & FLEET ALLOCATION
@@ -127,16 +192,20 @@ export default function OperatorDashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#0A0A0A] border border-[#0A0A0A] font-mono text-xs">
           {routes.map(route => {
-            const isFull = route.crowdingPercent > 100;
-            const needsExtra = route.id === 'route-a';
+            const isOvercrowded = route.crowdingPercent > 100;
+            const isUndercrowded = route.crowdingPercent < 50;
             return (
               <div key={route.id} className="p-4 sm:p-5 space-y-2.5 sm:space-y-3 bg-[#FFFFFF]">
                 <div className="flex items-center justify-between">
                   <span className="text-base font-black text-[#0A0A0A]">{route.code}</span>
                   <span className={`px-2 py-0.5 text-[9px] sm:text-[10px] font-bold border border-[#0A0A0A] ${
-                    isFull ? 'bg-[#0A0A0A] text-[#F6F3EC]' : 'bg-[#FAF8F5] text-[#0A0A0A]'
+                    isOvercrowded
+                      ? 'bg-[#DC2626] text-[#FFFFFF]'
+                      : isUndercrowded
+                      ? 'bg-[#16A34A] text-[#FFFFFF]'
+                      : 'bg-[#FAF8F5] text-[#0A0A0A]'
                   }`}>
-                    {route.crowdingPercent}% CROWD
+                    {route.crowdingPercent}% {isOvercrowded ? 'OVERCROWDED' : isUndercrowded ? 'UNDERCROWDED' : 'BALANCED'}
                   </span>
                 </div>
 
@@ -151,7 +220,13 @@ export default function OperatorDashboard() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#6E6B65]">FLEET ALLOCATION:</span>
-                    <span className="font-bold">{needsExtra ? (optimizationApplied ? '8 units (+2 Extra)' : '4 units (Needs Extra)') : '4-5 units (Low Capacity)'}</span>
+                    <span className="font-bold">
+                      {route.id === 'route-a'
+                        ? (optimizationApplied ? '8 units (+2 Extra Deployed)' : '4 units (Needs Extra Buses)')
+                        : route.id === 'route-b'
+                        ? (optimizationApplied ? '4 units (-1 Cancelled/Moved)' : '5 units (Surplus/Lean)')
+                        : '4 units (Standard)'}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#6E6B65]">AVG WAIT:</span>
@@ -184,15 +259,15 @@ export default function OperatorDashboard() {
 
           <div className="space-y-2.5 sm:space-y-3">
             <div className="border border-[#0A0A0A] p-2.5 sm:p-3 bg-[#FAF8F5]">
-              <span className="font-bold block text-[11px] sm:text-xs">HIGH DEMAND: ROUTE 29C (ANNA SALAI)</span>
+              <span className="font-bold block text-[11px] sm:text-xs text-[#DC2626]">OVERCROWDED: ROUTE 12 (SARAVANAMPATTI IT CORRIDOR)</span>
               <p className="font-sans text-xs text-[#6E6B65] mt-1 leading-relaxed">
-                Passenger crowding at 128%. Triggering AI dispatch automatically allocates 2 standby buses, dropping headway from 15 mins to 7.5 mins.
+                Crowding exceeds 134% during morning and evening rush. System deploys +2 extra relief buses, cutting wait times by 60% and absorbing queue overflows at Ganapathy and Sivanandapuram.
               </p>
             </div>
             <div className="border border-[#0A0A0A] p-2.5 sm:p-3 bg-[#FAF8F5]">
-              <span className="font-bold block text-[11px] sm:text-xs">LOW DEMAND: ROUTE 15B (INNER RING RD)</span>
+              <span className="font-bold block text-[11px] sm:text-xs text-[#16A34A]">UNDERCROWDED: ROUTE 3A (TRICHY ROAD CORRIDOR)</span>
               <p className="font-sans text-xs text-[#6E6B65] mt-1 leading-relaxed">
-                Passenger occupancy at 42%. Operates on lean fleet schedule to conserve fuel and prevent empty runs while preserving 5-minute passenger wait times.
+                Occupancy sits at only 40% with 60% empty seating. System cancels 1 redundant departure and transfers resources without compromising regular 15-minute passenger frequency.
               </p>
             </div>
           </div>
@@ -216,18 +291,18 @@ export default function OperatorDashboard() {
 
           {breakdownAlert.active ? (
             <div className="border border-[#0A0A0A] p-3 sm:p-4 bg-[#FAF8F5] space-y-2">
-              <span className="font-bold block text-[11px] sm:text-xs">BUS TN-01-N-4429 (ROUTE 29C)</span>
+              <span className="font-bold block text-[11px] sm:text-xs">BUS TN-38-N-2914 (ROUTE 12)</span>
               <p className="font-sans text-xs text-[#6E6B65] leading-relaxed">
-                Engine cooling system failure near T. Nagar Panagal Park. 84 passengers queued.
+                Alternator & electrical circuit failure near Ganapathy Signal on Sathy Road. 48 passengers queued.
               </p>
               <div className="border-t border-[#E2DBD0] pt-2 text-[10px] sm:text-[11px] flex justify-between">
-                <span>Relief Unit: <b>TN-01-N-8802 (ETA 5m)</b></span>
+                <span>Relief Unit: <b>TN-38-N-6602 (ETA 4m)</b></span>
                 <span>Mobile Crane Dispatched</span>
               </div>
             </div>
           ) : (
             <div className="border border-[#0A0A0A] p-6 text-center text-[#6E6B65] text-xs">
-              Zero active maintenance tickets. All 15 revenue service vehicles operating normally.
+              Zero active maintenance tickets. All revenue service vehicles operating normally.
             </div>
           )}
         </div>
