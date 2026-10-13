@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TransitProvider, useTransit } from './context/TransitContext';
 import Header from './components/Header';
@@ -13,6 +13,29 @@ import { scrollToChat } from './lib/navigation';
 function DashboardContent() {
   const { role, language } = useTransit();
   const isTamil = language === 'ta';
+  const [chatDirection, setChatDirection] = useState('down');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const chatEl = document.getElementById('chat-area');
+      if (!chatEl) return;
+      const rect = chatEl.getBoundingClientRect();
+      const chatCenter = rect.top + rect.height / 2;
+      const viewportCenter = window.innerHeight / 2;
+      
+      // If chat center is below viewport center, user is above chatbot -> show down arrow (↓)
+      // If chat center is above viewport center, user is below chatbot -> show up arrow (↑)
+      if (chatCenter > viewportCenter) {
+        setChatDirection('down');
+      } else {
+        setChatDirection('up');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#F6F3EC] text-[#0A0A0A] flex flex-col font-sans selection:bg-[#0A0A0A] selection:text-[#F6F3EC]">
@@ -95,16 +118,16 @@ function DashboardContent() {
           </AnimatePresence>
         </div>
 
-        {/* Floating Quick Action Popup Pill */}
+        {/* Floating Quick Action Popup Pill with Dynamic Directional Arrow */}
         <motion.button
           onClick={scrollToChat}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] text-[#F6F3EC] border-2 border-[#0A0A0A] shadow-[4px_4px_0px_#6E6B65] font-mono text-xs font-bold uppercase tracking-wider cursor-pointer hover:bg-[#FFFFFF] hover:text-[#0A0A0A] transition-colors"
-          title="Go to AI Assistant Chat"
+          title={chatDirection === 'down' ? "Scroll down to AI Assistant" : "Scroll up to AI Assistant"}
         >
           <MessageSquare className="w-4 h-4" />
-          <span>Chat (AI Assistant) ↓</span>
+          <span>Chat (AI Assistant) {chatDirection === 'down' ? '↓' : '↑'}</span>
         </motion.button>
 
       </main>
@@ -120,7 +143,7 @@ function DashboardContent() {
           <div className="flex items-center gap-4">
             <span className="text-[#0A0A0A] font-bold">SIMULATED DEMO</span>
             <span>•</span>
-            <span>Groq GenAI + Rule Optimizer</span>
+            <span>Groq GenAI + Route Optimizer</span>
           </div>
         </div>
       </footer>

@@ -23,12 +23,12 @@ export default function Chatbot() {
     let welcomeText = "";
     if (currentRole === 'operator') {
       welcomeText = currentIsTamil
-        ? `[டிப்போ கட்டுப்பாட்டு அறை AI]: வழித்தட நெரிசல், கூடுதல் பேருந்து ஒதுக்கீடு (+2), கத்திப்பாரா வெள்ள மாற்றுப்பாதை, மற்றும் பழுதான பேருந்து TN-01-N-4429 நிவாரண பணிகள் குறித்த எந்தவொரு தகவலையும் கேட்கலாம்.`
-        : `[DEPOT OPERATIONS AI]: Transit dispatch copilot ready. Ask me regarding corridor crowding balancing, Kathipara flood diversions, headway adjustments, or breakdown relief unit status.`;
+        ? `[டிப்போ கட்டுப்பாட்டு அறை AI]: வழித்தட நெரிசல் பகுப்பாய்வு, அதிக கூட்டமுள்ள பகுதிகளுக்கு கூடுதல் பேருந்து ஒதுக்கீடு (+2), குறைந்த கூட்டமுள்ள வழித்தடங்களில் பேருந்துகளைச் சீரமைத்தல், மற்றும் பழுதான பேருந்து TN-01-N-4429 நிவாரண பணிகள் குறித்த தகவல்களைக் கேட்கலாம்.`
+        : `[DEPOT OPERATIONS AI]: Transit dispatch copilot ready. Ask me regarding route optimization, extra bus allocation for crowded corridors, scaling down idle buses on low-demand routes, or breakdown relief status.`;
     } else {
       welcomeText = currentIsTamil
-        ? `[பயணிகள் வழிகாட்டி AI]: வணக்கம்! சென்னை சென்ட்ரல் - தாம்பரம் வழித்தடத்தில் கூட்டம் குறைந்த பேருந்துகள், மழை மாற்றுப்பாதைகள், மற்றும் பழுதான பேருந்துக்கான மாற்று வழிகள் பற்றி என்னிடம் கேட்கலாம்.`
-        : `[PASSENGER COPILOT AI]: Welcome commuter. Inquire regarding optimal less-crowded buses, flood detour durations, live timetable headways, or breakdown prior notices.`;
+        ? `[பயணிகள் வழிகாட்டி AI]: வணக்கம்! சென்னை சென்ட்ரல் - தாம்பரம் வழித்தடத்தில் கூட்டம் குறைந்த பேருந்துகள், பயண நேரம், கட்டணம், மற்றும் பழுதான பேருந்துக்கான நிவாரண மாற்று வழிகள் பற்றி என்னிடம் கேட்கலாம்.`
+        : `[PASSENGER COPILOT AI]: Welcome commuter. Inquire regarding optimal less-crowded buses with available seats, live timetable headways, fares, or breakdown prior notices.`;
     }
 
     return [

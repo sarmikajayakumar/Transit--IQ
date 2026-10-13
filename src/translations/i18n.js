@@ -13,14 +13,12 @@ export const translations = {
       liveTracking: "Live Route Tracker",
       journeyPlanner: "Journey Planner",
       crowdAnalysis: "Crowd Analytics",
-      floodAlerts: "Flood & Hazard Watch",
       breakdowns: "Breakdown Prior Notices",
       operatorEngine: "Optimization Engine"
     },
     simControls: {
       title: "Scenario Controls",
       surgePeak: "Trigger Peak Hour Surge",
-      monsoonFlood: "Toggle Flood Inundation",
       busBreakdown: "Simulate Bus Breakdown",
       reset: "Reset Simulation"
     },
@@ -29,12 +27,11 @@ export const translations = {
       avgWaiting: "Average Waiting Time",
       peakCrowding: "Max Corridor Crowding",
       fleetUtilization: "Active Fleet Vehicles",
-      floodRisk: "Active Roadblocks / Floods",
       breakdownCount: "Mechanical Breakdowns"
     },
     passenger: {
       plannerTitle: "Plan Your Journey with Real-Time Crowd Intelligence",
-      plannerSub: "Find fast, safe routes that avoid flooded streets and overcrowded buses",
+      plannerSub: "Find fast, optimal routes — board less crowded buses with guaranteed seats",
       origin: "From (Boarding Stop)",
       destination: "To (Destination)",
       searchBtn: "Find Optimal Routes",
@@ -44,52 +41,49 @@ export const translations = {
       crowdLevel: "Crowd Density",
       lowCrowd: "Low (<50%) - Seats Available",
       modCrowd: "Moderate (50-80%) - Standing Room",
-      highCrowd: "High (>100%) - Overcrowded",
+      highCrowd: "High (>100%) - Overcrowded (Extra Buses Needed)",
       waitTime: "Est. Wait Time",
       travelTime: "Travel Duration",
       headway: "Bus Frequency",
-      floodDetour: "Flood Detour Active",
-      floodClear: "Clear Road",
       breakdownNotice: "Mechanical Breakdown Prior Notice",
       reliefArriving: "Backup Relief Bus Dispatched",
       takeAlternate: "Recommended Action"
     },
     operator: {
       dashboardTitle: "Corridor Operations & Dispatch Command Center",
-      dashboardSub: "Rule-based recommendation engine for capacity balancing and disruption recovery",
+      dashboardSub: "Rule-based recommendation engine for capacity balancing and fleet optimization",
       routeComparison: "3-Route Corridor Density Comparison",
       optimizationTitle: "AI Route Optimization Recommendation",
       ruleExplainer: "Deterministic Rule Triggered",
       beforeAfterTitle: "Before vs After Optimization Impact",
-      applyOptimization: "Apply AI Recommendation (Add 2 Buses)",
+      applyOptimization: "Apply AI Recommendation (Add 2 Buses to Crowded Route)",
       revertOptimization: "Revert to Standard Schedule",
-      activeDisruptions: "Active Road Hazards & Inundations",
       fleetIncidents: "Live Fleet Incidents & Relief Dispatches",
       addBusAction: "Add Bus to Corridor",
       reduceHeadway: "Reduce Headway from 15m to 7.5m"
     },
     chatbot: {
       title: "TransitIQ AI Assistant",
-      subtitlePassenger: "Passenger Helper • Timings, Routes & Flood Detours",
-      subtitleOperator: "Depot Operations AI • Scheduling & Dispatch Logic",
+      subtitlePassenger: "Passenger Helper • Timings, Less-Crowded Routes & Fares",
+      subtitleOperator: "Depot Operations AI • Fleet Reallocation & Dispatch Logic",
       placeholder: "Ask in English or தமிழில் கேளுங்கள்...",
       send: "Send",
       clear: "Clear Chat",
       quickPrompts: {
         passenger: [
           "Which bus should I take to Tambaram?",
-          "Is Route 29C overcrowded right now?",
-          "Are there flooded roads near Guindy?",
+          "How does route optimization balance bus capacity?",
+          "Is Route 15B less crowded right now?",
           "What happened to broken down bus 29C?",
-          "தாம்பரம் செல்ல சிறந்த பேருந்து எது?",
-          "வெள்ளம் காரணமாக பேருந்து வழி மாறியுள்ளதா?"
+          "தாம்பரம் செல்ல கூட்டம் குறைந்த பேருந்து எது?",
+          "நெரிசலான நேரங்களில் கூடுதல் பேருந்துகள் உள்ளதா?"
         ],
         operator: [
-          "Why is Route 29C recommended for +2 buses?",
-          "What is the flood status at Kathipara junction?",
+          "Why does crowded Route 29C need +2 extra buses?",
+          "How do we balance buses from low-demand routes?",
           "Explain the wait time reduction logic",
           "Status of broken down bus TN-01-N-4429?",
-          "நெரிசலை குறைக்க என்ன செய்ய வேண்டும்?"
+          "நெரிசலை குறைக்க பேருந்துகளை எவ்வாறு மாற்றுவது?"
         ]
       }
     }
@@ -108,14 +102,12 @@ export const translations = {
       liveTracking: "நேரலை வழித்தடம்",
       journeyPlanner: "பயணத் திட்டம்",
       crowdAnalysis: "கூட்ட நெரிசல் ஆய்வு",
-      floodAlerts: "வெள்ளம் & சாலைத் தடைகள்",
       breakdowns: "பழுது முன்னெச்சரிக்கை",
       operatorEngine: "மேம்பாட்டு இயந்திரம்"
     },
     simControls: {
       title: "மாதிரி கட்டுப்பாடுகள்",
       surgePeak: "உச்ச நேர நெரிசலை உருவாக்கு",
-      monsoonFlood: "வெள்ளப் பாதிப்பை இயக்கு",
       busBreakdown: "பேருந்து பழுதை உருவகப்படுத்து",
       reset: "மீட்டமை"
     },
@@ -124,12 +116,11 @@ export const translations = {
       avgWaiting: "சராசரி காத்திருப்பு நேரம்",
       peakCrowding: "அதிகபட்ச கூட்ட நெரிசல்",
       fleetUtilization: "இயங்கும் பேருந்துகள்",
-      floodRisk: "செயலில் உள்ள வெள்ளத் தடைகள்",
       breakdownCount: "பழுதான பேருந்துகள்"
     },
     passenger: {
       plannerTitle: "நேரலை கூட்ட நெரிசல் தகவலுடன் உங்கள் பயணத்தைத் திட்டமிடுங்கள்",
-      plannerSub: "வெள்ளப் பாதைகள் மற்றும் கூட்ட நெரிசல் இல்லாத சிறந்த பேருந்துகளை உடனே கண்டறியுங்கள்",
+      plannerSub: "கூட்ட நெரிசல் இல்லாத மற்றும் இருக்கைகள் காலியாக உள்ள சிறந்த பேருந்துகளை உடனே கண்டறியுங்கள்",
       origin: "புறப்படும் இடம் (Start)",
       destination: "சென்றடையும் இடம் (Destination)",
       searchBtn: "சிறந்த வழித்தடத்தைக் கண்டறி",
@@ -139,52 +130,49 @@ export const translations = {
       crowdLevel: "கூட்ட அடர்த்தி",
       lowCrowd: "குறைவான கூட்டம் (<50%) - இருக்கைகள் உண்டு",
       modCrowd: "மிதமான கூட்டம் (50-80%) - நின்று செல்லலாம்",
-      highCrowd: "அதிக கூட்டம் (>100%) - நெரிசல் மிகுந்தது",
+      highCrowd: "அதிக கூட்டம் (>100%) - கூடுதல் பேருந்து தேவை",
       waitTime: "காத்திருப்பு நேரம்",
       travelTime: "பயண நேரம்",
       headway: "பேருந்து இடைவேளை",
-      floodDetour: "வெள்ள மாற்றுப்பாதை இயக்கத்தில் உள்ளது",
-      floodClear: "பாதுகாப்பான சாலை",
       breakdownNotice: "பேருந்து பழுது முன்னறிவிப்பு",
       reliefArriving: "நிவாரண மாற்றுப் பேருந்து விரைந்து வருகிறது",
       takeAlternate: "பரிந்துரைக்கப்பட்ட உடனடி செயல்"
     },
     operator: {
       dashboardTitle: "டிப்போ இயக்குனர் மற்றும் வழித்தட கட்டுப்பாட்டு அறை",
-      dashboardSub: "கூட்ட நெரிசல் சமநிலை மற்றும் பேரிடர் மீட்பிற்கான விதிமுறை சார்ந்த AI தீர்வு",
+      dashboardSub: "கூட்ட நெரிசல் சமநிலை மற்றும் கூடுதல் பேருந்து ஒதுக்கீட்டிற்கான AI தீர்வு",
       routeComparison: "3 வழித்தடங்களின் நேரலை கூட்ட ஒப்பீடு",
       optimizationTitle: "AI வழித்தட மேம்பாட்டு பரிந்துரை",
       ruleExplainer: "விதிமுறை தூண்டப்பட்டது",
       beforeAfterTitle: "மேம்பாட்டிற்கு முன் vs பின் ஒப்பீடு",
-      applyOptimization: "AI பரிந்துரையை செயல்படுத்து (+2 பேருந்துகள்)",
+      applyOptimization: "AI பரிந்துரையை செயல்படுத்து (நெரிசல் வழித்தடத்திற்கு +2 பேருந்துகள்)",
       revertOptimization: "வழக்கமான அட்டவணைக்கு மாற்று",
-      activeDisruptions: "செயலில் உள்ள சாலைத் தடைகள் & வெள்ள அபாயங்கள்",
       fleetIncidents: "பேருந்து பழுது மற்றும் நிவாரண ஏற்பாடுகள்",
       addBusAction: "கூடுதல் பேருந்து ஒதுக்கீடு",
       reduceHeadway: "இடைவேளையை 15 நிமிடத்திலிருந்து 7.5 ஆகக் குறை"
     },
     chatbot: {
       title: "TransitIQ AI உதவியாளர்",
-      subtitlePassenger: "பயணிகள் உதவியாளர் • நேரம், வழித்தடம் & வெள்ள மாற்றுப்பாதை",
-      subtitleOperator: "டிப்போ இயக்குனர் AI • அட்டவணை & மேலாண்மை தீர்வுகள்",
+      subtitlePassenger: "பயணிகள் உதவியாளர் • நேரம், கூட்டம் குறைந்த வழித்தடங்கள் & கட்டணம்",
+      subtitleOperator: "டிப்போ இயக்குனர் AI • கூடுதல் பேருந்து ஒதுக்கீடு & மேலாண்மை",
       placeholder: "தமிழில் அல்லது ஆங்கிலத்தில் கேளுங்கள்...",
       send: "அனுப்பு",
       clear: "அழிக்க",
       quickPrompts: {
         passenger: [
-          "தாம்பரம் செல்ல சிறந்த பேருந்து எது?",
-          "வழித்தடம் 29C-ல் அதிக கூட்டமா?",
-          "கிண்டி பகுதியில் வெள்ளப் பாதிப்பு உள்ளதா?",
-          "பழுதான பேருந்து 29C-க்கு என்ன தீர்வு?",
-          "Which bus is best right now?",
-          "Is Route 15B less crowded?"
+          "தாம்பரம் செல்ல கூட்டம் குறைந்த பேருந்து எது?",
+          "வழித்தடம் 29C-ல் கூட்ட நெரிசல் அதிகமா?",
+          "வழித்தடம் 15B-ல் காலியிடங்கள் உள்ளனவா?",
+          "பழுதான பேருந்து 29C-க்கு நிவாரணப் பேருந்து எப்போது வரும்?",
+          "Which bus is best and least crowded?",
+          "How does route optimization work?"
         ],
         operator: [
-          "வழித்தடம் 29C-க்கு ஏன் +2 பேருந்துகள் பரிந்துரைக்கப்படுகிறது?",
-          "கத்திப்பாரா சந்திப்பில் வெள்ள நிலவரம் என்ன?",
-          "காத்திருப்பு நேரம் எவ்வாறு குறைக்கப்படுகிறது?",
+          "கூட்டம் அதிகமுள்ள 29C வழித்தடத்திற்கு ஏன் +2 பேருந்துகள் தேவை?",
+          "குறைந்த நெரிசல் உள்ள வழித்தடங்களிலிருந்து பேருந்துகள் எப்படி சமன் செய்யப்படுகின்றன?",
+          "காத்திருப்பு நேரம் எவ்வாறு 6.8 நிமிடங்களாகக் குறைகிறது?",
           "பழுதான பேருந்து TN-01-N-4429 நிலவரம் என்ன?",
-          "Explain the before vs after crowding reduction"
+          "Explain the extra bus deployment logic"
         ]
       }
     }

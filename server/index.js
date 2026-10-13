@@ -26,32 +26,31 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 // Transit simulation state
 let transitState = {
   activeCorridor: "Chennai Central - Tambaram Corridor",
-  weather: "Rainy (Monsoon Watch)",
+  weather: "Clear (Normal Traffic Watch)",
   peakHour: true,
-  floodAlertActive: true,
-  floodZones: [
+  congestionHotspots: [
     {
-      id: "flood-1",
-      name: "Kathipara Junction & Guindy Underpass",
-      tamilName: "கத்திப்பாரா சந்திப்பு & கிண்டி சுரங்கப்பாதை",
-      status: "Severely Inundated (1.5 ft waterlogging)",
-      tamilStatus: "கடுமையான வெள்ளப்பெருக்கு (1.5 அடி நீர்)",
+      id: "hotspot-1",
+      name: "Kathipara Junction & Guindy Corridor",
+      tamilName: "கத்திப்பாரா சந்திப்பு & கிண்டி வழித்தடம்",
+      status: "High Commuter Surge (Queue Overflows)",
+      tamilStatus: "அதிக கூட்ட நெரிசல் (கூடுதல் பேருந்துகள் தேவை)",
       affectedRoutes: ["Route 29C (Anna Salai Direct)"],
-      detourRoute: "Diverted via 100ft Inner Ring Road (+7 mins)",
-      tamilDetour: "100 அடி உள்வட்டச் சாலை வழியாக மாற்றுப்பாதை (+7 நிமிடங்கள்)",
+      recommendation: "Deploy +2 relief buses to absorb surge",
+      tamilRecommendation: "29C-க்கு +2 கூடுதல் பேருந்துகள் ஒதுக்குதல்",
       lat: 13.0067,
       lng: 80.2023,
       radius: 650
     },
     {
-      id: "flood-2",
-      name: "Velachery Main Road / Lake Area",
-      tamilName: "வேளச்சேரி பிரதான சாலை / ஏரி பகுதி",
-      status: "Waterlogged Slow Traffic",
-      tamilStatus: "மழைநீர் தேக்கம் - மெதுவான போக்குவரத்து",
+      id: "hotspot-2",
+      name: "Velachery Main Junction",
+      tamilName: "வேளச்சேரி பிரதான சந்திப்பு",
+      status: "Steady Commuter Flow",
+      tamilStatus: "சீரான பயணிகள் இயக்கம்",
       affectedRoutes: ["Route 21M (Express Velachery)"],
-      detourRoute: "Single lane active with traffic police marshaling",
-      tamilDetour: "ஒரு வழித்தடத்தில் போக்குவரத்து காவலர் மேற்பார்வையில் இயக்கம்",
+      recommendation: "Regular 15-minute headway maintained",
+      tamilRecommendation: "வழக்கமான 15 நிமிட இடைவேளை தொடர்கிறது",
       lat: 12.9792,
       lng: 80.2212,
       radius: 400
@@ -83,8 +82,8 @@ let transitState = {
       name: "Route 29C",
       subtitle: "Chennai Central ↔ Tambaram (Mount Road Corridor)",
       tamilName: "வழித்தடம் 29C (மத்திய நிலையம் ↔ தாம்பரம்)",
-      status: "OVERCROWDED & FLOOD DETOUR",
-      tamilStatus: "அதிக கூட்டம் & வெள்ள மாற்றுப்பாதை",
+      status: "OVERCROWDED (NEEDS EXTRA BUSES)",
+      tamilStatus: "அதிக கூட்டம் (கூடுதல் பேருந்துகள் தேவை)",
       crowdingPercent: 128,
       demandPerHour: 420,
       busCapacity: 70,
@@ -92,12 +91,12 @@ let transitState = {
       headwayMin: 15,
       avgWaitMin: 14,
       color: "#EF4444",
-      alert: "Heavy crowding! Suggest taking Route 15B or wait for relief bus.",
-      tamilAlert: "அதிக நெரிசல்! வழித்தடம் 15B அல்லது கூடுதல் பேருந்தை தேர்ந்தெடுக்கவும்.",
+      alert: "Heavy crowding! Extra buses recommended or board Route 15B.",
+      tamilAlert: "அதிக நெரிசல்! கூடுதல் பேருந்துகள் இயக்கப்படுகின்றன அல்லது 15B தேர்ந்தெடுக்கவும்.",
       stops: [
         "Chennai Central", "LIC / Anna Salai", "Thousand Lights",
-        "Teynamppet", "Nandanam", "Saidapet", "Guindy (Detoured)",
-        "Kathipara (Detoured)", "Airport", "Pallavaram", "Tambaram"
+        "Teynamppet", "Nandanam", "Saidapet", "Guindy",
+        "Kathipara", "Airport", "Pallavaram", "Tambaram"
       ]
     },
     {
@@ -114,8 +113,8 @@ let transitState = {
       headwayMin: 12,
       avgWaitMin: 5,
       color: "#10B981",
-      alert: "Fast moving, zero waterlogging, 58% empty seats.",
-      tamilAlert: "வேகமாக செல்லும், வெள்ள பாதிப்பு இல்லை, 58% காலி இருக்கைகள்.",
+      alert: "Fast moving, seats guaranteed, 58% empty capacity.",
+      tamilAlert: "வேகமாக செல்லும், 58% காலி இருக்கைகள், சிறந்த தேர்வு.",
       stops: [
         "Chennai Central", "Egmore", "Chetpet", "Aminjikarai",
         "Koyambedu", "Ashok Nagar", "Ekkatuthangal", "Guindy Estate",
@@ -127,8 +126,8 @@ let transitState = {
       name: "Route 21M",
       subtitle: "Central ↔ Tambaram via Velachery Bypass",
       tamilName: "வழித்தடம் 21M (வேளச்சேரி புறவழிச்சாலை)",
-      status: "MODERATE (MINOR WATERLOGGING)",
-      tamilStatus: "மிதமான கூட்டம் (சிறிய மழைநீர் தேக்கம்)",
+      status: "MODERATE",
+      tamilStatus: "மிதமான கூட்டம்",
       crowdingPercent: 78,
       demandPerHour: 280,
       busCapacity: 70,
@@ -136,8 +135,8 @@ let transitState = {
       headwayMin: 15,
       avgWaitMin: 8,
       color: "#F59E0B",
-      alert: "Mild delay (+4m) near Velachery Lake road.",
-      tamilAlert: "வேளச்சேரி ஏரி பகுதியில் சிறிய தாமதம் (+4 நிமி).",
+      alert: "Steady flow, standard 15 min headway.",
+      tamilAlert: "சீரான இயக்கம், 15 நிமிட இடைவேளை.",
       stops: [
         "Chennai Central", "Marina Beach", "Mylapore", "Adyar",
         "SRP Tools", "Velachery", "Medavakkam", "Tambaram East"
@@ -148,7 +147,7 @@ let transitState = {
   optimizationMetrics: {
     before: { avgWait: "14.2 min", maxCrowding: "128%", serviceHeadway: "15 min" },
     after: { avgWait: "6.8 min", maxCrowding: "84%", serviceHeadway: "7.5 min" },
-    action: "Deployed +2 relief buses to Route 29C & dynamically routed 35% passenger flow to Route 15B"
+    action: "Deployed +2 relief buses to crowded Route 29C & reallocated idle capacity from Route 15B"
   }
 };
 
@@ -159,13 +158,6 @@ function generateSmartFallback(message, role, language) {
 
   if (role === 'operator') {
     if (isTamil) {
-      if (msgLower.includes('flood') || msgLower.includes('வெள்ள') || msgLower.includes('மழை')) {
-        return `🚨 [இயக்குனர் அறிக்கை - வெள்ள நிலைமை]:
-கத்திப்பாரா மற்றும் கிண்டி சுரங்கப்பாதையில் 1.5 அடி மழைநீர் தேங்கியுள்ளது.
-- வழித்தடம் 29C தற்காலிகமாக 100 அடி உள்வட்டச் சாலை வழியாக திருப்பப்பட்டுள்ளது (+7 நிமி).
-- பயணிகளுக்கு நேரலை எச்சரிக்கை அனுப்பப்பட்டுள்ளது.
-- பரிந்துரை: மேலும் 2 பேருந்துகளை வழித்தடம் 15B-க்கு மாற்றி கூட்ட நெரிசலை சமாளிக்கவும்.`;
-      }
       if (msgLower.includes('breakdown') || msgLower.includes('பழுது') || msgLower.includes('என்ஜின்')) {
         return `🛠️ [டிப்போ மேலாளர் எச்சரிக்கை - பழுது தகவல்]:
 பேருந்து எண் TN-01-N-4429 (வழித்தடம் 29C) தி.நகர் பனகல் பார்க் அருகில் பழுதாகியுள்ளது.
@@ -173,18 +165,11 @@ function generateSmartFallback(message, role, language) {
 - பயணிகள் மாற்றுப் பேருந்தான 15B-க்கு வழிகாட்டப்பட்டுள்ளனர்.
 - பழுதுநீக்கும் மொபைல் குழு சம்பவ இடத்திற்கு விரைந்துள்ளது.`;
       }
-      return `📊 [TransitIQ இயக்குனர் பகுப்பாய்வு]:
-- வழித்தடம் 29C-ல் உச்சநேர நெரிசல் 128% எட்டியுள்ளது!
-- காத்திருப்பு நேரம்: 14 நிமிடங்கள்.
-- பரிந்துரைக்கப்பட்ட தீர்வு: குறைந்த கூட்டம் உள்ள வழித்தடம் 15B-லிருந்து (42% ஆக்கிரமிப்பு) 2 கூடுதல் பேருந்துகளை 29C வழித்தடத்திற்கு ஒதுக்கவும். இதன் மூலம் கூட்ட நெரிசல் 84%-ஆகக் குறையும், காத்திருப்பு நேரம் 6.8 நிமிடங்களாகக் குறையும்!`;
+      return `📊 [TransitIQ இயக்குனர் பகுப்பாய்வு - வழித்தட உகப்பாக்கம்]:
+- அதிக கூட்டம் உள்ள வழித்தடம் 29C-ல் உச்சநேர நெரிசல் 128% எட்டியுள்ளது (காத்திருப்பு: 14 நிமி). இதற்கு +2 கூடுதல் பேருந்துகள் உடனடியாகத் தேவை!
+- குறைந்த கூட்டம் உள்ள வழித்தடம் 15B-ல் (42% ஆக்கிரமிப்பு) பேருந்துகளைக் குறைத்து/சீரமைத்து, அந்த கூடுதல் பேருந்துகளை நெரிசல் மிகுந்த 29C வழித்தடத்திற்கு ஒதுக்க AI பரிந்துரைக்கிறது.
+- இதன் மூலம் ஒட்டுமொத்த காத்திருப்பு நேரம் 14 நிமிடத்திலிருந்து 6.8 நிமிடங்களாகக் குறையும், நெரிசல் 84%-ஆகக் கட்டுப்படும்!`;
     } else {
-      if (msgLower.includes('flood') || msgLower.includes('water') || msgLower.includes('block')) {
-        return `🚨 [TransitIQ Operator Report - Inundation & Blockage]:
-Kathipara Junction & Guindy Underpass report 1.5 ft waterlogging.
-- Route 29C has been dynamically rerouted via 100ft Inner Ring Road (+7 min ETA).
-- Passenger passenger app displays detour banner.
-- Recommendation: Maintain 7-minute headways on Route 15B to absorb diverted corridor flow.`;
-      }
       if (msgLower.includes('breakdown') || msgLower.includes('repair') || msgLower.includes('bus')) {
         return `🛠️ [Depot Commander Alert - Fleet Incident]:
 Bus TN-01-N-4429 (Route 29C) reported engine cooling failure at T. Nagar Panagal Park.
@@ -193,9 +178,9 @@ Bus TN-01-N-4429 (Route 29C) reported engine cooling failure at T. Nagar Panagal
 - Mobile breakdown crane unit en route.`;
       }
       return `📊 [TransitIQ Corridor Optimization Intelligence]:
-- Peak demand detected on Corridor 1 (Central ↔ Tambaram).
-- Route 29C crowding reached 128% capacity with average wait of 14.2 minutes.
-- Immediate Action: Deploy 2 standby buses to Route 29C and divert 30% passenger load to parallel Route 15B (currently at 42% capacity). This will cut average wait times by 52% (down to 6.8 mins).`;
+- Crowded Corridors Need Extra Buses: Route 29C reached 128% capacity with an average wait time of 14.2 minutes.
+- Low Demand Corridors Need Fewer Buses: Route 15B operates at only 42% capacity with ample seating.
+- Immediate AI Action: Reallocate and deploy 2 extra buses to Route 29C while maintaining efficient low-frequency allocation on Route 15B. This slashes average wait times by 52% (down to 6.8 mins).`;
     }
   } else {
     // Passenger mode
@@ -206,26 +191,19 @@ Bus TN-01-N-4429 (Route 29C) reported engine cooling failure at T. Nagar Panagal
 ✅ கவலைப்பட வேண்டாம்! மாற்று நிவாரண பேருந்து TN-01-N-8802 இன்னும் 5 நிமிடங்களில் அங்கு வந்து சேரும்.
 👉 உடனடி பயணம் செய்ய: வழித்தடம் 15B (2 நிமிடங்களில் வரும், இருக்கைகள் காலியாக உள்ளன) தேர்ந்தெடுக்கலாம்!`;
       }
-      if (msgLower.includes('flood') || msgLower.includes('மழை') || msgLower.includes('தண்ணீர்') || msgLower.includes('தடை')) {
-        return `🌧️ [மழை மற்றும் வெள்ளப் பாதை எச்சரிக்கை]:
-கத்திப்பாரா சந்திப்பு மற்றும் கிண்டி சுரங்கப்பாதையில் நீர் தேங்கியுள்ளதால், வழக்கமான அண்ணா சாலை வழி மாற்றப்பட்டுள்ளது.
-- அனைத்து பேருந்துகளும் 100 அடி உள்வட்டச் சாலை வழியாக இயக்கப்படுகின்றன.
-- பயண நேரம் 7 நிமிடங்கள் கூடும்.
-- மிகக் குறைந்த கூட்டத்தில் செல்ல வழித்தடம் 15B-ஐப் பயன்படுத்த பரிந்துரைக்கிறோம்.`;
-      }
-      if (msgLower.includes('route') || msgLower.includes('எந்த') || msgLower.includes('பேருந்து') || msgLower.includes('நேரம்')) {
+      if (msgLower.includes('route') || msgLower.includes('எந்த') || msgLower.includes('பேருந்து') || msgLower.includes('நேரம்') || msgLower.includes('கூட்டம்')) {
         return `🚍 [TransitIQ பயண வழிகாட்டி]:
 நீங்கள் சென்னை மத்திய நிலையத்திலிருந்து தாம்பரம் செல்ல விரும்பினால்:
-1. ⭐ சிறந்த தேர்வு: வழித்தடம் 15B (இன்னும் 2 நிமிடங்களில் வரும், 42% கூட்டம் மட்டுமே, வெள்ளப் பாதிப்பு இல்லை).
+1. ⭐ சிறந்த தேர்வு: வழித்தடம் 15B (இன்னும் 2 நிமிடங்களில் வரும், 42% கூட்டம் மட்டுமே, காலியிடங்கள் உள்ளன).
 2. வழித்தடம் 21M: இன்னும் 6 நிமிடங்களில் வரும் (78% கூட்டம், வேளச்சேரி வழி).
-3. வழித்தடம் 29C: அதிக நெரிசல் (128% கூட்டம்) மற்றும் கிண்டியில் மாற்றுப்பாதை உள்ளது.
+3. வழித்தடம் 29C: அதிக நெரிசல் (128% கூட்டம்) - இதற்கு கூடுதல் பேருந்துகள் இயக்கப்பட்டு வருகின்றன.
 கூட்டம் இல்லாத சௌகரியமான பயணத்திற்கு வழித்தடம் 15B-ஐத் தேர்ந்தெடுக்கவும்!`;
       }
       return `வணக்கம்! நான் உங்கள் TransitIQ பேருந்து உதவியாளர்.
 - எந்தப் பேருந்து எடுக்க வேண்டும்?
 - கூட்டம் குறைந்த வழித்தடங்கள் எவை?
-- மழை/வெள்ளம் காரணமாக ஏற்பட்ட மாற்றுப்பாதைகள் எவை?
-- பழுதான பேருந்துகள் மற்றும் மாற்றுப் பேருந்துகள் எவை?
+- நெரிசலைத் தவிர்க்க கூடுதல் பேருந்துகள் எங்கு இயக்கப்படுகின்றன?
+- பழுதான பேருந்துக்கான நிவாரணப் பேருந்து நேரம் என்ன?
 எந்தக் கேள்வியும் கேளுங்கள், உங்களுக்கு உதவ நான் தயாராக உள்ளேன்!`;
     } else {
       if (msgLower.includes('breakdown') || msgLower.includes('repair') || msgLower.includes('broke')) {
@@ -234,24 +212,18 @@ Route 29C (Bus TN-01-N-4429) experienced an engine issue near T. Nagar Panagal P
 ✅ Relief Bus TN-01-N-8802 has already been dispatched and will arrive in 5 minutes!
 👉 Fast Alternate: Board Route 15B arriving in 2 minutes (42% occupancy, plenty of seats available).`;
       }
-      if (msgLower.includes('flood') || msgLower.includes('rain') || msgLower.includes('block') || msgLower.includes('water')) {
-        return `🌧️ [Disruption & Flood Detour Notice]:
-Kathipara Junction & Guindy underpass have waterlogging.
-- Route 29C is rerouted via the 100ft Inner Ring Road (+7 mins transit time).
-- Recommended Route: Take Route 15B which operates on elevated corridors completely free of waterlogging!`;
-      }
-      if (msgLower.includes('which bus') || msgLower.includes('suggest') || msgLower.includes('timing') || msgLower.includes('crowd')) {
+      if (msgLower.includes('which bus') || msgLower.includes('suggest') || msgLower.includes('timing') || msgLower.includes('crowd') || msgLower.includes('optimize')) {
         return `🚍 [TransitIQ Optimal Route Suggestion]:
 For traveling Central ↔ Tambaram:
 1. 🌟 Recommended: Route 15B (Arriving in 2 mins, only 42% crowd, smooth road, seats guaranteed).
-2. Route 21M: Arriving in 6 mins (78% crowd, minor delay at Velachery).
-3. Route 29C: Overcrowded (128% capacity) + flood detour near Guindy.
+2. Route 21M: Arriving in 6 mins (78% crowd, steady transit).
+3. Route 29C: Overcrowded (128% capacity) — receiving extra relief buses.
 We recommend boarding Route 15B to save 12 minutes of waiting and travel in comfort!`;
       }
       return `Hello! I am your TransitIQ Smart Passenger Assistant.
 I can help you with:
 - Finding the fastest & least crowded bus routes
-- Real-time flood, waterlogging and detour alerts
+- Route optimization insights (where extra buses are deployed)
 - Advance notification for broken-down buses with relief bus ETAs
 - Live timings, fares, and optimal transfer points.
 How can I assist your journey today?`;
@@ -277,8 +249,8 @@ app.post('/api/simulate', (req, res) => {
     transitState.routes[0].busesPerHour = 8;
     transitState.routes[0].headwayMin = 7.5;
     transitState.routes[0].avgWaitMin = 6.8;
-    transitState.routes[0].status = "OPTIMIZED (RELIEF BUSES ACTIVE)";
-    transitState.routes[0].tamilStatus = "மேம்படுத்தப்பட்டது (கூடுதல் பேருந்துகள் இயக்கம்)";
+    transitState.routes[0].status = "OPTIMIZED (+2 EXTRA BUSES)";
+    transitState.routes[0].tamilStatus = "மேம்படுத்தப்பட்டது (+2 கூடுதல் பேருந்துகள்)";
     transitState.routes[0].color = "#10B981";
   } else if (action === 'reset_optimization') {
     transitState.optimizationApplied = false;
@@ -286,11 +258,9 @@ app.post('/api/simulate', (req, res) => {
     transitState.routes[0].busesPerHour = 4;
     transitState.routes[0].headwayMin = 15;
     transitState.routes[0].avgWaitMin = 14;
-    transitState.routes[0].status = "OVERCROWDED & FLOOD DETOUR";
-    transitState.routes[0].tamilStatus = "அதிக கூட்டம் & வெள்ள மாற்றுப்பாதை";
+    transitState.routes[0].status = "OVERCROWDED (NEEDS EXTRA BUSES)";
+    transitState.routes[0].tamilStatus = "அதிக கூட்டம் (கூடுதல் பேருந்துகள் தேவை)";
     transitState.routes[0].color = "#EF4444";
-  } else if (action === 'toggle_flood') {
-    transitState.floodAlertActive = !transitState.floodAlertActive;
   } else if (action === 'resolve_breakdown') {
     transitState.breakdowns = [];
   } else if (action === 'trigger_breakdown') {
@@ -439,28 +409,29 @@ app.post('/api/chat', async (req, res) => {
     ? `You are TransitIQ Depot Operations AI, an intelligent transit dispatch & fleet management copilot for bus operators and depot managers.
 CURRENT LIVE CONTEXT:
 - Corridor: Chennai Central ↔ Tambaram (3 parallel routes: Route 29C, Route 15B, Route 21M).
-- Route 29C status: Overcrowded (128% capacity, 14 min wait). Flooding near Kathipara/Guindy underpass caused mandatory detour via 100ft Inner Ring Road (+7 mins).
-- Route 15B status: Optimal (42% capacity, 5 min wait, empty seats, no flooding).
-- Route 21M status: Moderate (78% capacity, 8 min wait, minor waterlogging near Velachery Lake).
+- Route 29C status: Overcrowded (128% capacity, 14 min wait). Needs +2 extra buses to reduce headway and wait times.
+- Route 15B status: Optimal (42% capacity, 5 min wait, empty seats). Needs fewer buses to prevent running empty vehicles.
+- Route 21M status: Moderate (78% capacity, 8 min wait).
 - Active Breakdown: Bus TN-01-N-4429 on Route 29C suffered engine failure at T. Nagar Panagal park. Relief bus TN-01-N-8802 dispatched (5 mins away).
-- Recommendation Rule: Crowding >100% requires adding 2 buses and shifting load to Route 15B, reducing wait to 6.8 mins and crowding to 84%.
+- Recommendation Rule: Crowding >100% requires adding 2 buses to crowded routes, reducing wait to 6.8 mins and crowding to 84%.
 
 YOUR INSTRUCTIONS:
 - You are addressing the BUS OPERATOR / DEPOT MANAGER.
-- Provide data-driven, operational advice on scheduling, headways, bus additions, crowd mitigation, flood detours, and mechanical breakdown dispatch.
+- Provide data-driven, operational advice on scheduling, headways, bus additions to crowded sectors, and mechanical breakdown dispatch.
+- Emphasize the core route optimization rule: crowded areas need extra buses, and less-crowded areas need low buses to balance overall fleet efficiency.
 - If language is Tamil (${isTamil ? 'YES' : 'NO'}), answer thoroughly and naturally in TAMIL (தமிழ்).
 - Keep responses professional, clear, concise (3-5 sentences), and cite the simulation figures. Always mention that data is simulated for the project demo.`
     : `You are TransitIQ Passenger Assistant, a friendly and accurate AI helper for public transit passengers.
 CURRENT LIVE CONTEXT:
 - Corridor: Chennai Central ↔ Tambaram.
-- Route 29C: Highly crowded (128% full), long wait (14 mins), detoured around flooded Kathipara underpass (+7 min travel time).
-- Route 15B: Best route! Less crowded (only 42% full, plenty of seats), arrives every 5-12 mins, completely avoided floods.
-- Route 21M: Moderate crowd (78%), slight rain delay near Velachery.
+- Route 29C: Highly crowded (128% full), long wait (14 mins) — receiving extra relief buses.
+- Route 15B: Best route! Less crowded (only 42% full, plenty of seats), arrives every 5-12 mins.
+- Route 21M: Moderate crowd (78%), steady transit.
 - Bus Breakdown Alert: Bus TN-01-N-4429 (Route 29C) is broken down at T. Nagar. Tell passenger NOT to worry: Relief bus TN-01-N-8802 arrives in 5 mins, or they can hop on Route 15B immediately (arriving in 2 mins).
 
 YOUR INSTRUCTIONS:
 - You are addressing a PASSENGER.
-- Be helpful, polite, reassuring, and give direct guidance on which bus to take, how to avoid crowds, flood safety detours, and breakdown relief options.
+- Be helpful, polite, reassuring, and give direct guidance on which bus to take, how to avoid crowds, and breakdown relief options.
 - If language is Tamil (${isTamil ? 'YES' : 'NO'}), answer fluently and politely in TAMIL (தமிழ்).
 - Keep answers under 4 sentences with clear bullet points. Mention simulated transit intelligence.`;
 

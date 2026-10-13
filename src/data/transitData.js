@@ -21,9 +21,8 @@ export const INITIAL_ROUTES = [
     headwayMin: 15,
     avgWaitMin: 14.2,
     travelTimeMin: 58,
-    detourTimeMin: 7,
+    detourTimeMin: 0,
     fare: "₹30",
-    hasFlood: true,
     hasBreakdown: true,
     path: [
       [13.0827, 80.2707], // Central
@@ -32,7 +31,7 @@ export const INITIAL_ROUTES = [
       [13.0410, 80.2450], // Teynampet
       [13.0280, 80.2410], // Nandanam
       [13.0180, 80.2220], // Saidapet
-      [13.0067, 80.2023], // Kathipara (Flooded/Detoured)
+      [13.0067, 80.2023], // Kathipara
       [12.9820, 80.1650], // Airport
       [12.9675, 80.1491], // Pallavaram
       [12.9249, 80.1260]  // Tambaram
@@ -44,7 +43,7 @@ export const INITIAL_ROUTES = [
       { name: "Teynampet", tamilName: "தேனாம்பேட்டை", lat: 13.0410, lng: 80.2450, crowded: "high" },
       { name: "Nandanam", tamilName: "நந்தனம்", lat: 13.0280, lng: 80.2410, crowded: "high" },
       { name: "Saidapet", tamilName: "சைதாப்பேட்டை", lat: 13.0180, lng: 80.2220, crowded: "high" },
-      { name: "Guindy / Kathipara", tamilName: "கிண்டி / கத்திப்பாரா", lat: 13.0067, lng: 80.2023, crowded: "flooded" },
+      { name: "Guindy / Kathipara", tamilName: "கிண்டி / கத்திப்பாரா", lat: 13.0067, lng: 80.2023, crowded: "high" },
       { name: "Chennai Airport", tamilName: "சென்னை விமான நிலையம்", lat: 12.9820, lng: 80.1650, crowded: "moderate" },
       { name: "Pallavaram", tamilName: "பல்லாவரம்", lat: 12.9675, lng: 80.1491, crowded: "high" },
       { name: "Tambaram Terminal", tamilName: "தாம்பரம் முனையம்", lat: 12.9249, lng: 80.1260, crowded: "high" }
@@ -68,7 +67,6 @@ export const INITIAL_ROUTES = [
     travelTimeMin: 46,
     detourTimeMin: 0,
     fare: "₹28",
-    hasFlood: false,
     hasBreakdown: false,
     path: [
       [13.0827, 80.2707], // Central
@@ -111,9 +109,8 @@ export const INITIAL_ROUTES = [
     headwayMin: 15,
     avgWaitMin: 8.0,
     travelTimeMin: 52,
-    detourTimeMin: 3,
+    detourTimeMin: 0,
     fare: "₹32",
-    hasFlood: true,
     hasBreakdown: false,
     path: [
       [13.0827, 80.2707], // Central
@@ -121,7 +118,7 @@ export const INITIAL_ROUTES = [
       [13.0336, 80.2678], // Mylapore
       [13.0064, 80.2575], // Adyar
       [12.9910, 80.2450], // SRP Tools OMR
-      [12.9792, 80.2212], // Velachery Lake (Minor Waterlogging)
+      [12.9792, 80.2212], // Velachery
       [12.9180, 80.1910], // Medavakkam
       [12.9249, 80.1260]  // Tambaram East
     ],
@@ -131,7 +128,7 @@ export const INITIAL_ROUTES = [
       { name: "Mylapore", tamilName: "மயிலாப்பூர்", lat: 13.0336, lng: 80.2678, crowded: "moderate" },
       { name: "Adyar Depot", tamilName: "அடையாறு டிப்போ", lat: 13.0064, lng: 80.2575, crowded: "moderate" },
       { name: "SRP Tools (OMR)", tamilName: "எஸ்.ஆர்.பி டூல்ஸ்", lat: 12.9910, lng: 80.2450, crowded: "moderate" },
-      { name: "Velachery Lake Road", tamilName: "வேளச்சேரி ஏரி சாலை", lat: 12.9792, lng: 80.2212, crowded: "flooded" },
+      { name: "Velachery Junction", tamilName: "வேளச்சேரி சந்திப்பு", lat: 12.9792, lng: 80.2212, crowded: "moderate" },
       { name: "Medavakkam", tamilName: "மேடவாக்கம்", lat: 12.9180, lng: 80.1910, crowded: "moderate" },
       { name: "Tambaram East", tamilName: "கிழக்கு தாம்பரம்", lat: 12.9249, lng: 80.1260, crowded: "moderate" }
     ]
@@ -226,9 +223,9 @@ export const LIVE_BUSES = [
     routeCode: "21M",
     currentLocation: "Velachery Bypass",
     tamilLocation: "வேளச்சேரி புறவழிச்சாலை",
-    status: "SLOW_WATERLOG",
-    occupancy: "82% (Standing)",
-    speed: 18,
+    status: "ON_TIME",
+    occupancy: "78% (Moderate)",
+    speed: 35,
     lat: 12.9792,
     lng: 80.2212,
     nextStop: "Medavakkam (ETA 8 min)",
@@ -240,30 +237,30 @@ export const LIVE_BUSES = [
 export const ACTIVE_HAZARDS = [
   {
     id: "hazard-1",
-    type: "SEVERE_FLOOD",
-    name: "Kathipara Junction & Guindy Underpass",
-    tamilName: "கத்திப்பாரா சந்திப்பு & கிண்டி சுரங்கப்பாதை",
-    waterDepth: "1.5 Feet Inundation",
-    tamilDepth: "1.5 அடி மழைநீர் தேக்கம்",
-    impact: "Anna Salai direct corridor closed to low-floor buses",
-    tamilImpact: "அண்ணா சாலை நேரடிப் பாதை மூடப்பட்டு மாற்றுப்பாதை அமல்",
-    detourAction: "Rerouted via 100ft Inner Ring Road (+7 min delay)",
-    tamilDetour: "100 அடி உள்வட்டச் சாலை வழியே மாற்றம் (+7 நிமி)",
+    type: "HIGH_DENSITY_SURGE",
+    name: "Kathipara Junction & Guindy Corridor",
+    tamilName: "கத்திப்பாரா சந்திப்பு & கிண்டி வழித்தடம்",
+    waterDepth: "Peak Passenger Density",
+    tamilDepth: "உச்ச நேர கூட்ட நெரிசல்",
+    impact: "High queue overflow (128% capacity) — requires extra buses",
+    tamilImpact: "கூட்ட நெரிசல் அதிகம் (128%) — கூடுதல் பேருந்துகள் தேவை",
+    detourAction: "Deploy +2 relief buses to Route 29C & route passengers to 15B",
+    tamilDetour: "29C-க்கு +2 கூடுதல் பேருந்துகள் இயக்கம், பயணிகளை 15B-க்கு மாற்றுதல்",
     lat: 13.0067,
     lng: 80.2023,
     severity: "high"
   },
   {
     id: "hazard-2",
-    type: "WATERLOGGING",
-    name: "Velachery Lake Road / Kaiveli",
-    tamilName: "வேளச்சேரி ஏரி சாலை / கைவேலி",
-    waterDepth: "0.8 Feet Waterlogging",
-    tamilDepth: "0.8 அடி மழைநீர்",
-    impact: "One-lane crawl; marshaled by transit wardens",
-    tamilImpact: "ஒரு வழித்தடத்தில் மெதுவாக இயக்கம்",
-    detourAction: "Single file queue, +3 min travel time",
-    tamilDetour: "வரிசை முறை இயக்கம், +3 நிமி கூடுதல் நேரம்",
+    type: "MODERATE_QUEUE",
+    name: "Velachery Main Junction",
+    tamilName: "வேளச்சேரி பிரதான சந்திப்பு",
+    waterDepth: "Moderate Density (78%)",
+    tamilDepth: "மிதமான நெரிசல் (78%)",
+    impact: "Normal passenger flow with 15 min headway",
+    tamilImpact: "வழக்கமான 15 நிமிட இடைவேளையில் சீரான இயக்கம்",
+    detourAction: "Standard timetable operational",
+    tamilDetour: "வழக்கமான அட்டவணை இயக்கம்",
     lat: 12.9792,
     lng: 80.2212,
     severity: "medium"

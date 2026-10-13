@@ -7,7 +7,7 @@ import { MessageSquare } from 'lucide-react';
 import { scrollToChat } from '../lib/navigation';
 
 export default function Header() {
-  const { language, setLanguage, role, setRole, t, floodActive } = useTransit();
+  const { language, setLanguage, role, setRole, optimizationApplied } = useTransit();
   const [supabaseOnline, setSupabaseOnline] = useState(true);
   const isTamil = language === 'ta';
 
@@ -60,12 +60,10 @@ export default function Header() {
               </span>
             </div>
 
-            {floodActive && (
-              <span className="bg-[#0A0A0A] text-[#F6F3EC] px-2 py-0.5 text-[10px] uppercase font-mono tracking-widest flex items-center gap-1.5">
-                <RadarWaveSvg className="w-3 h-3 text-[#F6F3EC]" />
-                Monsoon Reroute Active
-              </span>
-            )}
+            <span className="bg-[#0A0A0A] text-[#F6F3EC] px-2 py-0.5 text-[10px] uppercase font-mono tracking-widest flex items-center gap-1.5">
+              <RadarWaveSvg className="w-3 h-3 text-[#F6F3EC]" />
+              {optimizationApplied ? (isTamil ? "AI பேருந்து உகப்பாக்கம் (+2)" : "AI Fleet Optimized (+2)") : (isTamil ? "டைனமிக் வழித்தட சமநிலை" : "Dynamic Route Balancing")}
+            </span>
           </div>
 
           {/* Right: Stark Segmented Controls */}

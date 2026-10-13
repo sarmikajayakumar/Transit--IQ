@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTransit } from '../context/TransitContext';
-import { TechnicalGearSvg, FloodIsobarSvg } from './CustomIcons';
+import { TechnicalGearSvg, CorridorBranchSvg } from './CustomIcons';
 import { ArrowRight, MapPin, Clock } from 'lucide-react';
 
 export default function PassengerView() {
-  const { routes, floodActive, breakdownAlert, language } = useTransit();
+  const { routes, breakdownAlert, optimizationApplied, language } = useTransit();
   const isTamil = language === 'ta';
   
   const [origin, setOrigin] = useState("Chennai Central");
@@ -18,7 +18,7 @@ export default function PassengerView() {
     "T. Nagar / Panagal Park",
     "Koyambedu",
     "Guindy / Kathipara",
-    "Velachery Lake Road",
+    "Velachery Junction",
     "Chennai Airport",
     "Chromepet",
     "Tambaram"
@@ -67,8 +67,8 @@ export default function PassengerView() {
               </span>
               <p className="mt-1 text-[#0A0A0A]">
                 {isTamil
-                  ? "வழித்தடம் 15B இன்னும் 2 நிமிடத்தில் வரும் (42% கூட்டம் மட்டுமே)."
-                  : "Hop on Route 15B arriving in 2 mins (only 42% crowd, plenty of seats)."}
+                  ? "வழித்தடம் 15B இன்னும் 2 நிமிடத்தில் வரும் (42% கூட்டம் மட்டுமே, காலியிடங்கள் உள்ளன)."
+                  : "Hop on Route 15B arriving in 2 mins (only 42% crowd, plenty of empty seats)."}
               </p>
             </div>
 
@@ -76,27 +76,27 @@ export default function PassengerView() {
         </div>
       )}
 
-      {/* 2. Flood & Roadblock Hazard Advisory */}
-      {floodActive && (
-        <div className="border border-[#0A0A0A] bg-[#FAF8F5] p-4 flex items-start gap-4">
-          <FloodIsobarSvg className="w-6 h-6 shrink-0 mt-0.5" />
-          <div className="flex-1 font-mono text-xs">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="font-bold uppercase tracking-wider text-[#0A0A0A]">
-                MONSOON INUNDATION DETOUR ADVISORY:
-              </span>
-              <span className="text-[#6E6B65]">
-                KATHIPARA & GUINDY UNDERPASS (1.5 FT WATER)
-              </span>
-            </div>
-            <p className="font-sans text-xs text-[#0A0A0A] mt-1">
-              {isTamil
-                ? "வழித்தடம் 29C அண்ணா சாலை நேரடிப் பாதை மூடப்பட்டு 100 அடி உள்வட்டச் சாலை வழியே இயக்கப்படுகிறது (+7 நிமி). குறைந்த நெரிசலில் செல்ல வழித்தடம் 15B சிறந்தது."
-                : "Route 29C buses detoured via 100ft Inner Ring Road (+7 min delay). Route 15B runs smoothly on elevated corridors free of waterlogging."}
-            </p>
-          </div>
+      {/* 2. Route Optimization & Capacity Reallocation Advisory */}
+      <div className="border border-[#0A0A0A] bg-[#FAF8F5] p-4 flex items-start gap-4">
+        <div className="w-8 h-8 border border-[#0A0A0A] bg-[#0A0A0A] text-[#F6F3EC] flex items-center justify-center shrink-0 mt-0.5">
+          <CorridorBranchSvg className="w-5 h-5 invert" />
         </div>
-      )}
+        <div className="flex-1 font-mono text-xs">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-bold uppercase tracking-wider text-[#0A0A0A]">
+              ROUTE OPTIMIZATION ADVISORY:
+            </span>
+            <span className="text-[#6E6B65]">
+              DYNAMIC FLEET BALANCING (EXTRA BUSES IN CROWDED CORRIDORS)
+            </span>
+          </div>
+          <p className="font-sans text-xs text-[#0A0A0A] mt-1">
+            {isTamil
+              ? "நெரிசல் மிக்க வழித்தடம் 29C-க்கு கூடுதல் பேருந்துகள் இயக்கப்படுகின்றன (காத்திருப்பு நேரம் 6.8 நிமிடங்களாகக் குறைகிறது). குறைந்த கூட்டம் உள்ள வழித்தடம் 15B-ல் (42% ஆக்கிரமிப்பு) போதுமான இருக்கைகள் உள்ளன — பயணிகள் விரைவான பயணத்திற்கு 15B-ஐத் தேர்ந்தெடுக்கலாம்!"
+              : "High-crowd corridors (Route 29C at 128% surge) are allocated extra relief buses to cut wait times, while low-crowd corridors (Route 15B at 42%) maintain streamlined service with guaranteed open seats. Commuters save 10+ minutes by boarding Route 15B."}
+          </p>
+        </div>
+      </div>
 
       {/* 3. Journey Planner: Editorial Route Selector & Corridors Ledger */}
       <div className="border border-[#0A0A0A] bg-[#FFFFFF] p-6 lg:p-8 shadow-[6px_6px_0px_#0A0A0A]">
@@ -148,7 +148,7 @@ export default function PassengerView() {
           </div>
         </div>
 
-        {/* Route Comparison Ledger (Editorial Ledger table instead of generic 3-card grid) */}
+        {/* Route Comparison Ledger */}
         <div>
           <div className="font-mono text-[10px] uppercase tracking-widest text-[#6E6B65] mb-2">
             CORRIDOR COMPARISON LEDGER (SELECT ROUTE TO INSPECT):
@@ -185,10 +185,10 @@ export default function PassengerView() {
                     </div>
                     <p className="font-mono text-xs text-[#6E6B65]">
                       {route.id === 'route-a'
-                        ? "Anna Salai direct • Detoured around Kathipara underpass (+7m)"
+                        ? "Anna Salai direct • High crowd corridor (needs +2 extra buses)"
                         : route.id === 'route-b'
-                        ? "100ft Inner Ring Rd • 58% empty seats, no waterlogging"
-                        : "Velachery coastal bypass • Single lane crawl near lake road"}
+                        ? "100ft Inner Ring Rd • 58% empty seats, fast moving express"
+                        : "Velachery coastal bypass • Moderate passenger flow, steady transit"}
                     </p>
                   </div>
 
@@ -197,7 +197,7 @@ export default function PassengerView() {
                     <div>
                       <span className="text-[10px] text-[#6E6B65] block uppercase">Crowding</span>
                       <span className={`font-bold ${isOvercrowded ? 'underline' : ''}`}>
-                        {route.crowdingPercent}% {isOvercrowded ? '(FULL)' : isRecommended ? '(SEATS)' : '(MODERATE)'}
+                        {route.crowdingPercent}% {isOvercrowded ? '(HEAVY)' : isRecommended ? '(SEATS FREE)' : '(MODERATE)'}
                       </span>
                     </div>
 
@@ -209,7 +209,7 @@ export default function PassengerView() {
                     <div>
                       <span className="text-[10px] text-[#6E6B65] block uppercase">Transit Time</span>
                       <span className="font-bold">
-                        {route.travelTimeMin + (route.hasFlood && floodActive ? route.detourTimeMin : 0)} min
+                        {route.travelTimeMin} min
                       </span>
                     </div>
 
@@ -251,7 +251,7 @@ export default function PassengerView() {
                 <th className="pb-2">Next Departure</th>
                 <th className="pb-2">Headway</th>
                 <th className="pb-2">Crowd Density</th>
-                <th className="pb-2">Weather Condition</th>
+                <th className="pb-2">Optimization Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E2DBD0]">
@@ -266,8 +266,8 @@ export default function PassengerView() {
                   <td className="py-3 font-bold">
                     {r.crowdingPercent}% {r.crowdingPercent > 100 ? '[FULL]' : '[COMFORTABLE]'}
                   </td>
-                  <td className="py-3">
-                    {r.hasFlood && floodActive ? 'Detoured' : 'Clear'}
+                  <td className="py-3 font-mono text-[11px]">
+                    {r.id === 'route-a' ? (optimizationApplied ? '+2 Relief Buses Active' : 'Extra Buses Needed') : r.id === 'route-b' ? 'Seats Guaranteed' : 'Standard Headway'}
                   </td>
                 </tr>
               ))}

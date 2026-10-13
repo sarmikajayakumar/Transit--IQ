@@ -47,7 +47,7 @@ export default function TransitMap() {
   const currentTileLayerRef = useRef(null);
 
   const [activeLayer, setActiveLayer] = useState('google_traffic');
-  const { routes, buses, hazards, floodActive, breakdownAlert, language } = useTransit();
+  const { routes, buses, hazards, breakdownAlert, optimizationApplied, language } = useTransit();
   const isTamil = language === 'ta';
 
   useEffect(() => {
@@ -84,12 +84,10 @@ export default function TransitMap() {
 
     // 1. Draw Route Polylines in high contrast
     routes.forEach(route => {
-      const isDetoured = route.id === 'route-a' && floodActive;
       const polyline = L.polyline(route.path, {
         color: route.id === 'route-a' ? '#0A0A0A' : route.id === 'route-b' ? '#16A34A' : '#D97706',
         weight: route.id === 'route-a' ? 5 : 3.5,
-        opacity: 0.9,
-        dashArray: isDetoured ? '6, 6' : undefined
+        opacity: 0.9
       }).addTo(layerGroup);
 
       const title = isTamil ? route.tamilName : route.name;
@@ -99,50 +97,48 @@ export default function TransitMap() {
           <span>Crowd Level: <b>${route.crowdingPercent}%</b></span><br/>
           <span>Average Wait: <b>${route.avgWaitMin} min</b></span><br/>
           <span>Frequency: <b>Every ${route.headwayMin} min</b></span><br/>
-          ${isDetoured ? '<span style="font-weight: bold; text-decoration: underline;">DETOURED VIA INNER RING ROAD (+7 MIN)</span>' : ''}
+          <span>Fleet Density: <b>${route.busesPerHour} buses/hr</b></span>
         </div>
       `);
     });
 
-    // 2. Draw Flood Hazard Rings
-    if (floodActive) {
-      hazards.forEach(hazard => {
-        const floodCircle = L.circle([hazard.lat, hazard.lng], {
-          color: '#0A0A0A',
-          fillColor: '#0A0A0A',
-          fillOpacity: 0.22,
-          radius: hazard.severity === 'high' ? 700 : 450,
-          weight: 2,
-          dashArray: '4, 4'
-        }).addTo(layerGroup);
+    // 2. Draw High-Density Commuter Hotspot Rings
+    hazards.forEach(hazard => {
+      const surgeCircle = L.circle([hazard.lat, hazard.lng], {
+        color: '#0A0A0A',
+        fillColor: '#0A0A0A',
+        fillOpacity: 0.15,
+        radius: hazard.severity === 'high' ? 650 : 400,
+        weight: 1.5,
+        dashArray: '3, 3'
+      }).addTo(layerGroup);
 
-        const hazardTitle = isTamil ? hazard.tamilName : hazard.name;
-        const hazardDepth = isTamil ? hazard.tamilDepth : hazard.waterDepth;
-        const hazardDetour = isTamil ? hazard.tamilDetour : hazard.detourAction;
+      const hazardTitle = isTamil ? hazard.tamilName : hazard.name;
+      const hazardDepth = isTamil ? hazard.tamilDepth : hazard.waterDepth;
+      const hazardDetour = isTamil ? hazard.tamilDetour : hazard.detourAction;
 
-        floodCircle.bindPopup(`
-          <div style="font-family: inherit; font-size: 13px; color: #0A0A0A;">
-            <span style="background: #0A0A0A; color: #F6F3EC; font-weight: bold; padding: 2px 6px; font-size: 10px; font-family: monospace;">FLOOD INUNDATION</span>
-            <h4 style="margin: 6px 0 2px; font-weight: bold;">${hazardTitle}</h4>
-            <p style="margin: 0; font-family: monospace;">Water Depth: ${hazardDepth}</p>
-            <p style="margin: 4px 0 0; color: #6E6B65; font-size: 12px;">Detour: ${hazardDetour}</p>
-          </div>
-        `);
-      });
-    }
+      surgeCircle.bindPopup(`
+        <div style="font-family: inherit; font-size: 13px; color: #0A0A0A;">
+          <span style="background: #0A0A0A; color: #F6F3EC; font-weight: bold; padding: 2px 6px; font-size: 10px; font-family: monospace;">HIGH CONGESTION ZONE</span>
+          <h4 style="margin: 6px 0 2px; font-weight: bold;">${hazardTitle}</h4>
+          <p style="margin: 0; font-family: monospace;">Density: ${hazardDepth}</p>
+          <p style="margin: 4px 0 0; color: #6E6B65; font-size: 12px;">Recommendation: ${hazardDetour}</p>
+        </div>
+      `);
+    });
 
     // 3. Draw Bus Stops
     routes.forEach(route => {
       route.stops.forEach((stop, idx) => {
         const stopName = isTamil ? stop.tamilName : stop.name;
-        const isFloodedStop = stop.crowded === 'flooded' && floodActive;
+        const isHighDemandStop = stop.crowded === 'high';
 
         const stopIcon = L.divIcon({
           className: 'custom-stop-marker',
           html: `<div style="
             width: 10px;
             height: 10px;
-            background: ${isFloodedStop ? '#0A0A0A' : '#FFFFFF'};
+            background: ${isHighDemandStop ? '#0A0A0A' : '#FFFFFF'};
             border: 2px solid #0A0A0A;
             border-radius: 50%;
             box-shadow: 2px 2px 0px #0A0A0A;
@@ -156,7 +152,7 @@ export default function TransitMap() {
           <div style="font-size: 12px; font-family: inherit; color: #0A0A0A;">
             <b style="font-size: 13px;">${stopName}</b><br/>
             <span>Route: <b>${route.code}</b> (#${idx + 1} of ${route.stops.length})</span><br/>
-            ${isFloodedStop ? '<span style="font-weight: bold; text-decoration: underline;">Flood Inundation Warning</span>' : '<span>Standard Boarding Stop</span>'}
+            <span>Passenger Density: <b>${isHighDemandStop ? 'High (Extra Buses Needed)' : 'Optimal'}</b></span>
           </div>
         `);
       });
@@ -215,7 +211,7 @@ export default function TransitMap() {
       `);
     });
 
-  }, [activeLayer, routes, buses, hazards, floodActive, breakdownAlert, language]);
+  }, [activeLayer, routes, buses, hazards, breakdownAlert, optimizationApplied, language]);
 
   const focusLocation = (coords, zoom = 14) => {
     if (mapInstanceRef.current) {
@@ -311,7 +307,7 @@ export default function TransitMap() {
           onClick={() => focusLocation([13.0067, 80.2023], 15)}
           className="px-2 py-0.5 border border-[#0A0A0A] hover:bg-[#F6F3EC] whitespace-nowrap transition-colors"
         >
-          [Kathipara Flood Zone]
+          [Kathipara Hotspot]
         </button>
         <button
           onClick={() => focusLocation([13.0410, 80.2450], 16)}

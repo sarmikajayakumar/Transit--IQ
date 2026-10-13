@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTransit } from '../context/TransitContext';
-import { CorridorBranchSvg, TransitCrosshairSvg, RadarWaveSvg, TechnicalGearSvg, FloodIsobarSvg } from './CustomIcons';
+import { CorridorBranchSvg, TransitCrosshairSvg, RadarWaveSvg, TechnicalGearSvg } from './CustomIcons';
 import { MessageSquare } from 'lucide-react';
 import { scrollToChat } from '../lib/navigation';
 
@@ -9,8 +9,6 @@ export default function EditorialHeroCanvas() {
   const {
     routes,
     language,
-    floodActive,
-    toggleFlood,
     peakSurgeActive,
     togglePeakSurge,
     breakdownAlert,
@@ -100,18 +98,18 @@ export default function EditorialHeroCanvas() {
               Public Transit <span className="italic font-light">Demand</span> & Route Optimization.
             </motion.h1>
 
-            {/* Bilingual Subtitle */}
+            {/* Bilingual Subtitle: Clear explanation of Route Optimization */}
             <p className="text-sm sm:text-base text-[#6E6B65] max-w-2xl leading-relaxed">
               {isTamil ? (
                 <span className="font-tamil">
-                  நெரிசலான நேரங்களில் பயணிகள் தேவையை முன்கூட்டியே கணித்து, மாற்றுப்பாதைகள் மற்றும் கூடுதல் பேருந்துகளை நிகழ்நேரத்தில் இயக்கும் செயற்கை நுண்ணறிவு தளம்.
+                  அறிவார்ந்த வழித்தட தேர்வு மற்றும் நிகழ்நேர பேருந்து மேலாண்மை: அதிக நெரிசல் உள்ள பகுதிகளுக்கு கூடுதல் பேருந்துகளை அனுப்பி, கூட்டம் குறைந்த வழித்தடங்களில் பேருந்துகளைக் குறைத்து தேவையின் அடிப்படையில் சீராக இயக்குகிறது.
                 </span>
               ) : (
-                "Continuous telemetry detecting corridor overcrowding, waterlogged flood detours, and mechanical failures — dynamically balancing passenger capacity with zero guesswork."
+                "Intelligent route optimization and dynamic fleet balancing: real-time telemetry detects high-congestion corridors to deploy extra buses where passenger demand surges, while scaling down bus allocation in less-crowded areas to eliminate idle capacity."
               )}
             </p>
 
-            {/* Interactive Simulation Controls (Not generic cards, stark technical switches) */}
+            {/* Interactive Simulation Controls */}
             <div className="pt-2">
               <div className="flex items-center gap-2 mb-2">
                 <span className="font-mono text-[10px] uppercase tracking-widest text-[#6E6B65]">
@@ -131,19 +129,6 @@ export default function EditorialHeroCanvas() {
                 >
                   <span className={`w-1.5 h-1.5 rounded-full ${peakSurgeActive ? 'bg-[#F6F3EC]' : 'bg-[#0A0A0A]'}`}></span>
                   <span>{isTamil ? "உச்ச நெரிசல்" : "Peak Surge"}: {peakSurgeActive ? "ON" : "OFF"}</span>
-                </button>
-
-                {/* Flood Detour */}
-                <button
-                  onClick={toggleFlood}
-                  className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider border transition-all flex items-center gap-2 ${
-                    floodActive
-                      ? 'bg-[#0A0A0A] text-[#F6F3EC] border-[#0A0A0A]'
-                      : 'bg-transparent text-[#0A0A0A] border-[#0A0A0A] hover:bg-[#E2DBD0]'
-                  }`}
-                >
-                  <FloodIsobarSvg className={`w-3.5 h-3.5 ${floodActive ? 'invert' : ''}`} />
-                  <span>{isTamil ? "வெள்ள அபாயம்" : "Monsoon Flood"}: {floodActive ? "ACTIVE" : "CLEAR"}</span>
                 </button>
 
                 {/* Breakdown Toggle */}
@@ -207,7 +192,7 @@ export default function EditorialHeroCanvas() {
               </span>
             </div>
 
-            {/* High-contrast metrics rows (No generic cards, architectural tabular layout) */}
+            {/* High-contrast metrics rows */}
             <div className="space-y-4 font-mono">
               
               <div className="flex items-baseline justify-between border-b border-[#E2DBD0] pb-2">
@@ -220,7 +205,7 @@ export default function EditorialHeroCanvas() {
               <div className="flex items-baseline justify-between border-b border-[#E2DBD0] pb-2">
                 <span className="text-xs text-[#6E6B65] uppercase">Average Waiting Time</span>
                 <div className="text-right">
-                  <span className={`text-xl font-black ${optimizationApplied ? 'text-[#0A0A0A]' : 'text-[#0A0A0A]'}`}>
+                  <span className="text-xl font-black text-[#0A0A0A]">
                     {avgWait} min
                   </span>
                   {optimizationApplied && (
@@ -234,7 +219,7 @@ export default function EditorialHeroCanvas() {
               <div className="flex items-baseline justify-between border-b border-[#E2DBD0] pb-2">
                 <span className="text-xs text-[#6E6B65] uppercase">Peak Crowding %</span>
                 <div className="text-right">
-                  <span className={`text-xl font-black ${maxCrowd > 100 ? 'text-[#0A0A0A]' : 'text-[#0A0A0A]'}`}>
+                  <span className="text-xl font-black text-[#0A0A0A]">
                     {maxCrowd}%
                   </span>
                   <span className="block text-[10px] text-[#6E6B65]">
@@ -246,14 +231,14 @@ export default function EditorialHeroCanvas() {
               <div className="flex items-baseline justify-between border-b border-[#E2DBD0] pb-2">
                 <span className="text-xs text-[#6E6B65] uppercase">Active Fleet Units</span>
                 <span className="text-lg font-bold text-[#0A0A0A]">
-                  {optimizationApplied ? "17 Buses (2 Relief)" : "15 Buses Scheduled"}
+                  {optimizationApplied ? "17 Buses (+2 Extra on Route 29C)" : "15 Buses Scheduled"}
                 </span>
               </div>
 
               <div className="flex items-baseline justify-between pt-1">
-                <span className="text-xs text-[#6E6B65] uppercase">Disruption Status</span>
+                <span className="text-xs text-[#6E6B65] uppercase">Corridor Fleet Status</span>
                 <span className="text-xs font-bold text-[#0A0A0A] uppercase">
-                  {floodActive ? "Kathipara Flooded (1.5 ft)" : "All Corridors Clear"}
+                  {breakdownAlert.active ? "Panagal Park Incident (Relief Unit En Route)" : "All Routes In Active Flow"}
                 </span>
               </div>
 

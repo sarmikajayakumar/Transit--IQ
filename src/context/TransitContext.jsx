@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { INITIAL_ROUTES, LIVE_BUSES, ACTIVE_HAZARDS } from '../data/transitData';
 import { translations } from '../translations/i18n';
 
@@ -12,7 +12,6 @@ export function TransitProvider({ children }) {
   const [buses, setBuses] = useState(LIVE_BUSES);
   const [hazards, setHazards] = useState(ACTIVE_HAZARDS);
   
-  const [floodActive, setFloodActive] = useState(true);
   const [peakSurgeActive, setPeakSurgeActive] = useState(true);
   const [optimizationApplied, setOptimizationApplied] = useState(false);
   
@@ -34,7 +33,9 @@ export function TransitProvider({ children }) {
 
   const t = translations[language] || translations.en;
 
-  // Function to apply AI optimization recommendation
+  // Function to apply AI optimization recommendation:
+  // Dynamically reallocates fleet: adds +2 buses to crowded Route 29C to reduce wait times,
+  // while keeping less-crowded Route 15B balanced without wasteful empty runs.
   const applyOptimization = () => {
     setOptimizationApplied(true);
     setRoutes(prev => prev.map(r => {
@@ -46,7 +47,7 @@ export function TransitProvider({ children }) {
           headwayMin: 7.5,
           avgWaitMin: 6.8,
           status: "OPTIMIZED",
-          statusBadge: "Smooth Capacity",
+          statusBadge: "+2 Extra Buses Deployed",
           color: "#10B981"
         };
       }
@@ -57,10 +58,6 @@ export function TransitProvider({ children }) {
   const revertOptimization = () => {
     setOptimizationApplied(false);
     setRoutes(INITIAL_ROUTES);
-  };
-
-  const toggleFlood = () => {
-    setFloodActive(prev => !prev);
   };
 
   const togglePeakSurge = () => {
@@ -91,7 +88,6 @@ export function TransitProvider({ children }) {
     setRoutes(INITIAL_ROUTES);
     setBuses(LIVE_BUSES);
     setHazards(ACTIVE_HAZARDS);
-    setFloodActive(true);
     setPeakSurgeActive(true);
     setOptimizationApplied(false);
     setBreakdownAlert({
@@ -121,8 +117,6 @@ export function TransitProvider({ children }) {
         routes,
         buses,
         hazards,
-        floodActive,
-        toggleFlood,
         peakSurgeActive,
         togglePeakSurge,
         breakdownAlert,
