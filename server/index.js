@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import 'dotenv/config';
+import { createClient } from '@supabase/supabase-js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,6 +17,11 @@ app.use(express.json());
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY || "";
 const GROQ_MODEL = "openai/gpt-oss-20b";
+
+// Supabase Database Connection
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://blnpwkcryalhyezmrmzp.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_publishable_D9j_QMePAR8zqD4QH2H0wA_q_Sbplux';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Transit simulation state
 let transitState = {
@@ -314,6 +320,31 @@ app.post('/api/simulate', (req, res) => {
     success: true,
     data: transitState
   });
+});
+
+// Supabase Status Endpoint
+app.get('/api/supabase/status', async (req, res) => {
+  try {
+    const health = await fetch(`${SUPABASE_URL}/auth/v1/health`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    res.json({
+      connected: health.ok,
+      projectUrl: SUPABASE_URL,
+      projectId: 'blnpwkcryalhyezmrmzp',
+      status: health.ok ? 'online' : 'error'
+    });
+  } catch (err) {
+    res.json({
+      connected: false,
+      error: err.message,
+      projectUrl: SUPABASE_URL,
+      status: 'offline'
+    });
+  }
 });
 
 // Chatbot API Endpoint

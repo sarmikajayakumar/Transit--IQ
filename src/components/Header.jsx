@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTransit } from '../context/TransitContext';
 import { TransitCrosshairSvg, RadarWaveSvg } from './CustomIcons';
+import { checkSupabaseConnection } from '../lib/supabaseClient';
 
 export default function Header() {
   const { language, setLanguage, role, setRole, t, floodActive } = useTransit();
+  const [supabaseOnline, setSupabaseOnline] = useState(true);
   const isTamil = language === 'ta';
+
+  useEffect(() => {
+    checkSupabaseConnection().then(status => {
+      setSupabaseOnline(status);
+    });
+  }, []);
 
   return (
     <header className="relative z-30 border-b border-[#0A0A0A] bg-[#F6F3EC]">
@@ -30,16 +38,26 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Center Coordinates & Corridor Meta */}
-          <div className="hidden lg:flex items-center gap-6 font-mono text-[11px] text-[#0A0A0A]">
+          {/* Center Coordinates & Supabase DB Status */}
+          <div className="hidden lg:flex items-center gap-5 font-mono text-[11px] text-[#0A0A0A]">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#0A0A0A] rounded-full animate-ping"></span>
               <span className="font-semibold tracking-wider uppercase">13°04'N 80°14'E</span>
             </div>
+            
             <div className="h-4 w-px bg-[#0A0A0A]/20"></div>
-            <span className="tracking-widest uppercase text-[#6E6B65]">
-              {isTamil ? "மத்திய நிலையம் ↔ தாம்பரம் பாதை" : "Central ↔ Tambaram Corridor"}
-            </span>
+
+            {/* Supabase Connection Live Badge */}
+            <div 
+              className="flex items-center gap-1.5 border border-[#0A0A0A] px-2 py-0.5 bg-[#FFFFFF] shadow-[2px_2px_0px_#0A0A0A] cursor-help"
+              title="Connected to Supabase DB: blnpwkcryalhyezmrmzp.supabase.co"
+            >
+              <span className={`w-2 h-2 rounded-full ${supabaseOnline ? 'bg-[#16A34A] animate-pulse' : 'bg-[#DC2626]'}`}></span>
+              <span className="font-bold text-[10px] uppercase tracking-wider">
+                SUPABASE: {supabaseOnline ? 'CONNECTED' : 'DISCONNECTED'}
+              </span>
+            </div>
+
             {floodActive && (
               <span className="bg-[#0A0A0A] text-[#F6F3EC] px-2 py-0.5 text-[10px] uppercase font-mono tracking-widest flex items-center gap-1.5">
                 <RadarWaveSvg className="w-3 h-3 text-[#F6F3EC]" />
