@@ -529,10 +529,14 @@ YOUR INSTRUCTIONS:
   }
 });
 
-// Serve frontend assets built in dist
+// Serve frontend assets built in dist (supports both root and /Transit--IQ base path)
+app.use('/Transit--IQ', express.static(distPath));
 app.use(express.static(distPath));
 
 // Wildcard fallback to index.html for SPA
+app.get('/Transit--IQ/*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
+});
 app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });

@@ -1,14 +1,30 @@
 import { createClient } from '@supabase/supabase-js';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://blnpwkcryalhyezmrmzp.supabase.co';
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_D9j_QMePAR8zqD4QH2H0wA_q_Sbplux';
+const rawUrl = import.meta.env.VITE_SUPABASE_URL;
+const rawKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+export const SUPABASE_URL = (rawUrl && typeof rawUrl === 'string' && rawUrl.trim()) ? rawUrl.trim() : 'https://blnpwkcryalhyezmrmzp.supabase.co';
+export const SUPABASE_ANON_KEY = (rawKey && typeof rawKey === 'string' && rawKey.trim()) ? rawKey.trim() : 'sb_publishable_D9j_QMePAR8zqD4QH2H0wA_q_Sbplux';
+
+let client = null;
+try {
+  if (SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL.startsWith('http')) {
+    client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+} catch (err) {
+  console.warn('Supabase client initialization warning:', err.message);
+}
+
+export const supabase = client;
+export const isSupabaseConfigured = Boolean(client);
 
 /**
  * Verifies live connection to Supabase project
  */
 export async function checkSupabaseConnection() {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !SUPABASE_URL.startsWith('http')) {
+    return false;
+  }
   try {
     const res = await fetch(`${SUPABASE_URL}/auth/v1/health`, {
       headers: {
@@ -27,6 +43,7 @@ export async function checkSupabaseConnection() {
  * Log passenger or operator chat interactions into Supabase
  */
 export async function logChatInteraction(payload) {
+  if (!supabase) return;
   try {
     const { error } = await supabase.from('passenger_inquiries').insert([
       {
@@ -49,6 +66,7 @@ export async function logChatInteraction(payload) {
  * Log fleet breakdown alerts into Supabase
  */
 export async function logFleetBreakdown(breakdown) {
+  if (!supabase) return;
   try {
     const { error } = await supabase.from('fleet_breakdowns').insert([
       {
@@ -73,6 +91,7 @@ export async function logFleetBreakdown(breakdown) {
  * Log AI corridor optimization events
  */
 export async function logOptimizationEvent(metrics) {
+  if (!supabase) return;
   try {
     const { error } = await supabase.from('corridor_optimizations').insert([
       {
