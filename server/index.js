@@ -550,6 +550,14 @@ app.get(['/ppt', '/hackathon-ppt', '/hackathon_presentation.html', '/Transit--IQ
   const filePath = path.join(__dirname, '..', 'hackathon_presentation.html');
   res.sendFile(filePath);
 });
+app.get('/api/download-simple-ppt', (req, res) => {
+  const filePath = path.join(__dirname, '..', 'simple_presentation.html');
+  res.download(filePath, 'TransitIQ_Core_Presentation.html');
+});
+app.get(['/simple-ppt', '/core-ppt', '/simple_presentation.html', '/Transit--IQ/core-ppt.html'], (req, res) => {
+  const filePath = path.join(__dirname, '..', 'simple_presentation.html');
+  res.sendFile(filePath);
+});
 
 // Wildcard fallback to index.html for SPA
 app.get('/Transit--IQ/*', (req, res) => {
