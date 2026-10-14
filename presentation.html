@@ -483,6 +483,7 @@
     <button class="btn" id="prevBtn" onclick="prevSlide()">← Previous</button>
     <span class="hint" id="statusHint">Slide 1 of 8 (Use Left/Right arrow keys)</span>
     <button class="btn" id="nextBtn" onclick="nextSlide()">Next →</button>
+    <button class="btn" onclick="downloadDeck()" style="background: #16A34A; color: #FFFFFF;">⬇ Download Deck</button>
     <button class="btn" onclick="window.print()" style="background: transparent; color: var(--text);">Print / Save PDF</button>
   </div>
 
@@ -509,6 +510,16 @@
         currentSlide--;
         showSlide(currentSlide);
       }
+    }
+
+    function downloadDeck() {
+      const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'TransitIQ_Presentation_Deck.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
     document.addEventListener('keydown', (e) => {

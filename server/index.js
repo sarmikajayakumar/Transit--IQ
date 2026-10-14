@@ -533,6 +533,16 @@ YOUR INSTRUCTIONS:
 app.use('/Transit--IQ', express.static(distPath));
 app.use(express.static(distPath));
 
+// Presentation deck download & view endpoints
+app.get('/api/download-presentation', (req, res) => {
+  const filePath = path.join(__dirname, '..', 'presentation.html');
+  res.download(filePath, 'TransitIQ_Presentation_Deck.html');
+});
+app.get(['/presentation', '/presentation.html', '/Transit--IQ/presentation.html'], (req, res) => {
+  const filePath = path.join(__dirname, '..', 'presentation.html');
+  res.sendFile(filePath);
+});
+
 // Wildcard fallback to index.html for SPA
 app.get('/Transit--IQ/*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
