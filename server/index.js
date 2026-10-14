@@ -538,8 +538,16 @@ app.get('/api/download-presentation', (req, res) => {
   const filePath = path.join(__dirname, '..', 'presentation.html');
   res.download(filePath, 'TransitIQ_Presentation_Deck.html');
 });
+app.get('/api/download-hackathon-ppt', (req, res) => {
+  const filePath = path.join(__dirname, '..', 'hackathon_presentation.html');
+  res.download(filePath, 'TransitIQ_SmartMove_Hackathon_Presentation.html');
+});
 app.get(['/presentation', '/presentation.html', '/Transit--IQ/presentation.html'], (req, res) => {
   const filePath = path.join(__dirname, '..', 'presentation.html');
+  res.sendFile(filePath);
+});
+app.get(['/ppt', '/hackathon-ppt', '/hackathon_presentation.html', '/Transit--IQ/ppt.html'], (req, res) => {
+  const filePath = path.join(__dirname, '..', 'hackathon_presentation.html');
   res.sendFile(filePath);
 });
 

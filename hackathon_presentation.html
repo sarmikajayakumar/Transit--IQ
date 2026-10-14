@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransitIQ — Smart Move Hackathon Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&family=Noto+Sans+Tamil:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0A0A0A;
+      --slide-bg: #FFFFFF;
+      --text: #0A0A0A;
+      --muted: #525252;
+      --red: #C5161D;
+      --blue: #1A365D;
+      --navy: #0F172A;
+      --light-bg: #F8FAFC;
+      --card-border: #E2E8F0;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #121212;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .deck-container {
+      width: 100%;
+      max-width: 1120px;
+      aspect-ratio: 16 / 9;
+      background: var(--slide-bg);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #333;
+    }
+    .slide {
+      display: none;
+      height: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px 42px;
+      position: relative;
+    }
+    .slide.active {
+      display: flex;
+    }
+
+    /* Template Header */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 8px;
+    }
+    .slide-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+    }
+    .slide-title-banner {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .header-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .logo-kit {
+      width: 44px;
+      height: 44px;
+      background: radial-gradient(circle, #FFFFFF 40%, var(--red) 41%);
+      border: 2px solid var(--red);
+      color: #000;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+    }
+    .logo-dept {
+      width: 42px;
+      height: 42px;
+      background: var(--red);
+      color: #fff;
+      border: 2px solid #000;
+      font-size: 7px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .hackathon-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: #000;
+      color: #fff;
+      padding: 4px 8px;
+    }
+
+    /* Slide 1 - Cover */
+    .cover-slide {
+      padding: 32px 48px;
+      text-align: center;
+    }
+    .inst-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+    .inst-name {
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+    .inst-sub {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-top: 3px;
+    }
+    .cover-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      margin: 14px 0;
+    }
+    .cover-title-box {
+      background: #FAF8F5;
+      border: 2px solid #000;
+      padding: 16px 20px;
+      margin: 12px auto;
+      max-width: 900px;
+      box-shadow: 4px 4px 0px #000;
+      text-align: left;
+    }
+    .meta-row {
+      font-size: 13px;
+      font-weight: 700;
+      margin: 4px 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .meta-row span.label {
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    /* Layout Grids */
+    .content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 14px 0;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    
+    .card {
+      border: 2px solid #000;
+      padding: 14px;
+      background: #FAF8F5;
+      display: flex;
+      flex-direction: column;
+    }
+    .card.red {
+      border-color: var(--red);
+      background: #FFF5F5;
+    }
+    .card.green {
+      border-color: #16A34A;
+      background: #F0FDF4;
+    }
+    .card.blue {
+      border-color: var(--blue);
+      background: #F0F4F8;
+    }
+    .card-icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+    .card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: #000;
+    }
+    .card-desc {
+      font-size: 12px;
+      line-height: 1.4;
+      color: #333;
+    }
+
+    .banner-statement {
+      background: #000;
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      border-left: 6px solid var(--red);
+    }
+    .banner-statement span.gap {
+      color: #F87171;
+    }
+
+    /* Bottom strip */
+    .bottom-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #E2E8F0;
+      padding-top: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* Navigation Bar */
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    button.nav-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      background: #fff;
+      color: #000;
+      border: 2px solid #000;
+      box-shadow: 2px 2px 0px #000;
+      cursor: pointer;
+    }
+    button.nav-btn:hover {
+      background: #000;
+      color: #fff;
+    }
+    .hint {
+      color: #aaa;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .deck-container {
+        border: none;
+        box-shadow: none;
+        width: 100vw;
+        height: 100vh;
+        page-break-after: always;
+      }
+      .slide {
+        display: flex !important;
+      }
+      .nav-bar, .hint {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-container">
+    
+    <!-- SLIDE 1: Title & Hackathon Meta -->
+    <div class="slide cover-slide active" id="slide-1">
+      <div class="inst-header">
+        <div class="inst-name">KIT - KALAIGNARKARUNANIDHI INSTITUTE OF TECHNOLOGY</div>
+        <div class="inst-sub">COIMBATORE - 641402 • Approved by AICTE, Affiliated to Anna University, Chennai • Accredited With 'A' Grade by NAAC & NBA</div>
+      </div>
+      
+      <div class="cover-logos">
+        <div class="hackathon-tag" style="font-size: 14px; padding: 6px 14px;">SMART MOVE HACKATHON 2026</div>
+      </div>
+
+      <div class="cover-title-box">
+        <div class="meta-row"><span class="label">TITLE :</span> TransitIQ – Intelligent Public Transit Demand & Fleet Balancing Platform</div>
+        <div class="meta-row"><span class="label">TEAM NAME :</span> RouteOptimizers (TransitIQ Team)</div>
+        <div class="meta-row"><span class="label">TEAM MEMBERS :</span> 1) Sarmika Jayakumar &nbsp;&nbsp; 2) Student Contributor 2 &nbsp;&nbsp; 3) Student Contributor 3</div>
+        <div class="meta-row"><span class="label">COLLEGE NAME :</span> KIT – Kalaignarkarunanidhi Institute of Technology, Coimbatore</div>
+        <div class="meta-row"><span class="label">DEPARTMENT :</span> Electronics and Communication Engineering & Computer Science</div>
+      </div>
+
+      <div class="bottom-strip">
+        <span>Coimbatore Urban Mobility Challenge</span>
+        <span>Slide 01 of 08</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Problem Statement -->
+    <div class="slide" id="slide-2">
+      <div class="top-header">
+        <div class="slide-num">2</div>
+        <div class="slide-title-banner">PROBLEM STATEMENT</div>
+        <div class="header-logos">
+          <span class="hackathon-tag">SMART MOVE HACKATHON</span>
+          <div class="logo-kit">KIT</div>
+        </div>
+      </div>
+
+      <div class="content-area">
+        <div class="banner-statement">
+          THE PROBLEM: Urban commuters wait 15–20 minutes at packed stops while buses run empty two streets away.<br>
+          <span class="gap">THE GAP:</span> Not shortage of total buses – but lack of real-time, demand-responsive fleet rebalancing.
+        </div>
+
+        <div class="grid-4">
+          <div class="card red">
+            <div class="card-icon">🚨</div>
+            <div class="card-title">Choked Corridors</div>
+            <div class="card-desc">Sathy Road & IT corridor (Route 12) hit <strong>134% peak occupancy</strong>, leaving passengers stranded on platforms.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📉</div>
+            <div class="card-title">Idle Fleet Waste</div>
+            <div class="card-desc">Trichy Road (Route 3A) runs simultaneously with <strong>60% empty seats</strong>, burning unneeded depot diesel and driver hours.</div>
+          </div>
+          <div class="card red">
+            <div class="card-icon">⚠️</div>
+            <div class="card-title">Breakdown Domino</div>
+            <div class="card-desc">When a bus stalls at Ganapathy, commuters have zero visibility; next units arrive packed with no relief broadcast.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📋</div>
+            <div class="card-title">Static Timetables</div>
+            <div class="card-desc">Fixed schedules cannot adapt to morning office spikes, Peelamedu waterlogging, or CODISSIA fair surges.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-strip">
+        <span>TransitIQ — Coimbatore Public Transit Telemetry</span>
+        <span>Slide 02 of 08</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Proposed Solution -->
+    <div class="slide" id="slide-3">
+      <div class="top-header">
+        <div class="slide-num">3</div>
+        <div class="slide-title-banner">PROPOSED SOLUTION</div>
+        <div class="header-logos">
+          <span class="hackathon-tag">SMART MOVE HACKATHON</span>
+          <div class="logo-kit">KIT</div>
+        </div>
+      </div>
+
+      <div class="content-area">
+        <div class="banner-statement" style="border-left-color: #16A34A;">
+          TransitIQ: Dynamic Fleet Reallocation — Shift idle buses from low-demand corridors to overloaded peak corridors in real time.
+        </div>
+
+        <div class="grid-4" style="margin-bottom: 12px;">
+          <div class="card">
+            <div class="card-icon">📡</div>
+            <div class="card-title">1. Live Sensing</div>
+            <div class="card-desc">Flags routes in real time: <span style="color:#DC2626;font-weight:700">Red (>100% full)</span>, <span style="color:#CA8A04;font-weight:700">Yellow (Seats Free)</span>, and <span style="color:#16A34A;font-weight:700">Green (Normal)</span>.</div>
+          </div>
+          <div class="card green">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">2. Fleet Balancing</div>
+            <div class="card-desc">Zero new buses needed: cancels 1 surplus trip on Route 3A and injects 2 extra relief buses into Route 12.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🗣️</div>
+            <div class="card-title">3. Bilingual AI</div>
+            <div class="card-desc">Conversational assistance in authentic Tamil & English voice/text for less-crowded bus options and fares.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🗺️</div>
+            <div class="card-title">4. Hazard Telemetry</div>
+            <div class="card-desc">Automatic detour notices for monsoon waterlogging near Peelamedu and tracked relief buses with live ETA.</div>
+          </div>
+        </div>
+
+        <div style="font-size: 11px; font-weight: 800; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; margin-bottom: 6px;">WHAT MAKES IT INNOVATIVE:</div>
+        <div class="grid-4">
+          <div class="card" style="padding: 8px 10px; font-size: 11px; font-weight: 700; text-align: center;">✅ Zero CapEx Rebalancing</div>
+          <div class="card" style="padding: 8px 10px; font-size: 11px; font-weight: 700; text-align: center;">✅ Pure Tamil Voice AI</div>
+          <div class="card" style="padding: 8px 10px; font-size: 11px; font-weight: 700; text-align: center;">✅ Real Depot Dashboard</div>
+          <div class="card" style="padding: 8px 10px; font-size: 11px; font-weight: 700; text-align: center;">✅ Active Detour Routing</div>
+        </div>
+      </div>
+
+      <div class="bottom-strip">
+        <span>TransitIQ — Intelligent Public Transit Platform</span>
+        <span>Slide 03 of 08</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Technical Approach -->
+    <div class="slide" id="slide-4">
+      <div class="top-header">
+        <div class="slide-num">4</div>
+        <div class="slide-title-banner">TECHNICAL APPROACH</div>
+        <div class="header-logos">
+          <span class="hackathon-tag">SMART MOVE HACKATHON</span>
+          <div class="logo-kit">KIT</div>
+        </div>
+      </div>
+
+      <div class="content-area">
+        <div class="grid-3" style="margin-bottom: 14px;">
+          <div class="card blue">
+            <div class="card-icon">💻</div>
+            <div class="card-title">1. TACTICAL CLIENT (PWA)</div>
+            <div class="card-desc">
+              • React 18 & Vite SPA<br>
+              • Leaflet & Google Maps telemetry<br>
+              • Framer Motion fluid animations<br>
+              • Web Speech & Google TTS audio
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">☁️</div>
+            <div class="card-title">2. ENGINE & GROQ AI</div>
+            <div class="card-desc">
+              • Node.js Express server<br>
+              • Groq LPU GenAI (sub-second)<br>
+              • Smart rule-based failover fallback<br>
+              • REST APIs for live simulation
+            </div>
+          </div>
+          <div class="card green">
+            <div class="card-icon">🗄️</div>
+            <div class="card-title">3. SUPABASE DATABASE</div>
+            <div class="card-desc">
+              • PostgreSQL relational schema<br>
+              • Row Level Security (RLS) policies<br>
+              • Tables: routes, stops, crowding, disruptions<br>
+              • Dynamic foreign key linking
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size: 11px; font-weight: 800; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; margin-bottom: 6px;">TRANSIT DATA & BALANCING FLOW:</div>
+        <div class="grid-4" style="text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+          <div class="card" style="padding: 10px;"><strong>1. Ingest</strong><br><span style="font-size: 10px; color: var(--muted);">GPS & Crowd Telemetry</span></div>
+          <div class="card" style="padding: 10px;"><strong>2. Compute</strong><br><span style="font-size: 10px; color: var(--muted);">Congestion Threshold >100%</span></div>
+          <div class="card green" style="padding: 10px;"><strong>3. Rebalance</strong><br><span style="font-size: 10px; color: var(--muted);">Transfer Idle Bus to Peak Route</span></div>
+          <div class="card" style="padding: 10px;"><strong>4. Broadcast</strong><br><span style="font-size: 10px; color: var(--muted);">Tamil & English Alerts</span></div>
+        </div>
+      </div>
+
+      <div class="bottom-strip">
+        <span>TransitIQ Architecture & Data Pipelines</span>
+        <span>Slide 04 of 08</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Feasibility & Implementation Plan -->
+    <div class="slide" id="slide-5">
+      <div class="top-header">
+        <div class="slide-num">5</div>
+        <div class="slide-title-banner">FEASIBILITY & IMPLEMENTATION PLAN</div>
+        <div class="header-logos">
+          <span class="hackathon-tag">SMART MOVE HACKATHON</span>
+          <div class="logo-kit">KIT</div>
+        </div>
+      </div>
+
+      <div class="content-area">
+        <div class="grid-3" style="margin-bottom: 14px;">
+          <div class="card">
+            <div class="card-icon">⚙️</div>
+            <div class="card-title">Technically Feasible</div>
+            <div class="card-desc">Built on open web standards, PostGIS geospatial queries, and standard GTFS bus route formats. Runs on any mobile or desktop browser.</div>
+          </div>
+          <div class="card green">
+            <div class="card-icon">₹</div>
+            <div class="card-title">Economically Viable</div>
+            <div class="card-desc">Zero hardware modification needed for buses; immediate operational savings by cutting diesel burned on empty trips.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">👥</div>
+            <div class="card-title">Operationally Simple</div>
+            <div class="card-desc">One-click dashboard for depot station masters; instant QR code scanning for passengers at bus stops with no app install required.</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card" style="background: #FFF;">
+            <div class="card-title" style="color: var(--blue);">12-WEEK IMPLEMENTATION PLAN</div>
+            <div style="font-size: 11px; line-height: 1.5; font-family: 'JetBrains Mono', monospace;">
+              • <strong>Wk 1–2:</strong> Route telemetry & Coimbatore stop mapping<br>
+              • <strong>Wk 3–5:</strong> Supabase schema, RLS & live tracking APIs<br>
+              • <strong>Wk 6–8:</strong> Fleet balancing engine & depot control UI<br>
+              • <strong>Wk 9–10:</strong> Bilingual Groq AI & Tamil TTS voice integration<br>
+              • <strong>Wk 11–12:</strong> Pilot field test on Gandhipuram ↔ Saravanampatti
+            </div>
+          </div>
+          <div class="card" style="background: #FFF;">
+            <div class="card-title" style="color: var(--red);">KEY RISKS & MITIGATIONS</div>
+            <div style="font-size: 11px; line-height: 1.5; font-family: 'JetBrains Mono', monospace;">
+              • <strong>Network Drops:</strong> Offline local storage & resilient fallbacks<br>
+              • <strong>Driver Duty Rules:</strong> Reallocation respects shift rosters<br>
+              • <strong>Language Barrier:</strong> Native Tamil voice assistance for elders<br>
+              • <strong>False Alarms:</strong> Automated sensor threshold verification
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-strip">
+        <span>TransitIQ — Operational Viability & Roadmap</span>
+        <span>Slide 05 of 08</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Impact & Benefits -->
+    <div class="slide" id="slide-6">
+      <div class="top-header">
+        <div class="slide-num">6</div>
+        <div class="slide-title-banner">IMPACT & BENEFITS</div>
+        <div class="header-logos">
+          <span class="hackathon-tag">SMART MOVE HACKATHON</span>
+          <div class="logo-kit">KIT</div>
+        </div>
+      </div>
+
+      <div class="content-area">
+        <div class="grid-4" style="margin-bottom: 16px; text-align: center;">
+          <div class="card green">
+            <div style="font-family:'JetBrains Mono',monospace; font-size: 26px; font-weight:900; color:#16A34A;">↓ 60%</div>
+            <div class="card-title" style="margin-top:4px;">Wait Time Reduction</div>
+            <div class="card-desc">From 15.4 mins down to 6.2 mins on crowded IT line.</div>
+          </div>
+          <div class="card green">
+            <div style="font-family:'JetBrains Mono',monospace; font-size: 26px; font-weight:900; color:#16A34A;">82%</div>
+            <div class="card-title" style="margin-top:4px;">Controlled Crowding</div>
+            <div class="card-desc">Slashes peak 134% dangerous overcrowding.</div>
+          </div>
+          <div class="card">
+            <div style="font-family:'JetBrains Mono',monospace; font-size: 26px; font-weight:900;">15 MIN</div>
+            <div class="card-title" style="margin-top:4px;">Reliable Headway</div>
+            <div class="card-desc">Preserved on Trichy Road without running empty buses.</div>
+          </div>
+          <div class="card">
+            <div style="font-family:'JetBrains Mono',monospace; font-size: 26px; font-weight:900;">₹1.8L+</div>
+            <div class="card-title" style="margin-top:4px;">Fuel Saved / Month</div>
+            <div class="card-desc">Per depot by cutting dead mileage on lean routes.</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">WHO BENEFITS</div>
+            <div class="card-desc" style="font-size: 11px; line-height: 1.5;">
+              👩‍🎓 <strong>Students & Commuters:</strong> Faster arrivals, guaranteed seats, live prior alerts.<br>
+              🚌 <strong>Bus Drivers & Conductors:</strong> Reduced stress from dangerous platform overloads.<br>
+              🏢 <strong>TNSTC Depots:</strong> Maximum revenue per km, lower diesel waste.<br>
+              👮 <strong>Traffic Marshals:</strong> Less choke at bottlenecks like Ganapathy & Peelamedu.
+            </div>
+          </div>
+          <div class="card blue">
+            <div class="card-title">ALIGNED WITH UN SDGs</div>
+            <div class="card-desc" style="font-size: 11px; line-height: 1.5;">
+              • <strong>SDG 9:</strong> Industry, Innovation & Sustainable Infrastructure<br>
+              • <strong>SDG 11:</strong> Sustainable Cities & Smart Urban Mobility<br>
+              • <strong>SDG 12:</strong> Responsible Resource & Fuel Consumption<br>
+              • <strong>SDG 13:</strong> Climate Action (Reduced public transit carbon footprint)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-strip">
+        <span>TransitIQ — Value Delivered & Sustainability</span>
+        <span>Slide 06 of 08</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Business Model & Market Opportunity -->
+    <div class="slide" id="slide-7">
+      <div class="top-header">
+        <div class="slide-num">7</div>
+        <div class="slide-title-banner">BUSINESS MODEL & MARKET OPPORTUNITY</div>
+        <div class="header-logos">
+          <span class="hackathon-tag">SMART MOVE HACKATHON</span>
+          <div class="logo-kit">KIT</div>
+        </div>
+      </div>
+
+      <div class="content-area">
+        <div class="grid-3" style="margin-bottom: 14px;">
+          <div class="card">
+            <div class="card-title">B2G — State Transit</div>
+            <div class="card-desc">TNSTC Coimbatore, MTC Chennai, BMTC. Deployment of depot control room software with annual SaaS licensing.</div>
+          </div>
+          <div class="card">
+            <div class="card-title">B2B — Tech Parks & Colleges</div>
+            <div class="card-desc">CHIL SEZ Saravanampatti, TIDEL Park, and institutional college bus fleets for employee/student route balancing.</div>
+          </div>
+          <div class="card">
+            <div class="card-title">B2C — Everyday Citizens</div>
+            <div class="card-desc">Free public route advisory PWA with optional premium notifications for reserved seats and transfer passes.</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card" style="background:#FFF;">
+            <div class="card-title" style="color:var(--red);">REVENUE STREAMS (PROPOSED)</div>
+            <div style="font-size: 11px; line-height: 1.6; font-family:'JetBrains Mono',monospace;">
+              • <strong>SaaS License:</strong> ₹45,000 / month per transit depot hub<br>
+              • <strong>Institutional Packs:</strong> ₹15,000 / month for private campus fleet balancing<br>
+              • <strong>Urban Data Analytics:</strong> Anonymized mobility telemetry for city planners<br>
+              • <strong>Sponsorships:</strong> Route information displays at major terminals
+            </div>
+          </div>
+          <div class="card" style="background:#FFF;">
+            <div class="card-title" style="color:var(--blue);">MARKET OPPORTUNITY & OUR EDGE</div>
+            <div style="font-size: 11px; line-height: 1.5;">
+              • <strong>Market Size:</strong> India operates over 1.5 million public and private buses with under 15% digitization.<br><br>
+              • <strong>Our Edge:</strong> Unlike timetable apps (Chalo/Moovit) that only show where buses are, TransitIQ dynamically balances the fleet to eliminate both overcrowding and empty buses.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-strip">
+        <span>TransitIQ — Commercial Scalability</span>
+        <span>Slide 07 of 08</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: Prototype, Future Roadmap & References -->
+    <div class="slide" id="slide-8">
+      <div class="top-header">
+        <div class="slide-num">8</div>
+        <div class="slide-title-banner">PROTOTYPE, ROADMAP & REFERENCES</div>
+        <div class="header-logos">
+          <span class="hackathon-tag">SMART MOVE HACKATHON</span>
+          <div class="logo-kit">KIT</div>
+        </div>
+      </div>
+
+      <div class="content-area">
+        <div class="grid-2" style="margin-bottom: 14px;">
+          <div class="card green" style="padding: 12px;">
+            <div class="card-title">LIVE PROTOTYPE STATUS</div>
+            <div style="font-size: 11px; line-height: 1.4; font-family: 'JetBrains Mono', monospace;">
+              • Full-stack working app: React 18, Node.js, Supabase, Groq AI<br>
+              • 10 Coimbatore routes + 20 stops mapped with live telemetry<br>
+              • Verified sample alert: <code>TN-38-N-2914 alternator breakdown at Ganapathy — Relief bus TN-38-N-6602 dispatched (ETA: 4 min).</code>
+            </div>
+          </div>
+          <div class="card" style="padding: 12px;">
+            <div class="card-title">FUTURE ROADMAP</div>
+            <div style="font-size: 11px; line-height: 1.4; font-family: 'JetBrains Mono', monospace;">
+              • <strong>1. Now:</strong> Working web prototype with live simulation<br>
+              • <strong>2. 3–6 Months:</strong> GPS OBD-II integration on 20 pilot TNSTC buses<br>
+              • <strong>3. 6–12 Months:</strong> Predictive AI demand models based on rain & events<br>
+              • <strong>4. 1–2 Years:</strong> City-wide rollout across Tamil Nadu transit hubs
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="background:#FFF; padding: 10px 14px;">
+          <div class="card-title" style="margin-bottom:4px;">KEY REFERENCES</div>
+          <div style="font-size: 10px; line-height: 1.4; color: var(--muted); font-family:'JetBrains Mono',monospace;">
+            [1] Ministry of Housing and Urban Affairs (MoHUA) – National Urban Transport Policy guidelines.<br>
+            [2] Bureau of Indian Standards (BIS) – IS 16490: Intelligent Transportation Systems Standards.<br>
+            [3] Tamil Nadu State Transport Corporation (TNSTC) – Coimbatore Division Corridor Telemetry Models.<br>
+            [4] Supabase PostgreSQL Real-time RLS Database Framework (supabase.com).<br>
+            [5] Groq Cloud GenAI LPU Engine for Low-Latency Multilingual Inference.
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-strip">
+        <span>TransitIQ — KIT Coimbatore Smart Move Hackathon</span>
+        <span>Thank You • Q&A</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Navigation Bar -->
+  <div class="nav-bar">
+    <button class="nav-btn" onclick="prevSlide()">← Previous</button>
+    <span class="hint" id="statusHint">Slide 1 of 8 (Use Left/Right arrow keys or Spacebar)</span>
+    <button class="nav-btn" onclick="nextSlide()">Next →</button>
+    <button class="nav-btn" onclick="downloadDeck()" style="background: #16A34A; color: #fff; border-color: #16A34A;">⬇ Download Deck (.html)</button>
+    <button class="nav-btn" onclick="window.print()" style="background: #C5161D; color: #fff; border-color: #C5161D;">🖨️ Print / Save as PDF</button>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 8;
+
+    function showSlide(n) {
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      const active = document.getElementById('slide-' + n);
+      if (active) active.classList.add('active');
+      document.getElementById('statusHint').textContent = `Slide ${n} of ${totalSlides} (Use Left/Right arrow keys)`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        showSlide(currentSlide);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        showSlide(currentSlide);
+      }
+    }
+
+    function downloadDeck() {
+      const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'TransitIQ_SmartMove_Hackathon_Presentation.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+  </script>
+</body>
+</html>
